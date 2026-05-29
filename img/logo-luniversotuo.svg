@@ -1,12 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 46" width="260" height="46">
-  <!-- Shield icon — protezione, il cuore del brand -->
-  <path d="M5 10 L23 3 L41 10 L41 24 C41 35 23 43 23 43 C23 43 5 35 5 24 Z" fill="#2563EB"/>
-  <!-- Orbita intorno al centro — "universo" -->
-  <circle cx="23" cy="23" r="7.5" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.6"/>
-  <ellipse cx="23" cy="23" rx="13" ry="5.5" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1" transform="rotate(-25 23 23)"/>
-  <!-- Punto centrale -->
-  <circle cx="23" cy="23" r="2.5" fill="white"/>
-  <!-- Wordmark -->
-  <text x="52" y="22" font-family="Inter,ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="19" font-weight="800" fill="#ffffff" dominant-baseline="middle" letter-spacing="-0.6">LuniversoTuo</text>
-  <text x="53" y="37" font-family="Inter,ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="500" fill="rgba(255,255,255,0.32)" letter-spacing="1.4">L'UNICO CHE ASSICURA LA SUPERSERENITÀ®</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 52" width="260" height="52">
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="26" cy="26" r="23"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer white ring -->
+  <circle cx="26" cy="26" r="25.5" fill="white"/>
+  <!-- Blue circle fill -->
+  <circle cx="26" cy="26" r="23" fill="#1a5196"/>
+
+  <!-- Cape swoosh (white diagonal arc behind body) -->
+  <path d="M 10 22 Q 26 10 42 20 L 40 28 Q 26 16 12 26 Z" fill="white" clip-path="url(#circleClip)"/>
+
+  <!-- Superhero body silhouette -->
+  <!-- Head -->
+  <circle cx="26" cy="13" r="4.8" fill="white" clip-path="url(#circleClip)"/>
+  <!-- Torso + shoulders -->
+  <path d="M 15 28 C 15 22 20 19 26 19 C 32 19 37 22 37 28 L 37 36 L 15 36 Z" fill="white" clip-path="url(#circleClip)"/>
+  <!-- Left arm on hip -->
+  <path d="M 15 28 L 9 30 L 10 35 L 16 33 L 15 28" fill="white" clip-path="url(#circleClip)"/>
+  <!-- Right arm on hip -->
+  <path d="M 37 28 L 43 30 L 42 35 L 36 33 L 37 28" fill="white" clip-path="url(#circleClip)"/>
+  <!-- Legs -->
+  <path d="M 17 36 L 22 46 L 26 44 L 30 46 L 35 36 Z" fill="white" clip-path="url(#circleClip)"/>
+
+  <!-- Blue name banner -->
+  <rect x="56" y="4" width="198" height="28" rx="3" fill="#1a5196"/>
+  <rect x="54" y="2" width="202" height="32" rx="4" fill="none" stroke="white" stroke-width="2"/>
+  <text x="155" y="22" font-family="Impact, Arial Black, 'Franklin Gothic Medium', sans-serif" font-size="19" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2.5" dominant-baseline="middle">LUNIVERSOTUO</text>
+
+  <!-- Tagline below -->
+  <text x="155" y="41" font-family="Arial, Helvetica, sans-serif" font-size="7.5" font-weight="600" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing="1.2">L'UNICO CHE ASSICURA LA SUPERSERENITÀ®</text>
 </svg>
