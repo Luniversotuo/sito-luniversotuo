@@ -1,3 +1,26 @@
+/* ── DROPDOWN NAV — LuniversoTuo ── */
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    var toggles = document.querySelectorAll('.nav__dropdown-toggle');
+    toggles.forEach(function(toggle){
+      toggle.addEventListener('click', function(e){
+        e.preventDefault();
+        var parent = toggle.closest('.nav__dropdown');
+        var isOpen = parent.classList.contains('open');
+        // chiudi tutti
+        document.querySelectorAll('.nav__dropdown').forEach(function(d){ d.classList.remove('open'); });
+        if (!isOpen) parent.classList.add('open');
+      });
+    });
+    // chiudi cliccando fuori
+    document.addEventListener('click', function(e){
+      if (!e.target.closest('.nav__dropdown')) {
+        document.querySelectorAll('.nav__dropdown').forEach(function(d){ d.classList.remove('open'); });
+      }
+    });
+  });
+})();
+
 /* ── COOKIE BANNER — LuniversoTuo ── */
 (function(){
   const KEY = 'lt_cookie_consent';
