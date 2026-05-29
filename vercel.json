@@ -12,6 +12,9 @@
     { "source": "/storie", "destination": "/storie.html" },
     { "source": "/testimonianze", "destination": "/testimonianze.html" },
     { "source": "/contatti", "destination": "/contatti.html" },
-    { "source": "/chat", "destination": "/chat.html" }
+    { "source": "/chat", "destination": "/chat.html" },
+    { "source": "/informativa-privacy", "destination": "/informativa-privacy.html" },
+    { "source": "/cookie-policy", "destination": "/cookie-policy.html" },
+    { "source": "/whistleblowing", "destination": "/whistleblowing.html" }
   ]
 }
