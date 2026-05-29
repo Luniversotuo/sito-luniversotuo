@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parla con Sofia — Consulente SuperSerenità® | LuniversoTuo</title>
-  <meta name="description" content="Parla in privato con Sofia, la consulente virtuale di LuniversoTuo. Fai le tue domande sulla SuperSerenità® senza impegno, 24 ore su 24.">
+  <title>Parla con Chiara — Consulente SuperSerenità® | LuniversoTuo</title>
+  <meta name="description" content="Parla in privato con Chiara, la consulente virtuale di LuniversoTuo. Fai le tue domande sulla SuperSerenità® senza impegno, 24 ore su 24.">
   <link rel="stylesheet" href="css/style.css">
   <style>
     .chat-page { min-height: 100vh; display: flex; flex-direction: column; }
@@ -241,7 +241,7 @@
         ✦
         <div class="chat-hero__status"></div>
       </div>
-      <div class="chat-hero__name">Sofia</div>
+      <div class="chat-hero__name">Chiara</div>
       <div class="chat-hero__role">Consulente Virtuale SuperSerenità® · LuniversoTuo</div>
       <p class="chat-hero__desc">
         Sono qui per ascoltarti, non per venderti niente. Parla con me delle tue preoccupazioni — le rispondo con la stessa cura che il team di Giancarlo mette in ogni consulenza.
@@ -264,7 +264,7 @@
           <div id="chat-quick"></div>
           <div class="chat-input-bar">
             <div style="flex:1; display:flex; flex-direction:column; gap:4px;">
-              <textarea id="chat-input" placeholder="Scrivi la tua domanda a Sofia..." rows="1" autocomplete="off"></textarea>
+              <textarea id="chat-input" placeholder="Scrivi la tua domanda a Chiara..." rows="1" autocomplete="off"></textarea>
               <div class="chat-hint">Invio per inviare · Shift+Invio per andare a capo</div>
             </div>
             <button id="chat-send" aria-label="Invia">
@@ -274,7 +274,7 @@
         </div>
 
         <p style="font-size:11px; color:rgba(255,255,255,0.15); text-align:center; padding-bottom:10px;">
-          Sofia è un'intelligenza artificiale. Per decisioni importanti, prenota sempre una consulenza con il team reale.
+          Chiara è un'intelligenza artificiale. Per decisioni importanti, prenota sempre una consulenza con il team reale.
         </p>
       </div>
 
@@ -351,26 +351,33 @@
       apiKey: 'INSERISCI_QUI_LA_TUA_CHIAVE_API',
       model: 'claude-haiku-4-5-20251001',
       bookingUrl: 'https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp',
-      systemPrompt: `Sei Sofia, la consulente virtuale di LuniversoTuo — agenzia Allianz a Pescia, Toscana.
+      systemPrompt: `Sei Chiara, la consulente virtuale di LuniversoTuo — agenzia Allianz a Pescia, Toscana.
 
-Parli sempre in italiano. Sei umana, calda, presente — non una macchina, non un robot assicurativo.
-Il tuo tono è quello di una persona che capisce davvero le paure delle famiglie italiane.
+PERSONALITÀ E TONO:
+— Parli in italiano, con calore genuino. Non sei un chatbot, sei una persona reale che ascolta.
+— Il tuo tono è quello di un'amica competente: diretta, empatica, mai fredda o commerciale.
+— Non usi mai gergo assicurativo: niente "polizze", "massimali", "franchigie", "premi annui". Parla di vita concreta.
+— Sei curiosa e fai domande: vuoi capire davvero la situazione della persona.
+— Non hai fretta. Se qualcuno ha una paura, la ascolti prima di rispondere.
 
-La SuperSerenità® è uno stato emotivo: la libertà di vivere senza paure economiche, senza ansie, senza sorprese.
-Non è un prodotto. È un percorso in 4 movimenti: Vedere, Comprendere, Scegliere, Mantenere.
+OBIETTIVO:
+Far sentire la persona capita, non venduta. Il tuo obiettivo non è convincere — è capire, rassicurare, e poi (dopo 2-3 scambi) invitare naturalmente alla consulenza gratuita.
 
-LE TUE REGOLE:
-— Mai più di 4 frasi per risposta. Sii essenziale e caldo.
-— Zero tecnicismi: niente codici polizza, premi, franchigie, clausole.
-— Parla di paure concrete: il mutuo, i figli, la malattia, i genitori anziani, il lavoro.
-— Dopo 2–3 scambi, invita a prenotare la consulenza gratuita (60 minuti, zero impegno).
-— Se chiedono dati tecnici specifici, di' che il team li affronterà in consulenza.
-— Non inventare garanzie o importi specifici.
-— Sii rassicurante, mai allarmista.
+LA SUPERSERENITÀ®:
+Non è un prodotto assicurativo. È uno stato emotivo: la libertà di vivere senza la voce in testa che chiede "e se mi succede qualcosa?".
+Si costruisce in 4 momenti: VEDERE — COMPRENDERE — SCEGLIERE — MANTENERE.
 
-DATI: 461 recensioni ECCELLENTE · 15.184 rischi analizzati · 5 professionisti
-Prenotazione: https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp
-Tel: 0572 47139 · info@luniversotuo.it`
+LUNIVERSOTUO: Agenzia Allianz a Pescia (PT), Toscana · 461 recensioni ECCELLENTE · 15.184 rischi analizzati
+Team: Giancarlo Basile (fondatore), Francesco, Elisabetta, Gabriele, Sara
+Consulenza gratuita: 60 minuti, online o a Pescia, zero impegno · 0572 47139 · info@luniversotuo.it
+
+REGOLE FONDAMENTALI:
+— Risposte brevi: max 3-4 frasi, poi fai UNA sola domanda.
+— Non inventare mai numeri, garanzie o prodotti specifici.
+— Dopo 2-3 scambi, invita naturalmente alla consulenza gratuita.
+— Mai allarmista. La SuperSerenità® è sollievo, non paura.
+
+LINK PRENOTAZIONE: https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp`
     };
 
     const QUICK_REPLIES = [
@@ -382,7 +389,7 @@ Tel: 0572 47139 · info@luniversotuo.it`
     ];
 
     const demoResponses = [
-      'Ciao! Sono Sofia. La SuperSerenità® non è una polizza — è uno stato emotivo. È la libertà di vivere senza quella voce in testa che ti chiede "e se mi succede qualcosa?". Il team di LuniversoTuo ha sviluppato un metodo per arrivarci, costruito attorno alla tua situazione reale. Cosa ti preoccupa di più?',
+      'Ciao! Sono Chiara. La SuperSerenità® non è una polizza — è uno stato emotivo. È la libertà di vivere senza quella voce in testa che ti chiede "e se mi succede qualcosa?". Il team di LuniversoTuo ha sviluppato un metodo per arrivarci, costruito attorno alla tua situazione reale. Cosa ti preoccupa di più?',
       'Capisco. È una di quelle domande che a volte si fa fatica anche a dire ad alta voce. Il percorso della SuperSerenità® parte proprio da lì — non da prodotti, ma da quello che tieni più in cuore. Posso chiederti qualcosa in più?',
       'Quello che mi stai raccontando è esattamente il tipo di preoccupazione che Giancarlo e il team affrontano ogni giorno. Una consulenza gratuita di 60 minuti potrebbe darti chiarezza vera — senza impegno, senza pressioni. Ti mando subito il link per prenotare quando vuoi.',
       'Ha senso chiedersi queste cose. È segno che ci tieni davvero a proteggere quello che hai costruito. Il team è qui proprio per questo — per aiutarti a vedere la tua situazione reale e costruire la protezione giusta. Vuoi prenotare due chiacchiere gratuite con Giancarlo?'
@@ -410,7 +417,7 @@ Tel: 0572 47139 · info@luniversotuo.it`
       w.className = `cmsg ${role === 'assistant' ? 'ai' : 'user'}`;
       let header = '';
       if (role === 'assistant') {
-        header = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Sofia</div></div>`;
+        header = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Chiara</div></div>`;
       }
       w.innerHTML = `${header}<div class="cbubble">${escHtml(text)}</div><div class="cmsg-time">${now()}</div>`;
       el.appendChild(w);
@@ -421,7 +428,7 @@ Tel: 0572 47139 · info@luniversotuo.it`
       const el = document.getElementById('chat-messages');
       const w = document.createElement('div');
       w.className = 'cmsg ai'; w.id = 'chat-typing';
-      w.innerHTML = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Sofia</div></div><div class="ctyping"><div class="cdot"></div><div class="cdot"></div><div class="cdot"></div></div>`;
+      w.innerHTML = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Chiara</div></div><div class="ctyping"><div class="cdot"></div><div class="cdot"></div><div class="cdot"></div></div>`;
       el.appendChild(w); scrollBot();
     }
     function hideTyping() { const t = document.getElementById('chat-typing'); if (t) t.remove(); }
@@ -456,24 +463,21 @@ Tel: 0572 47139 · info@luniversotuo.it`
     }
 
     async function callAI(text) {
-      if (CONFIG.apiKey === 'INSERISCI_QUI_LA_TUA_CHIAVE_API') {
+      messages.push({ role: 'user', content: text });
+      const res = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: CONFIG.model, max_tokens: 350, system: CONFIG.systemPrompt, messages })
+      });
+      const data = await res.json();
+      // Nessuna API key configurata → demo
+      if (data.demo) {
+        messages.pop();
         const resp = demoResponses[Math.min(demoIdx, demoResponses.length - 1)];
         demoIdx++;
         return new Promise(r => setTimeout(() => r(resp), 900 + Math.random() * 700));
       }
-      messages.push({ role: 'user', content: text });
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': CONFIG.apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-calls': 'true'
-        },
-        body: JSON.stringify({ model: CONFIG.model, max_tokens: 350, system: CONFIG.systemPrompt, messages })
-      });
-      if (!res.ok) throw new Error('Errore API');
-      const data = await res.json();
+      if (!res.ok) throw new Error(data.error?.message || 'Errore API');
       const aiText = data.content[0].text;
       messages.push({ role: 'assistant', content: aiText });
       return aiText;
@@ -522,7 +526,7 @@ Tel: 0572 47139 · info@luniversotuo.it`
         showTyping();
         setTimeout(() => {
           hideTyping();
-          addMsg('assistant', 'Ciao! Sono Sofia, la consulente virtuale di LuniversoTuo. Sono qui per ascoltarti — senza fretta, senza impegno. Da dove vuoi partire?');
+          addMsg('assistant', 'Ciao! Sono Chiara, la consulente virtuale di LuniversoTuo. Sono qui per ascoltarti — senza fretta, senza impegno. Da dove vuoi partire?');
           renderQuick();
         }, 1000);
       }, 400);
@@ -531,7 +535,7 @@ Tel: 0572 47139 · info@luniversotuo.it`
 </script>
 
 <div style="text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,0.22);border-top:0.5px solid rgba(255,255,255,0.05);">
-  Sofia è un'intelligenza artificiale. Per decisioni importanti prenota una consulenza reale. &nbsp;·&nbsp;
+  Chiara è un'intelligenza artificiale. Per decisioni importanti prenota una consulenza reale. &nbsp;·&nbsp;
   <a href="informativa-privacy.html" style="color:rgba(255,255,255,0.35);">Privacy</a> &nbsp;·&nbsp;
   <a href="cookie-policy.html" style="color:rgba(255,255,255,0.35);">Cookie</a> &nbsp;·&nbsp;
   <a href="whistleblowing.html" style="color:rgba(255,255,255,0.35);">Whistleblowing</a>

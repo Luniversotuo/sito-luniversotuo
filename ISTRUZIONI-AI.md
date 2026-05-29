@@ -1,6 +1,6 @@
-# Come attivare Sofia — l'AI del sito LuniversoTuo
+# Come attivare Chiara — l'AI del sito LuniversoTuo
 
-Sofia è già installata sul sito e funziona in **modalità demo** con risposte pre-scritte.
+Chiara è già installata sul sito e funziona in **modalità demo** con risposte pre-scritte.
 Per attivarla con l'intelligenza artificiale reale (Claude di Anthropic), segui questi 3 passi.
 
 ---
@@ -17,11 +17,11 @@ Per attivarla con l'intelligenza artificiale reale (Claude di Anthropic), segui 
 
 1. Una volta dentro la console, vai su **"API Keys"** nel menu a sinistra
 2. Clicca **"Create Key"**
-3. Dai un nome (es. "Sofia LuniversoTuo")
+3. Dai un nome (es. "Chiara LuniversoTuo")
 4. Copia la chiave — inizia con `sk-ant-...`
    > **Importante:** copiala subito, non la mostra più dopo!
 5. Aggiungi un metodo di pagamento (carta di credito)
-   - Il costo è ~$0,25 ogni 1.000 conversazioni con Sofia
+   - Il costo è ~$0,25 ogni 1.000 conversazioni con Chiara
    - Per una piccola agenzia: stimiamo 5-15€/mese massimo
 
 ---
@@ -57,7 +57,7 @@ Sostituisci con la stessa chiave.
 
 ## Risultato
 
-Dopo la modifica, Sofia risponderà con l'intelligenza artificiale reale di Claude —
+Dopo la modifica, Chiara risponderà con l'intelligenza artificiale reale di Claude —
 sempre con il tono caldo, empatico e orientato alla SuperSerenità® che abbiamo impostato.
 
 ---
@@ -73,13 +73,13 @@ Per ora sì — il sito ha traffico limitato e la chiave può avere un budget ma
 dalla console Anthropic. In futuro, quando il sito andrà su WordPress, il tecnico può
 spostare la chiave su un server backend (più sicuro). Per ora è ok.
 
-**Sofia può dire cose sbagliate?**
+**Chiara può dire cose sbagliate?**
 È istruita per non dare mai dati tecnici specifici e per invitare sempre alla consulenza reale.
 Tuttavia, come tutte le AI, può sbagliare. Per questo in fondo alla pagina chat c'è la nota:
-"Sofia è un'intelligenza artificiale. Per decisioni importanti, prenota una consulenza con il team reale."
+"Chiara è un'intelligenza artificiale. Per decisioni importanti, prenota una consulenza con il team reale."
 
-**Posso cambiare cosa dice Sofia?**
-Sì. Il "cervello" di Sofia è il `systemPrompt` nel file `js/chat-widget.js`. Puoi modificarlo
+**Posso cambiare cosa dice Chiara?**
+Sì. Il "cervello" di Chiara è il `systemPrompt` nel file `js/chat-widget.js`. Puoi modificarlo
 o chiedere a Claude di aggiornarlo quando vuoi.
 
 ---

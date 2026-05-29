@@ -366,7 +366,7 @@
           </div>
 
           <div class="page-item">
-            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Chat con Sofia</div><div class="page-path">chat.html</div></div></div>
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Chat con Chiara</div><div class="page-path">chat.html</div></div></div>
             <div class="page-actions">
               <a href="chat.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
               <button class="page-btn edit" onclick="openEditor('chat.html')">Modifica</button>
@@ -378,11 +378,11 @@
         <!-- AZIONI RAPIDE -->
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div class="card">
-            <div class="card-title">Sofia — AI del sito</div>
-            <div class="sofia-status warning"><div class="sofia-dot"></div><div class="sofia-text"><strong>Demo attiva</strong> — Inserisci chiave API per attivare l'AI reale.</div></div>
+            <div class="card-title">Chiara — AI del sito</div>
+            <div class="sofia-status warning"><div class="sofia-dot"></div><div class="sofia-text"><strong>Demo attiva — Inserisci chiave API per attivare l'AI reale.</div></div>
             <a href="https://console.anthropic.com" target="_blank" class="qa-btn">
               <div class="qa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-              <div class="qa-text"><div class="qa-title">Console Anthropic</div><div class="qa-sub">Crea/gestisci la chiave API di Sofia</div></div>
+              <div class="qa-text"><div class="qa-title">Console Anthropic</div><div class="qa-sub">Crea/gestisci la chiave API di Chiara</div></div>
               <div class="qa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
             </a>
           </div>
@@ -511,7 +511,7 @@
             <option value="storie.html">Le Storie (storie.html)</option>
             <option value="testimonianze.html">Testimonianze (testimonianze.html)</option>
             <option value="contatti.html">Contatti (contatti.html)</option>
-            <option value="chat.html">Chat con Sofia (chat.html)</option>
+            <option value="chat.html">Chat con Chiara (chat.html)</option>
             <option value="css/style.css">CSS condiviso (style.css)</option>
           </select>
           <button class="editor-load-btn" onclick="loadFile()">Carica</button>
@@ -657,11 +657,11 @@
         </div>
       </div>
 
-      <!-- Chat Sofia Analytics -->
+      <!-- Chat Chiara Analytics -->
       <div class="card" style="margin-bottom:12px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
           <div>
-            <div class="card-title" style="margin-bottom:2px;">Conversazioni con Sofia</div>
+            <div class="card-title" style="margin-bottom:2px;">Conversazioni con Chiara</div>
             <div style="font-size:11.5px;color:var(--t3);">Dati live da Netlify Forms — richiede token Netlify</div>
           </div>
           <button onclick="loadChatLog()" id="chatlog-refresh-btn" style="background:var(--blue-dim);border:0.5px solid var(--blue-border);border-radius:8px;padding:7px 14px;color:var(--blue-text);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Carica dati chat</button>
@@ -1189,7 +1189,7 @@
       // Step 3: leggi le submissions (max 100)
       const subs = await netlifyFetch(`/api/v1/forms/${chatForm.id}/submissions?per_page=100`);
       if (!Array.isArray(subs) || subs.length === 0) {
-        document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:16px 0;text-align:center;">Nessuna conversazione registrata ancora. Le chat appariranno qui dopo che qualcuno usa Sofia.</div>';
+        document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:16px 0;text-align:center;">Nessuna conversazione registrata ancora. Le chat appariranno qui dopo che qualcuno usa Chiara.</div>';
         ['chat-kpi-total','chat-kpi-week','chat-kpi-booked','chat-kpi-msgs'].forEach(id => document.getElementById(id).textContent = '0');
         return;
       }

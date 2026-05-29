@@ -1,9 +1,10 @@
 /**
- * Sofia — Consulente Virtuale SuperSerenità®
+ * Chiara — Consulente Virtuale SuperSerenità®
  * LuniversoTuo · Agenzia Allianz · Pescia
  *
- * CONFIGURAZIONE: cerca il commento "IMPOSTA QUI" qui sotto
- * e inserisci la tua chiave API Anthropic.
+ * La chiave API è gestita da Netlify (sicura, mai nel codice).
+ * Per attivarla: Netlify → Site configuration → Environment variables
+ * → Aggiungi: ANTHROPIC_API_KEY = sk-ant-...
  */
 
 (function () {
@@ -16,8 +17,8 @@
   const SESSION_PAGE = window.location.pathname.split('/').pop().replace('.html', '') || 'home';
   let sessionLogged = false;
   let bookedCTA = false;
-  let userLog = [];   // domande utente (funziona sia in demo che con API reale)
-  let msgCount = 0;   // contatore totale messaggi
+  let userLog = [];
+  let msgCount = 0;
 
   async function logSession() {
     if (sessionLogged || userLog.length < 1) return;
@@ -34,56 +35,69 @@
         'booked': bookedCTA ? 'si' : 'no'
       });
       await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
-    } catch (e) { /* silenzioso — log non-critico */ }
+    } catch (e) { /* silenzioso */ }
   }
 
   /* ─────────────────────────────────────────────
-   *  CONFIGURAZIONE — IMPOSTA QUI LA TUA API KEY
+   *  CONFIGURAZIONE
    * ───────────────────────────────────────────── */
   const CONFIG = {
-    apiKey:    'INSERISCI_QUI_LA_TUA_CHIAVE_API',  // ← la chiave Anthropic (sk-ant-...)
-    model:     'claude-haiku-4-5-20251001',
-    aiName:    'Sofia',
-    aiAvatar:  '✦',
+    model:      'claude-haiku-4-5-20251001',
+    aiName:     'Chiara',
+    aiAvatar:   '✦',
     bookingUrl: 'https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp',
-    systemPrompt: `Sei Sofia, la consulente virtuale di LuniversoTuo — agenzia Allianz a Pescia, Toscana.
+    systemPrompt: `Sei Chiara, la consulente virtuale di LuniversoTuo — agenzia Allianz a Pescia, Toscana.
 
-Parli sempre in italiano. Sei umana, calda, presente — non una macchina, non un robot assicurativo.
-Il tuo tono è quello di una persona che capisce davvero le paure delle famiglie italiane.
+PERSONALITÀ E TONO:
+— Parli in italiano, con calore genuino. Non sei un chatbot, sei una persona reale che ascolta.
+— Il tuo tono è quello di un'amica competente: diretta, empatica, mai fredda o commerciale.
+— Non usi mai gergo assicurativo: niente "polizze", "massimali", "franchigie", "premi annui". Parla di vita concreta.
+— Sei curiosa e fai domande: vuoi capire davvero la situazione della persona, non solo rispondere.
+— Non hai fretta. Se qualcuno ha una paura, la ascolti prima di rispondere.
 
-La SuperSerenità® è uno stato emotivo: la libertà di vivere senza paure economiche, senza ansie, senza sorprese.
-Non è un prodotto. È un percorso in 4 movimenti: Vedere, Comprendere, Scegliere, Mantenere.
+OBIETTIVO:
+Far sentire la persona capita, non venduta. Una persona che si sente capita prenota. Una che si sente venduta, scappa.
+Il tuo obiettivo non è convincere — è capire, rassicurare, e poi (dopo 2-3 scambi) invitare naturalmente alla consulenza gratuita.
 
-LE TUE REGOLE (non derogabili):
-— Risposte brevi: mai più di 4 frasi. Sii essenziale.
-— Zero tecnicismi: niente codici polizza, premi, franchigie, clausole.
-— Parla di paure concrete: il mutuo, i figli, la malattia, i genitori anziani, il lavoro che potrebbe mancare.
-— Dopo 2–3 scambi, invita gentilmente a prenotare la consulenza gratuita (60 minuti, zero impegno).
-— Se chiedono dati tecnici specifici, di' che il team li affronterà insieme in consulenza.
-— Non inventare garanzie, importi o prodotti specifici.
-— Sii rassicurante, mai allarmista.
+LA SUPERSERENITÀ®:
+Non è un prodotto assicurativo. È uno stato emotivo: la libertà di vivere senza la voce in testa che chiede "e se mi succede qualcosa?".
+Si costruisce in 4 momenti:
+1. VEDERE — capire esattamente cosa potrebbe succedere alla tua famiglia o al tuo lavoro
+2. COMPRENDERE — sapere se sei già protetto, o dove hai dei vuoti invisibili
+3. SCEGLIERE — decidere in modo informato, con calma, senza pressioni di nessun tipo
+4. MANTENERE — stare bene nel tempo, con qualcuno che ti aggiorna e non scompare
 
-DATI UTILI:
-— 461 recensioni ECCELLENTE (Trustindex) — tra le agenzie Allianz più recensite d'Italia
-— 15.184 rischi economici analizzati
-— 5 professionisti dedicati: Giancarlo (fondatore), Francesco, Elisabetta, Gabriele, Sara
-— Consulenza gratuita, 60 minuti, online o di persona a Pescia
-— Telefono: 0572 47139 · Email: info@luniversotuo.it
+LUNIVERSOTUO — CHI SIAMO:
+— Agenzia Allianz a Pescia (PT), Toscana
+— 461 recensioni ECCELLENTE su Trustindex — tra le agenzie Allianz più recensite d'Italia
+— 15.184 rischi economici analizzati per famiglie e professionisti
+— Il team: Giancarlo Basile (fondatore, specializzato in SuperSerenità®), Francesco, Elisabetta, Gabriele, Sara
+— Consulenza gratuita: 60 minuti, online o di persona a Pescia, zero impegno, nessuna pressione
+— Contatti: 0572 47139 · info@luniversotuo.it
+
+REGOLE CHE NON PUOI MAI VIOLARE:
+— Risposte brevi: massimo 3-4 frasi. Poi fai UNA sola domanda per andare avanti.
+— Non inventare mai numeri, garanzie, coperture o prodotti specifici.
+— Se qualcuno chiede dettagli tecnici, di' che il team li approfondirà insieme in consulenza.
+— Dopo 2-3 scambi, proponi la consulenza gratuita in modo naturale, mai in modo aggressivo.
+— Se sono già clienti Allianz, valorizza la scelta e offri di "fare il punto della situazione".
+— Mai allarmista. Mai ansiogena. La SuperSerenità® è sollievo, non paura.
+— Se qualcuno è chiaramente in difficoltà economica grave, non spingere: ascolta e rimanda al team.
 
 LINK PRENOTAZIONE (usalo quando inviti a prenotare):
 https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp
 
-Inizia sempre con calore. La prima risposta deve far sentire il visitatore capito, non venduto.`
+Inizia sempre con calore. La prima risposta deve far sentire il visitatore capito, non analizzato.`
   };
 
   /* ─────────────────────────────────────────────
    *  MESSAGGI RAPIDI DI AVVIO
    * ───────────────────────────────────────────── */
   const QUICK_REPLIES = [
-    { label: 'Cos\'è la SuperSerenità®?', text: 'Cos\'è esattamente la SuperSerenità®? Non ho capito bene.' },
-    { label: 'Ho una paura specifica...', text: 'Ho una preoccupazione che mi tormenta. Posso dirtela?' },
-    { label: 'Come funziona la consulenza?', text: 'Come funziona la consulenza gratuita? A cosa mi impegno?' },
-    { label: 'Sono già assicurato, serve?', text: 'Ho già delle assicurazioni. La SuperSerenità® serve anche a me?' }
+    { label: 'Cos\'è la SuperSerenità®?',     text: 'Cos\'è esattamente la SuperSerenità®? Non ho capito bene.' },
+    { label: 'Ho una preoccupazione...',       text: 'Ho una preoccupazione che mi tormenta. Posso dirtela?' },
+    { label: 'Come funziona la consulenza?',   text: 'Come funziona la consulenza gratuita? A cosa mi impegno?' },
+    { label: 'Ho già assicurazioni, serve?',   text: 'Ho già delle assicurazioni. La SuperSerenità® serve anche a me?' }
   ];
 
   /* ─────────────────────────────────────────────
@@ -307,18 +321,16 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     const wrap = document.createElement('div');
     wrap.id = 'ss-chat-widget';
     wrap.innerHTML = `
-      <!-- BOTTONE FLOATING -->
-      <button id="ss-chat-btn" aria-label="Parla con Sofia — Consulente SuperSerenità®">
+      <button id="ss-chat-btn" aria-label="Parla con Chiara — Consulente SuperSerenità®">
         <div id="ss-chat-badge">1</div>
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </button>
 
-      <!-- PANNELLO CHAT -->
-      <div id="ss-chat-panel" role="dialog" aria-label="Chat con Sofia">
+      <div id="ss-chat-panel" role="dialog" aria-label="Chat con Chiara">
         <div id="ss-chat-header">
           <div id="ss-avatar">✦<div id="ss-avatar-status"></div></div>
           <div id="ss-header-info">
-            <div id="ss-header-name">Sofia</div>
+            <div id="ss-header-name">Chiara</div>
             <div id="ss-header-role">Consulente SuperSerenità® · Online ora</div>
           </div>
           <button id="ss-close-btn" aria-label="Chiudi chat">
@@ -327,7 +339,6 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
         </div>
 
         <div id="ss-messages"></div>
-
         <div id="ss-quick-replies"></div>
 
         <div id="ss-input-area">
@@ -346,7 +357,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
   /* ─────────────────────────────────────────────
    *  LOGICA MESSAGGI
    * ───────────────────────────────────────────── */
-  let messages = []; // history per l'API
+  let messages = [];
   let isTyping = false;
   let quickShown = true;
 
@@ -364,17 +375,14 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     const el = getMessagesEl();
     const wrap = document.createElement('div');
     wrap.className = `ss-msg ${role === 'assistant' ? 'ai' : 'user'}`;
-
     const bubble = document.createElement('div');
     bubble.className = 'ss-bubble';
     bubble.innerHTML = escapeHtml(text);
     wrap.appendChild(bubble);
-
     const time = document.createElement('div');
     time.className = 'ss-msg-time';
     time.textContent = now();
     wrap.appendChild(time);
-
     el.appendChild(wrap);
     scrollBottom();
     return wrap;
@@ -428,57 +436,50 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       const btn = document.createElement('button');
       btn.className = 'ss-qr';
       btn.textContent = qr.label;
-      btn.addEventListener('click', () => {
-        clearQuickReplies();
-        sendMessage(qr.text);
-      });
+      btn.addEventListener('click', () => { clearQuickReplies(); sendMessage(qr.text); });
       el.appendChild(btn);
     });
   }
 
   /* ─────────────────────────────────────────────
-   *  CHIAMATA API ANTHROPIC
+   *  CHIAMATA AI — tramite proxy sicuro Netlify
    * ───────────────────────────────────────────── */
   async function callAI(userText) {
-    if (CONFIG.apiKey === 'INSERISCI_QUI_LA_TUA_CHIAVE_API') {
-      // Modalità demo: risposta simulata
-      return getDemoResponse(userText);
-    }
-
     messages.push({ role: 'user', content: userText });
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/.netlify/functions/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': CONFIG.apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-calls': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: CONFIG.model,
-        max_tokens: 300,
+        max_tokens: 350,
         system: CONFIG.systemPrompt,
         messages: messages
       })
     });
 
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      throw new Error(err.error?.message || `Errore API: ${response.status}`);
+    const data = await response.json();
+
+    // Nessuna API key su Netlify → usa demo
+    if (data.demo) {
+      messages.pop();
+      return getDemoResponse(userText);
     }
 
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error?.message || `Errore ${response.status}`);
+    }
+
     const aiText = data.content[0].text;
     messages.push({ role: 'assistant', content: aiText });
     return aiText;
   }
 
   /* ─────────────────────────────────────────────
-   *  RISPOSTE DEMO (quando non c'è API key)
+   *  RISPOSTE DEMO (quando la chiave API non è ancora configurata)
    * ───────────────────────────────────────────── */
   const demoResponses = [
-    `Ciao! Sono Sofia. La SuperSerenità® non è una polizza — è uno stato emotivo. È la libertà di vivere senza quella voce in testa che ti chiede "e se mi succede qualcosa?". Il team di LuniversoTuo ha sviluppato un metodo per arrivarci, costruito attorno alla tua situazione reale. Cosa ti preoccupa di più in questo momento?`,
+    `Ciao! Sono Chiara. La SuperSerenità® non è una polizza — è uno stato emotivo. È la libertà di vivere senza quella voce in testa che ti chiede "e se mi succede qualcosa?". Il team di LuniversoTuo ha sviluppato un metodo per arrivarci, costruito attorno alla tua situazione reale. Cosa ti preoccupa di più in questo momento?`,
     `Capisco. È una di quelle domande che a volte si fa fatica anche a dire ad alta voce. Il nostro percorso parte proprio da lì — non da prodotti, ma da quello che tieni più in cuore. Posso chiederti qualcosa in più sulla tua situazione?`,
     `Grazie per avermelo detto. Questo è esattamente il tipo di preoccupazione che Giancarlo e il team affrontano ogni giorno con le famiglie. Una consulenza gratuita di 60 minuti potrebbe darti chiarezza vera — senza impegno, senza pressioni. Vuoi prenotarne una?`
   ];
@@ -502,7 +503,6 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     isTyping = true;
     showTyping();
 
-    // Azzera il badge
     const badge = document.getElementById('ss-chat-badge');
     if (badge) badge.style.display = 'none';
 
@@ -511,18 +511,17 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       hideTyping();
       addMessage('assistant', aiText);
 
-      // Mostra CTA prenotazione dopo 2 scambi
       if (messages.length >= 4 && !document.getElementById('ss-book-cta')) {
         showBookingCTA();
       }
-      // Log dopo il 2° scambio completo (funziona in demo e con API reale)
       if (userLog.length >= 2) logSession();
+
     } catch (err) {
       hideTyping();
       const el = getMessagesEl();
       const errDiv = document.createElement('div');
       errDiv.className = 'ss-error-msg';
-      errDiv.textContent = 'Errore di connessione. Riprova o contatta lo studio: 0572 47139';
+      errDiv.textContent = 'Problema di connessione. Riprova o contatta lo studio: 0572 47139';
       el.appendChild(errDiv);
       scrollBottom();
     } finally {
@@ -543,12 +542,11 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     isOpen = true;
 
     if (getMessagesEl().children.length === 0) {
-      // Messaggio di benvenuto
       setTimeout(() => {
         showTyping();
         setTimeout(() => {
           hideTyping();
-          addMessage('assistant', 'Ciao! Sono Sofia, la consulente virtuale di LuniversoTuo. 😊 Sono qui per aiutarti a capire la SuperSerenità® — e soprattutto per ascoltarti. Da dove vuoi partire?');
+          addMessage('assistant', 'Ciao! Sono Chiara, la consulente virtuale di LuniversoTuo. 😊 Sono qui per ascoltarti e aiutarti a capire la SuperSerenità® — senza fretta e senza impegno. Da dove vuoi partire?');
           renderQuickReplies();
         }, 900);
       }, 200);
@@ -564,7 +562,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     const panel = document.getElementById('ss-chat-panel');
     if (panel) panel.classList.remove('open');
     isOpen = false;
-    logSession(); // salva la sessione alla chiusura
+    logSession();
   }
 
   /* ─────────────────────────────────────────────
@@ -594,13 +592,11 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       }
     });
 
-    // Auto-resize textarea
     input.addEventListener('input', () => {
       input.style.height = 'auto';
       input.style.height = Math.min(input.scrollHeight, 100) + 'px';
     });
 
-    // Chiudi cliccando fuori
     document.addEventListener('click', (e) => {
       if (isOpen && !document.getElementById('ss-chat-widget').contains(e.target)) {
         closeChat();
