@@ -610,6 +610,34 @@
   }
   function removeToken() { localStorage.removeItem('lt_gh_token'); checkToken(); document.getElementById('token-input').value=''; }
 
+  /* ── GITHUB BASE PATH (auto-rilevato) ── */
+  function getBase() { return localStorage.getItem('lt_gh_base') ?? null; }
+  function setBase(v) { localStorage.setItem('lt_gh_base', v); }
+
+  async function ghGet(filePath, token) {
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`;
+    const res = await fetch(url, { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} });
+    return res;
+  }
+
+  async function resolveFilePath(file, token) {
+    // If we already know the base path, use it
+    const saved = getBase();
+    if (saved !== null) {
+      const res = await ghGet(saved + file, token);
+      if (res.ok) return { res, path: saved + file };
+      // Saved base no longer valid — re-detect
+      localStorage.removeItem('lt_gh_base');
+    }
+    // Auto-detect: try root, then common subfolder names
+    const candidates = ['', 'sito-luniversotuo/', 'site/', 'www/'];
+    for (const prefix of candidates) {
+      const res = await ghGet(prefix + file, token);
+      if (res.ok) { setBase(prefix); return { res, path: prefix + file }; }
+    }
+    return null;
+  }
+
   /* ── EDITOR: LOAD FILE ── */
   async function loadFile() {
     const file = document.getElementById('file-select').value;
@@ -623,16 +651,14 @@
     currentFileSha = null; currentFileName = null;
 
     try {
-      const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${file}`, {
-        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-      });
-      if (!res.ok) throw new Error(`Errore ${res.status}: ${res.statusText}`);
-      const data = await res.json();
+      const found = await resolveFilePath(file, token);
+      if (!found) throw new Error('File non trovato nel repository (provate root e sottocartelle comuni).');
+      const data = await found.res.json();
       const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
       document.getElementById('code-editor').value = content;
       currentFileSha = data.sha;
-      currentFileName = file;
-      info.textContent = `${file} · ${(data.size/1024).toFixed(1)} KB · pronto per la modifica`;
+      currentFileName = found.path;
+      info.textContent = `${found.path} · ${(data.size/1024).toFixed(1)} KB · pronto per la modifica`;
     } catch(e) {
       info.textContent = 'Errore: ' + e.message;
     }
@@ -734,10 +760,12 @@
     const files = FILES_BY_TYPE[type];
     let updated=0, errors=[];
 
+    const BASE = getBase() ?? '';
     for (const file of files) {
       try {
+        const filePath = BASE + file;
         // Get file
-        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${file}`,{
+        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,{
           headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
         });
         if (!getRes.ok) throw new Error(`${file}: ${getRes.status}`);
@@ -749,7 +777,7 @@
         content = content.split(oldVal).join(newVal);
 
         // Save file
-        const putRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${file}`,{
+        const putRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,{
           method:'PUT',
           headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
           body:JSON.stringify({
