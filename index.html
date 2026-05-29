@@ -693,7 +693,8 @@ fbq('track','PageView');
 </script>
 
 <!-- Form nascosto per statistiche chat Sofia (Netlify Forms) -->
-<form name="chat-log" data-netlify="true" hidden>
+<form name="chat-log" netlify data-netlify="true" action="/" method="POST" style="display:none;position:absolute;left:-9999px;">
+  <input name="form-name" type="hidden" value="chat-log">
   <input name="session_id" type="text">
   <input name="timestamp" type="text">
   <input name="page" type="text">
