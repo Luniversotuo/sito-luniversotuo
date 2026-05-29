@@ -662,7 +662,7 @@
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
           <div>
             <div class="card-title" style="margin-bottom:2px;">Conversazioni con Chiara</div>
-            <div style="font-size:11.5px;color:var(--t3);">Dati live da Netlify Forms — richiede token Netlify</div>
+            <div style="font-size:11.5px;color:var(--t3);">Dati live da Netlify Blobs — richiede token Netlify</div>
           </div>
           <button onclick="loadChatLog()" id="chatlog-refresh-btn" style="background:var(--blue-dim);border:0.5px solid var(--blue-border);border-radius:8px;padding:7px 14px;color:var(--blue-text);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Carica dati chat</button>
         </div>
@@ -1171,23 +1171,27 @@
     btn.disabled = true;
 
     try {
-      if (!getNetlifyToken()) {
+      const token = getNetlifyToken();
+      if (!token) {
         document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--gold);padding:12px 0;">⚠ Inserisci prima il token Netlify nel riquadro qui sopra.</div>';
         return;
       }
 
-      // Step 1: trova il sito
-      const sites = await netlifyFetch('/api/v1/sites?filter=all&per_page=100');
-      const site = Array.isArray(sites) ? sites.find(s => s.name === 'ornate-sherbet-511176' || (s.url||'').includes('ornate-sherbet-511176')) : null;
-      if (!site) throw new Error('Sito Netlify non trovato. Verifica che il token abbia accesso al sito.');
+      // Chiama la funzione serverless che legge da Netlify Blobs
+      const res = await fetch('/.netlify/functions/sessions', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
 
-      // Step 2: trova il form chat-log
-      const forms = await netlifyFetch(`/api/v1/sites/${site.id}/forms`);
-      const chatForm = Array.isArray(forms) ? forms.find(f => f.name === 'chat-log') : null;
-      if (!chatForm) throw new Error('Form "chat-log" non trovato. Pubblica prima il sito con la nuova versione e attendi una conversazione.');
+      if (res.status === 401) {
+        throw new Error('Token Netlify non valido. Verifica il token nelle impostazioni.');
+      }
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `Errore ${res.status} dal server`);
+      }
 
-      // Step 3: leggi le submissions (max 100)
-      const subs = await netlifyFetch(`/api/v1/forms/${chatForm.id}/submissions?per_page=100`);
+      const subs = await res.json();
+
       if (!Array.isArray(subs) || subs.length === 0) {
         document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:16px 0;text-align:center;">Nessuna conversazione registrata ancora. Le chat appariranno qui dopo che qualcuno usa Chiara.</div>';
         ['chat-kpi-total','chat-kpi-week','chat-kpi-booked','chat-kpi-msgs'].forEach(id => document.getElementById(id).textContent = '0');
@@ -1197,9 +1201,9 @@
       // Calcola KPI
       const now = Date.now();
       const week = 7 * 24 * 60 * 60 * 1000;
-      const recentCount = subs.filter(s => (now - new Date(s.created_at)) < week).length;
-      const bookedCount = subs.filter(s => s.data?.booked === 'si').length;
-      const totalMsgs = subs.reduce((acc, s) => acc + (parseInt(s.data?.messages_count) || 0), 0);
+      const recentCount = subs.filter(s => (now - new Date(s.timestamp || s.logged_at)) < week).length;
+      const bookedCount = subs.filter(s => s.booked === 'si').length;
+      const totalMsgs = subs.reduce((acc, s) => acc + (parseInt(s.messages_count) || 0), 0);
       const avgMsgs = subs.length ? Math.round(totalMsgs / subs.length) : 0;
 
       document.getElementById('chat-kpi-total').textContent = subs.length;
@@ -1207,31 +1211,30 @@
       document.getElementById('chat-kpi-booked').textContent = bookedCount;
       document.getElementById('chat-kpi-msgs').textContent = avgMsgs;
 
-      // Render conversazioni
+      // Render conversazioni (max 30)
       const rows = subs.slice(0, 30).map(s => {
-        const d = new Date(s.created_at);
+        const d = new Date(s.timestamp || s.logged_at);
         const dateStr = d.toLocaleDateString('it-IT', {day:'2-digit', month:'short', year:'numeric'});
         const timeStr = d.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});
-        const firstQ = s.data?.first_question || '—';
-        const allQ = s.data?.user_questions || '';
-        const msgCount = s.data?.messages_count || '?';
-        const page = s.data?.page || '';
-        const booked = s.data?.booked === 'si';
+        const firstQ = s.first_question || '—';
+        const allQ = s.user_questions || '';
+        const msgs = s.messages_count || '?';
+        const page = s.page || '';
+        const booked = s.booked === 'si';
 
-        // Domande come lista
         const questions = allQ.split(' ||| ').filter(q => q.trim());
 
         return `<div style="border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;background:var(--card2);">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
             <div>
-              <div style="font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.4;">"${firstQ.length > 90 ? firstQ.substring(0,90)+'…' : firstQ}"</div>
-              <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">${dateStr} · ${timeStr} · ${msgCount} messaggi · pagina: ${page || 'home'}</div>
+              <div style="font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.4;">"${firstQ.length > 90 ? firstQ.substring(0,90)+'\u2026' : firstQ}"</div>
+              <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">${dateStr} \u00b7 ${timeStr} \u00b7 ${msgs} messaggi \u00b7 pagina: ${page || 'home'}</div>
             </div>
             <div style="flex-shrink:0;display:flex;gap:6px;align-items:center;">
               ${booked ? '<span style="font-size:10px;font-weight:700;background:rgba(34,197,94,0.12);color:var(--green);border:0.5px solid rgba(34,197,94,0.25);border-radius:6px;padding:3px 8px;">PRENOTATO</span>' : ''}
             </div>
           </div>
-          ${questions.length > 1 ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${questions.map(q => `<span style="font-size:10.5px;background:var(--blue-dim);color:var(--blue-text);border:0.5px solid var(--blue-border);border-radius:6px;padding:3px 9px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${q}">${q.length > 45 ? q.substring(0,45)+'…' : q}</span>`).join('')}</div>` : ''}
+          ${questions.length > 1 ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${questions.map(q => `<span style="font-size:10.5px;background:var(--blue-dim);color:var(--blue-text);border:0.5px solid var(--blue-border);border-radius:6px;padding:3px 9px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${q}">${q.length > 45 ? q.substring(0,45)+'\u2026' : q}</span>`).join('')}</div>` : ''}
         </div>`;
       }).join('');
 

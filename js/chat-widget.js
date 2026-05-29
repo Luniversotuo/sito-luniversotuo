@@ -24,45 +24,19 @@
     if (sessionLogged || userLog.length < 1) return;
     sessionLogged = true;
     try {
-      // Submit reale via iframe nascosto — più affidabile di fetch con Netlify Forms
-      const iframeName = 'ss_log_' + Date.now();
-      const iframe = document.createElement('iframe');
-      iframe.name = iframeName;
-      iframe.style.cssText = 'display:none;position:absolute;left:-9999px;width:1px;height:1px;';
-      document.body.appendChild(iframe);
-
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = '/';
-      form.target = iframeName;
-      form.style.display = 'none';
-
-      const fields = {
-        'form-name':      'chat-log',
-        'session_id':     SESSION_ID,
-        'timestamp':      new Date().toISOString(),
-        'page':           SESSION_PAGE,
-        'messages_count': String(msgCount),
-        'first_question': userLog[0] || '',
-        'user_questions': userLog.join(' ||| '),
-        'booked':         bookedCTA ? 'si' : 'no'
-      };
-      Object.entries(fields).forEach(([name, value]) => {
-        const inp = document.createElement('input');
-        inp.type = 'hidden';
-        inp.name = name;
-        inp.value = value;
-        form.appendChild(inp);
-      });
-
-      document.body.appendChild(form);
-      form.submit();
-
-      // Pulizia dopo 5 secondi
-      setTimeout(() => {
-        try { document.body.removeChild(form); } catch(e) {}
-        try { document.body.removeChild(iframe); } catch(e) {}
-      }, 5000);
+      fetch('/.netlify/functions/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id:     SESSION_ID,
+          timestamp:      new Date().toISOString(),
+          page:           SESSION_PAGE,
+          messages_count: msgCount,
+          first_question: userLog[0] || '',
+          user_questions: userLog.join(' ||| '),
+          booked:         bookedCTA ? 'si' : 'no'
+        })
+      }).catch(() => { /* silenzioso */ });
     } catch (e) { /* silenzioso */ }
   }
 
