@@ -1,0 +1,9 @@
+{
+  "name": "luniversotuo-sito",
+  "version": "1.0.0",
+  "description": "Sito LuniversoTuo — Agenzia Allianz Pescia",
+  "private": true,
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
