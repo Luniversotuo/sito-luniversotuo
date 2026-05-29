@@ -379,7 +379,7 @@
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div class="card">
             <div class="card-title">Chiara — AI del sito</div>
-            <div class="sofia-status warning"><div class="sofia-dot"></div><div class="sofia-text"><strong>Demo attiva — Inserisci chiave API per attivare l'AI reale.</div></div>
+            <div class="sofia-status" id="chiara-status-bar"><div class="sofia-dot"></div><div class="sofia-text" id="chiara-status-text">Controllo stato Chiara...</div></div>
             <a href="https://console.anthropic.com" target="_blank" class="qa-btn">
               <div class="qa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
               <div class="qa-text"><div class="qa-title">Console Anthropic</div><div class="qa-sub">Crea/gestisci la chiave API di Chiara</div></div>
@@ -772,6 +772,31 @@
     document.getElementById('login-screen').style.display='none';
     document.getElementById('dashboard').style.display='block';
     checkToken();
+    checkChiaraStatus();
+  }
+
+  async function checkChiaraStatus() {
+    const bar  = document.getElementById('chiara-status-bar');
+    const text = document.getElementById('chiara-status-text');
+    if (!bar || !text) return;
+    try {
+      const res  = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 10, messages: [{ role: 'user', content: 'ping' }] })
+      });
+      const data = await res.json();
+      if (data.demo) {
+        bar.className  = 'sofia-status warning';
+        text.innerHTML = '<strong>Demo attiva</strong> — chiave API Anthropic non trovata su Netlify.';
+      } else {
+        bar.className  = 'sofia-status ok';
+        text.innerHTML = '<strong>Chiara attiva</strong> — AI reale operativa.';
+      }
+    } catch {
+      bar.className  = 'sofia-status warning';
+      text.innerHTML = 'Impossibile verificare lo stato di Chiara.';
+    }
   }
 
   /* ── TABS ── */
