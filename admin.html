@@ -662,22 +662,9 @@
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
           <div>
             <div class="card-title" style="margin-bottom:2px;">Conversazioni con Chiara</div>
-            <div style="font-size:11.5px;color:var(--t3);">Dati live da Netlify Blobs — richiede token Netlify</div>
+            <div style="font-size:11.5px;color:var(--t3);">Dati live da Netlify Blobs — accesso con password admin</div>
           </div>
           <button onclick="loadChatLog()" id="chatlog-refresh-btn" style="background:var(--blue-dim);border:0.5px solid var(--blue-border);border-radius:8px;padding:7px 14px;color:var(--blue-text);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Carica dati chat</button>
-        </div>
-
-        <!-- Token Netlify setup -->
-        <div id="netlify-token-setup" style="background:rgba(37,99,235,0.06);border:0.5px solid var(--blue-border);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;">
-          <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">🔑 Token Netlify per leggere le chat</div>
-          <div style="font-size:11.5px;color:var(--t3);margin-bottom:12px;line-height:1.6;">
-            Vai su <a href="https://app.netlify.com/user/applications#personal-access-tokens" target="_blank" style="color:var(--blue-text);">Netlify → User Settings → Access tokens</a>, crea un token personale e incollalo qui. Si salva nel browser.
-          </div>
-          <div style="display:flex;gap:8px;">
-            <input type="password" id="netlify-token-input" placeholder="nfp_xxxxxxxxxxxxxxxxxxxx" style="flex:1;background:var(--card2);border:0.5px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--t1);font-size:12.5px;outline:none;font-family:monospace;">
-            <button onclick="saveNetlifyToken()" style="background:var(--blue);border:none;border-radius:8px;padding:9px 18px;color:white;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Salva token</button>
-          </div>
-          <div id="netlify-token-status" style="font-size:11.5px;margin-top:8px;"></div>
         </div>
 
         <!-- KPI chat -->
@@ -766,7 +753,7 @@
   document.getElementById('login-btn').addEventListener('click', async()=>{
     const pwd = document.getElementById('pwd-input').value;
     if (await sha256(pwd) === HASH_CORRECT) {
-      sessionStorage.setItem('lt_admin_auth','1'); showDash();
+      sessionStorage.setItem('lt_admin_auth','1'); sessionStorage.setItem('lt_admin_pwd', pwd); showDash();
     } else {
       const e = document.getElementById('login-error');
       e.style.display='block'; document.getElementById('pwd-input').value='';
@@ -776,7 +763,7 @@
   });
   document.getElementById('pwd-input').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('login-btn').click(); });
   document.getElementById('logout-btn').addEventListener('click',()=>{
-    sessionStorage.removeItem('lt_admin_auth');
+    sessionStorage.removeItem('lt_admin_auth'); sessionStorage.removeItem('lt_admin_pwd');
     document.getElementById('dashboard').style.display='none';
     document.getElementById('login-screen').style.display='flex';
     document.getElementById('pwd-input').value='';
@@ -785,7 +772,6 @@
     document.getElementById('login-screen').style.display='none';
     document.getElementById('dashboard').style.display='block';
     checkToken();
-    checkNetlifyTokenUI();
   }
 
   /* ── TABS ── */
@@ -1135,35 +1121,8 @@
     }
   }
 
-  /* ── CHAT LOG (Netlify Forms) ── */
-  function getNetlifyToken() { return localStorage.getItem('lt_netlify_token') || ''; }
-  function saveNetlifyToken() {
-    const v = document.getElementById('netlify-token-input').value.trim();
-    if (!v) { return; }
-    localStorage.setItem('lt_netlify_token', v);
-    const s = document.getElementById('netlify-token-status');
-    s.style.color = 'var(--green)';
-    s.textContent = '✓ Token salvato. Ora premi "Carica dati chat".';
-    document.getElementById('netlify-token-input').value = '';
-  }
-  function checkNetlifyTokenUI() {
-    const t = getNetlifyToken();
-    const setup = document.getElementById('netlify-token-setup');
-    if (t && setup) setup.style.display = 'none';
-  }
-
-  async function netlifyFetch(path) {
-    const token = getNetlifyToken();
-    if (!token) throw new Error('Token Netlify non configurato');
-    const res = await fetch('https://api.netlify.com' + path, {
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || `Errore ${res.status}`);
-    }
-    return res.json();
-  }
+  /* ── CHAT LOG (Netlify Blobs) ── */
+  function getNetlifyToken() { return sessionStorage.getItem('lt_admin_pwd') || ''; }
 
   async function loadChatLog() {
     const btn = document.getElementById('chatlog-refresh-btn');

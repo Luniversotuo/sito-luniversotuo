@@ -1,7 +1,13 @@
 /**
  * sessions.js — Restituisce tutte le sessioni chat da Netlify Blobs
  * LuniversoTuo · usato dall'admin dashboard
- * Auth: Bearer token Netlify (verificato contro Netlify API)
+ *
+ * Auth: Bearer <password-admin> confrontata con env var ADMIN_PASSWORD
+ *
+ * Env vars richieste su Netlify:
+ *   NETLIFY_SITE_ID   — UUID del sito (Settings → General → Site ID)
+ *   NETLIFY_API_TOKEN — token personale Netlify (server-side, mai esposto)
+ *   ADMIN_PASSWORD    — la password dell'admin (la stessa del login)
  */
 
 const { getStore } = require('@netlify/blobs');
@@ -22,7 +28,7 @@ exports.handler = async (event) => {
     return { statusCode: 405, headers: CORS, body: 'Method Not Allowed' };
   }
 
-  // Verifica token Netlify nell'header Authorization
+  // Leggi token dall'header Authorization
   const auth = (event.headers.authorization || event.headers.Authorization || '').trim();
   const token = auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
 
@@ -30,25 +36,33 @@ exports.handler = async (event) => {
     return {
       statusCode: 401,
       headers: { ...CORS, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'Token mancante. Inserisci il token Netlify nell\'area admin.' })
+      body: JSON.stringify({ error: 'Accesso non autorizzato.' })
+    };
+  }
+
+  // Verifica password contro env var ADMIN_PASSWORD
+  const adminPwd = process.env.ADMIN_PASSWORD;
+  if (!adminPwd || token !== adminPwd) {
+    return {
+      statusCode: 401,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Password non corretta. Aggiorna la variabile ADMIN_PASSWORD su Netlify.' })
+    };
+  }
+
+  const siteID = process.env.NETLIFY_SITE_ID;
+  const apiToken = process.env.NETLIFY_API_TOKEN;
+
+  if (!siteID || !apiToken) {
+    return {
+      statusCode: 500,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Env vars NETLIFY_SITE_ID e NETLIFY_API_TOKEN non configurate sul server.' })
     };
   }
 
   try {
-    // Verifica che il token sia un token Netlify valido
-    const check = await fetch('https://api.netlify.com/api/v1/user', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!check.ok) {
-      return {
-        statusCode: 401,
-        headers: { ...CORS, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Token Netlify non valido. Verifica nelle impostazioni.' })
-      };
-    }
-
-    // Leggi tutte le sessioni dallo store
-    const store = getStore('chat-sessions');
+    const store = getStore({ name: 'chat-sessions', siteID, token: apiToken });
     const { blobs } = await store.list();
 
     if (!blobs || blobs.length === 0) {
@@ -59,18 +73,13 @@ exports.handler = async (event) => {
       };
     }
 
-    // Recupera i dati di ogni sessione
     const sessions = await Promise.all(
       blobs.map(async ({ key }) => {
-        try {
-          return await store.get(key, { type: 'json' });
-        } catch {
-          return null;
-        }
+        try { return await store.get(key, { type: 'json' }); }
+        catch { return null; }
       })
     );
 
-    // Filtra nulls, ordina per timestamp decrescente (più recenti prima)
     const valid = sessions
       .filter(Boolean)
       .sort((a, b) => {

@@ -1,6 +1,10 @@
 /**
  * log.js — Salva sessioni chat in Netlify Blobs
  * LuniversoTuo · riceve POST dal widget Chiara
+ *
+ * Richiede env vars su Netlify:
+ *   NETLIFY_SITE_ID  — UUID del sito (Settings → General → Site ID)
+ *   NETLIFY_API_TOKEN — token personale Netlify
  */
 
 const { getStore } = require('@netlify/blobs');
@@ -21,6 +25,17 @@ exports.handler = async (event) => {
     return { statusCode: 405, headers: CORS, body: 'Method Not Allowed' };
   }
 
+  const siteID = process.env.NETLIFY_SITE_ID;
+  const token  = process.env.NETLIFY_API_TOKEN;
+
+  if (!siteID || !token) {
+    return {
+      statusCode: 500,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Env vars NETLIFY_SITE_ID e NETLIFY_API_TOKEN non configurate.' })
+    };
+  }
+
   try {
     const data = JSON.parse(event.body || '{}');
 
@@ -32,7 +47,7 @@ exports.handler = async (event) => {
       };
     }
 
-    const store = getStore('chat-sessions');
+    const store = getStore({ name: 'chat-sessions', siteID, token });
 
     await store.setJSON(data.session_id, {
       session_id:     data.session_id,
