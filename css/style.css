@@ -378,7 +378,7 @@ button { font-family: inherit; cursor: pointer; }
   margin-bottom: 40px;
 }
 
-.footer__logo img { height: 50px; mix-blend-mode: lighten; margin-bottom: 16px; }
+.footer__logo img { height: 80px; width: auto; mix-blend-mode: lighten; margin-bottom: 16px; display: block; }
 
 .footer__desc { font-size: 13px; color: var(--text-3); line-height: 1.7; margin-bottom: 20px; }
 
