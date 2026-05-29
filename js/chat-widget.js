@@ -10,6 +10,33 @@
   'use strict';
 
   /* ─────────────────────────────────────────────
+   *  SESSION TRACKING — statistiche admin
+   * ───────────────────────────────────────────── */
+  const SESSION_ID = 'ss_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+  const SESSION_PAGE = window.location.pathname.split('/').pop().replace('.html', '') || 'home';
+  let sessionLogged = false;
+  let bookedCTA = false;
+
+  async function logSession() {
+    const userMessages = messages.filter(m => m.role === 'user');
+    if (sessionLogged || userMessages.length < 1) return;
+    sessionLogged = true;
+    try {
+      const body = new URLSearchParams({
+        'form-name': 'chat-log',
+        'session_id': SESSION_ID,
+        'timestamp': new Date().toISOString(),
+        'page': SESSION_PAGE,
+        'messages_count': String(messages.length),
+        'first_question': userMessages[0]?.content || '',
+        'user_questions': userMessages.map(m => m.content).join(' ||| '),
+        'booked': bookedCTA ? 'si' : 'no'
+      });
+      await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+    } catch (e) { /* silenzioso — log non-critico */ }
+  }
+
+  /* ─────────────────────────────────────────────
    *  CONFIGURAZIONE — IMPOSTA QUI LA TUA API KEY
    * ───────────────────────────────────────────── */
   const CONFIG = {
@@ -372,6 +399,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     cta.href = CONFIG.bookingUrl;
     cta.target = '_blank';
     cta.rel = 'noopener noreferrer';
+    cta.addEventListener('click', () => { bookedCTA = true; logSession(); });
     cta.innerHTML = `
       <div id="ss-book-cta-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
       <div id="ss-book-cta-text">
@@ -484,6 +512,8 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       if (messages.length >= 4 && !document.getElementById('ss-book-cta')) {
         showBookingCTA();
       }
+      // Log dopo il 2° scambio completo
+      if (messages.length >= 4) logSession();
     } catch (err) {
       hideTyping();
       const el = getMessagesEl();
@@ -531,6 +561,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     const panel = document.getElementById('ss-chat-panel');
     if (panel) panel.classList.remove('open');
     isOpen = false;
+    logSession(); // salva la sessione alla chiusura
   }
 
   /* ─────────────────────────────────────────────

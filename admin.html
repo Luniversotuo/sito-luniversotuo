@@ -294,6 +294,10 @@
       <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       Aggiornamenti Rapidi
     </button>
+    <button class="tab-btn" data-tab="statistiche">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Statistiche
+    </button>
   </div>
 
   <!-- ══════════ TAB: PANNELLO ══════════ -->
@@ -594,6 +598,151 @@
     </div>
   </div>
 
+  <!-- ══════════ TAB: STATISTICHE ══════════ -->
+  <div id="tab-statistiche" class="tab-panel">
+    <div class="dash-main">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div>
+          <div style="font-size:15px;font-weight:700;color:var(--white);letter-spacing:-0.3px;">Statistiche sito</div>
+          <div style="font-size:12px;color:var(--t3);margin-top:3px;" id="stat-updated-at">Premi "Aggiorna" per caricare i dati live</div>
+        </div>
+        <button onclick="loadStatistiche()" id="stat-refresh-btn" style="background:var(--blue-dim);border:0.5px solid var(--blue-border);border-radius:var(--r);padding:9px 18px;color:var(--blue-text);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Aggiorna
+        </button>
+      </div>
+
+      <!-- KPI Strip -->
+      <div class="stats-strip" style="margin-bottom:20px;">
+        <div class="stat-card">
+          <div class="stat-card__val" id="kpi-status" style="font-size:18px;letter-spacing:0;">—</div>
+          <div class="stat-card__lbl">Stato sito</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__val blue" id="kpi-pages">—</div>
+          <div class="stat-card__lbl">Pagine HTML attive</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__val" id="kpi-commits">—</div>
+          <div class="stat-card__lbl">Aggiornamenti (30gg)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__val blue" id="kpi-lastcommit" style="font-size:15px;letter-spacing:-0.3px;">—</div>
+          <div class="stat-card__lbl">Ultimo aggiornamento</div>
+        </div>
+      </div>
+
+      <!-- Commit log + File repo -->
+      <div class="grid-2" style="margin-bottom:12px;">
+
+        <!-- Ultimi aggiornamenti -->
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div class="card-title" style="margin-bottom:0;">Ultimi aggiornamenti sito</div>
+            <a href="https://github.com/Luniversotuo/sito-luniversotuo/commits/main" target="_blank" style="font-size:11px;color:var(--blue-text);text-decoration:none;flex-shrink:0;">Vedi su GitHub →</a>
+          </div>
+          <div id="commit-list">
+            <div style="font-size:12.5px;color:var(--t3);text-align:center;padding:24px 0;">Premi "Aggiorna" per caricare</div>
+          </div>
+        </div>
+
+        <!-- File nel repo -->
+        <div class="card">
+          <div class="card-title">File nel repository</div>
+          <div id="files-list">
+            <div style="font-size:12.5px;color:var(--t3);text-align:center;padding:24px 0;">Premi "Aggiorna" per caricare</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Sofia Analytics -->
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div>
+            <div class="card-title" style="margin-bottom:2px;">Conversazioni con Sofia</div>
+            <div style="font-size:11.5px;color:var(--t3);">Dati live da Netlify Forms — richiede token Netlify</div>
+          </div>
+          <button onclick="loadChatLog()" id="chatlog-refresh-btn" style="background:var(--blue-dim);border:0.5px solid var(--blue-border);border-radius:8px;padding:7px 14px;color:var(--blue-text);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Carica dati chat</button>
+        </div>
+
+        <!-- Token Netlify setup -->
+        <div id="netlify-token-setup" style="background:rgba(37,99,235,0.06);border:0.5px solid var(--blue-border);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">🔑 Token Netlify per leggere le chat</div>
+          <div style="font-size:11.5px;color:var(--t3);margin-bottom:12px;line-height:1.6;">
+            Vai su <a href="https://app.netlify.com/user/applications#personal-access-tokens" target="_blank" style="color:var(--blue-text);">Netlify → User Settings → Access tokens</a>, crea un token personale e incollalo qui. Si salva nel browser.
+          </div>
+          <div style="display:flex;gap:8px;">
+            <input type="password" id="netlify-token-input" placeholder="nfp_xxxxxxxxxxxxxxxxxxxx" style="flex:1;background:var(--card2);border:0.5px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--t1);font-size:12.5px;outline:none;font-family:monospace;">
+            <button onclick="saveNetlifyToken()" style="background:var(--blue);border:none;border-radius:8px;padding:9px 18px;color:white;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Salva token</button>
+          </div>
+          <div id="netlify-token-status" style="font-size:11.5px;margin-top:8px;"></div>
+        </div>
+
+        <!-- KPI chat -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:var(--white);letter-spacing:-0.5px;" id="chat-kpi-total">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Sessioni totali</div>
+          </div>
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:#60a5fa;letter-spacing:-0.5px;" id="chat-kpi-week">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Ultimi 7 giorni</div>
+          </div>
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:var(--green);letter-spacing:-0.5px;" id="chat-kpi-booked">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Prenotazioni cliccate</div>
+          </div>
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:var(--gold);letter-spacing:-0.5px;" id="chat-kpi-msgs">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Msg medi/sessione</div>
+          </div>
+        </div>
+
+        <!-- Conversation log -->
+        <div id="chat-log-list">
+          <div style="font-size:12.5px;color:var(--t3);text-align:center;padding:20px 0;">Inserisci il token Netlify e premi "Carica dati chat"</div>
+        </div>
+      </div>
+
+      <!-- Traffico & Analytics -->
+      <div class="card">
+        <div class="card-title">Traffico & Analisi esterne</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          <a href="https://app.netlify.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(0,173,127,0.35)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(0,173,127,0.12);border:0.5px solid rgba(0,173,127,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ad7f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:600;color:var(--t1);">Netlify Analytics</span>
+            </div>
+            <span style="font-size:11px;color:var(--t3);line-height:1.5;">Visite, bandwidth e deploy del sito</span>
+          </a>
+          <a href="https://analytics.google.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(245,158,11,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(245,158,11,0.1);border:0.5px solid rgba(245,158,11,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="18.5 8 13 13.5 8 8.5 3 14"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:600;color:var(--t1);">Google Analytics</span>
+            </div>
+            <span style="font-size:11px;color:var(--t3);line-height:1.5;">Configura GA4 per il traffico dettagliato</span>
+          </a>
+          <a href="https://www.facebook.com/LuniversoTuo/insights" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(37,99,235,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(37,99,235,0.1);border:0.5px solid rgba(37,99,235,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:600;color:var(--t1);">Facebook Insights</span>
+            </div>
+            <span style="font-size:11px;color:var(--t3);line-height:1.5;">Statistiche pagina Facebook LuniversoTuo</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div><!-- /dashboard -->
 
 <script>
@@ -636,6 +785,7 @@
     document.getElementById('login-screen').style.display='none';
     document.getElementById('dashboard').style.display='block';
     checkToken();
+    checkNetlifyTokenUI();
   }
 
   /* ── TABS ── */
@@ -645,6 +795,7 @@
       document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'statistiche' && !statLoaded) loadStatistiche();
     });
   });
 
@@ -981,6 +1132,282 @@
       statusEl.textContent = '✗ ' + e.message;
     } finally {
       btn.disabled = false;
+    }
+  }
+
+  /* ── CHAT LOG (Netlify Forms) ── */
+  function getNetlifyToken() { return localStorage.getItem('lt_netlify_token') || ''; }
+  function saveNetlifyToken() {
+    const v = document.getElementById('netlify-token-input').value.trim();
+    if (!v) { return; }
+    localStorage.setItem('lt_netlify_token', v);
+    const s = document.getElementById('netlify-token-status');
+    s.style.color = 'var(--green)';
+    s.textContent = '✓ Token salvato. Ora premi "Carica dati chat".';
+    document.getElementById('netlify-token-input').value = '';
+  }
+  function checkNetlifyTokenUI() {
+    const t = getNetlifyToken();
+    const setup = document.getElementById('netlify-token-setup');
+    if (t && setup) setup.style.display = 'none';
+  }
+
+  async function netlifyFetch(path) {
+    const token = getNetlifyToken();
+    if (!token) throw new Error('Token Netlify non configurato');
+    const res = await fetch('https://api.netlify.com' + path, {
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `Errore ${res.status}`);
+    }
+    return res.json();
+  }
+
+  async function loadChatLog() {
+    const btn = document.getElementById('chatlog-refresh-btn');
+    btn.textContent = 'Caricamento...';
+    btn.disabled = true;
+
+    try {
+      if (!getNetlifyToken()) {
+        document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--gold);padding:12px 0;">⚠ Inserisci prima il token Netlify nel riquadro qui sopra.</div>';
+        return;
+      }
+
+      // Step 1: trova il sito
+      const sites = await netlifyFetch('/api/v1/sites?filter=all&per_page=100');
+      const site = Array.isArray(sites) ? sites.find(s => s.name === 'ornate-sherbet-511176' || (s.url||'').includes('ornate-sherbet-511176')) : null;
+      if (!site) throw new Error('Sito Netlify non trovato. Verifica che il token abbia accesso al sito.');
+
+      // Step 2: trova il form chat-log
+      const forms = await netlifyFetch(`/api/v1/sites/${site.id}/forms`);
+      const chatForm = Array.isArray(forms) ? forms.find(f => f.name === 'chat-log') : null;
+      if (!chatForm) throw new Error('Form "chat-log" non trovato. Pubblica prima il sito con la nuova versione e attendi una conversazione.');
+
+      // Step 3: leggi le submissions (max 100)
+      const subs = await netlifyFetch(`/api/v1/forms/${chatForm.id}/submissions?per_page=100`);
+      if (!Array.isArray(subs) || subs.length === 0) {
+        document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:16px 0;text-align:center;">Nessuna conversazione registrata ancora. Le chat appariranno qui dopo che qualcuno usa Sofia.</div>';
+        ['chat-kpi-total','chat-kpi-week','chat-kpi-booked','chat-kpi-msgs'].forEach(id => document.getElementById(id).textContent = '0');
+        return;
+      }
+
+      // Calcola KPI
+      const now = Date.now();
+      const week = 7 * 24 * 60 * 60 * 1000;
+      const recentCount = subs.filter(s => (now - new Date(s.created_at)) < week).length;
+      const bookedCount = subs.filter(s => s.data?.booked === 'si').length;
+      const totalMsgs = subs.reduce((acc, s) => acc + (parseInt(s.data?.messages_count) || 0), 0);
+      const avgMsgs = subs.length ? Math.round(totalMsgs / subs.length) : 0;
+
+      document.getElementById('chat-kpi-total').textContent = subs.length;
+      document.getElementById('chat-kpi-week').textContent = recentCount;
+      document.getElementById('chat-kpi-booked').textContent = bookedCount;
+      document.getElementById('chat-kpi-msgs').textContent = avgMsgs;
+
+      // Render conversazioni
+      const rows = subs.slice(0, 30).map(s => {
+        const d = new Date(s.created_at);
+        const dateStr = d.toLocaleDateString('it-IT', {day:'2-digit', month:'short', year:'numeric'});
+        const timeStr = d.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});
+        const firstQ = s.data?.first_question || '—';
+        const allQ = s.data?.user_questions || '';
+        const msgCount = s.data?.messages_count || '?';
+        const page = s.data?.page || '';
+        const booked = s.data?.booked === 'si';
+
+        // Domande come lista
+        const questions = allQ.split(' ||| ').filter(q => q.trim());
+
+        return `<div style="border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;background:var(--card2);">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.4;">"${firstQ.length > 90 ? firstQ.substring(0,90)+'…' : firstQ}"</div>
+              <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">${dateStr} · ${timeStr} · ${msgCount} messaggi · pagina: ${page || 'home'}</div>
+            </div>
+            <div style="flex-shrink:0;display:flex;gap:6px;align-items:center;">
+              ${booked ? '<span style="font-size:10px;font-weight:700;background:rgba(34,197,94,0.12);color:var(--green);border:0.5px solid rgba(34,197,94,0.25);border-radius:6px;padding:3px 8px;">PRENOTATO</span>' : ''}
+            </div>
+          </div>
+          ${questions.length > 1 ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${questions.map(q => `<span style="font-size:10.5px;background:var(--blue-dim);color:var(--blue-text);border:0.5px solid var(--blue-border);border-radius:6px;padding:3px 9px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${q}">${q.length > 45 ? q.substring(0,45)+'…' : q}</span>`).join('')}</div>` : ''}
+        </div>`;
+      }).join('');
+
+      document.getElementById('chat-log-list').innerHTML = rows + (subs.length > 30 ? `<div style="font-size:11.5px;color:var(--t3);text-align:center;padding:10px 0;">Mostrate le ultime 30 su ${subs.length} sessioni totali</div>` : '');
+
+      // Nascondi setup token se tutto ok
+      const setup = document.getElementById('netlify-token-setup');
+      if (setup) setup.style.display = 'none';
+
+    } catch(e) {
+      document.getElementById('chat-log-list').innerHTML = `<div style="font-size:12.5px;color:var(--red);padding:12px 0;">✗ ${e.message}</div>`;
+    } finally {
+      btn.textContent = 'Carica dati chat';
+      btn.disabled = false;
+    }
+  }
+
+  /* ── STATISTICHE ── */
+  let statLoaded = false;
+
+  async function loadStatistiche() {
+    const btn = document.getElementById('stat-refresh-btn');
+    btn.innerHTML = '<div class="spinner" style="border-color:rgba(147,186,255,0.3);border-top-color:var(--blue-text);"></div> Caricamento...';
+    btn.disabled = true;
+    statLoaded = true;
+
+    // 1. Controllo stato sito
+    checkSiteStatus();
+
+    // 2. Dati GitHub (se token disponibile)
+    const token = getToken();
+    if (!token) {
+      const noToken = '<div style="font-size:12.5px;color:var(--gold);padding:14px 0;display:flex;align-items:center;gap:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Inserisci il token GitHub nella scheda "Editor Pagine"</div>';
+      document.getElementById('commit-list').innerHTML = noToken;
+      document.getElementById('files-list').innerHTML = noToken;
+      document.getElementById('kpi-pages').textContent = '—';
+      document.getElementById('kpi-commits').textContent = '—';
+      document.getElementById('kpi-lastcommit').textContent = 'Token mancante';
+    } else {
+      await Promise.all([loadCommits(token), loadFiles(token)]);
+    }
+
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Aggiorna';
+    btn.disabled = false;
+    const now = new Date();
+    document.getElementById('stat-updated-at').textContent = 'Aggiornato alle ' + now.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}) + ' del ' + now.toLocaleDateString('it-IT',{day:'2-digit',month:'short',year:'numeric'});
+  }
+
+  async function checkSiteStatus() {
+    const el = document.getElementById('kpi-status');
+    el.innerHTML = '<span style="color:var(--t3)">Verifica...</span>';
+    try {
+      await fetch('https://ornate-sherbet-511176.netlify.app/', { mode:'no-cors', signal: AbortSignal.timeout(7000) });
+      el.innerHTML = '<span style="color:var(--green)">● ONLINE</span>';
+    } catch(e) {
+      el.innerHTML = '<span style="color:var(--red)">● OFFLINE</span>';
+    }
+  }
+
+  async function loadCommits(token) {
+    try {
+      // Ultimi 10 commit per il log
+      const logRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?per_page=10`,
+        { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} }
+      );
+      if (!logRes.ok) throw new Error('API GitHub: ' + logRes.status);
+      const commits = await logRes.json();
+      if (!Array.isArray(commits)) throw new Error('Risposta non valida');
+
+      // Commit ultimi 30 giorni
+      const since = new Date(Date.now() - 30*24*60*60*1000).toISOString();
+      const cntRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?per_page=100&since=${since}`,
+        { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} }
+      );
+      const recentCommits = cntRes.ok ? await cntRes.json() : [];
+      document.getElementById('kpi-commits').textContent = Array.isArray(recentCommits) ? recentCommits.length : '?';
+
+      // Ultimo aggiornamento
+      if (commits.length > 0) {
+        const lastDate = new Date(commits[0].commit.author.date);
+        const daysAgo = Math.floor((Date.now() - lastDate) / (1000*60*60*24));
+        document.getElementById('kpi-lastcommit').textContent =
+          daysAgo === 0 ? 'Oggi' : daysAgo === 1 ? 'Ieri' : daysAgo + ' giorni fa';
+      }
+
+      // Render commit list
+      if (commits.length === 0) {
+        document.getElementById('commit-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:14px 0;">Nessun commit trovato.</div>';
+        return;
+      }
+      document.getElementById('commit-list').innerHTML = commits.map(c => {
+        const d = new Date(c.commit.author.date);
+        const dateStr = d.toLocaleDateString('it-IT',{day:'2-digit',month:'short'});
+        const timeStr = d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+        const msg = c.commit.message.split('\n')[0];
+        const shortMsg = msg.length > 62 ? msg.substring(0,62)+'…' : msg;
+        const sha = c.sha.substring(0,7);
+        return `<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--border);">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.4;">${shortMsg}</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:2px;">${dateStr} · ${timeStr} &nbsp;·&nbsp; <span style="font-family:monospace;">${sha}</span></div>
+          </div>
+        </div>`;
+      }).join('') + '<div style="padding-bottom:2px;"></div>';
+
+    } catch(e) {
+      document.getElementById('commit-list').innerHTML = `<div style="font-size:12.5px;color:var(--red);padding:12px 0;">✗ ${e.message}</div>`;
+      document.getElementById('kpi-commits').textContent = '!';
+      document.getElementById('kpi-lastcommit').textContent = 'Errore';
+    }
+  }
+
+  async function loadFiles(token) {
+    try {
+      const rootRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`,
+        { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} }
+      );
+      if (!rootRes.ok) throw new Error('Errore repo: ' + rootRes.status);
+      const rootFiles = await rootRes.json();
+      if (!Array.isArray(rootFiles)) throw new Error('Risposta non valida');
+
+      const htmlFiles = rootFiles.filter(f => f.type==='file' && f.name.endsWith('.html'));
+      const jsFiles   = rootFiles.filter(f => f.type==='file' && f.name.endsWith('.js'));
+      const cssRoot   = rootFiles.filter(f => f.type==='file' && f.name.endsWith('.css'));
+      const dirs      = rootFiles.filter(f => f.type==='dir');
+
+      // KPI pagine
+      document.getElementById('kpi-pages').textContent = htmlFiles.length;
+
+      // Conta CSS in /css/
+      let cssCount = cssRoot.length;
+      const cssDir = dirs.find(d => d.name === 'css');
+      if (cssDir) {
+        const cr = await fetch(cssDir.url, {headers:{'Authorization':`Bearer ${token}`}});
+        if (cr.ok) { const cf = await cr.json(); cssCount += Array.isArray(cf) ? cf.filter(f=>f.name.endsWith('.css')).length : 0; }
+      }
+
+      // Render file list
+      const rows = htmlFiles.map(f =>
+        `<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--border);">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:9px;font-weight:700;background:rgba(37,99,235,0.12);color:#93BFFF;border:0.5px solid rgba(37,99,235,0.25);border-radius:4px;padding:2px 6px;letter-spacing:0.2px;">HTML</span>
+            <span style="font-size:12.5px;font-weight:500;color:var(--t1);">${f.name}</span>
+          </div>
+          <span style="font-size:10.5px;color:var(--t3);">${(f.size/1024).toFixed(1)} KB</span>
+        </div>`
+      ).join('');
+
+      const summary = `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="background:rgba(139,92,246,0.1);border:0.5px solid rgba(139,92,246,0.25);border-radius:8px;padding:8px 14px;">
+          <div style="color:#a78bfa;font-weight:800;font-size:18px;letter-spacing:-0.5px;">${cssCount}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">File CSS</div>
+        </div>
+        <div style="background:rgba(52,211,153,0.1);border:0.5px solid rgba(52,211,153,0.25);border-radius:8px;padding:8px 14px;">
+          <div style="color:#34d399;font-weight:800;font-size:18px;letter-spacing:-0.5px;">${jsFiles.length}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">File JS</div>
+        </div>
+        <div style="background:rgba(245,158,11,0.1);border:0.5px solid rgba(245,158,11,0.25);border-radius:8px;padding:8px 14px;">
+          <div style="color:var(--gold);font-weight:800;font-size:18px;letter-spacing:-0.5px;">${dirs.length}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">Cartelle</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:0.5px solid var(--border);border-radius:8px;padding:8px 14px;">
+          <div style="color:var(--t1);font-weight:800;font-size:18px;letter-spacing:-0.5px;">${rootFiles.length}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">Tot. nella root</div>
+        </div>
+      </div>`;
+
+      document.getElementById('files-list').innerHTML = rows + summary;
+
+    } catch(e) {
+      document.getElementById('files-list').innerHTML = `<div style="font-size:12.5px;color:var(--red);padding:12px 0;">✗ ${e.message}</div>`;
+      document.getElementById('kpi-pages').textContent = '!';
     }
   }
 

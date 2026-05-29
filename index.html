@@ -692,6 +692,17 @@ fbq('init','390681561312731');
 fbq('track','PageView');
 </script>
 
+<!-- Form nascosto per statistiche chat Sofia (Netlify Forms) -->
+<form name="chat-log" data-netlify="true" hidden>
+  <input name="session_id" type="text">
+  <input name="timestamp" type="text">
+  <input name="page" type="text">
+  <input name="messages_count" type="text">
+  <input name="user_questions" type="text">
+  <input name="first_question" type="text">
+  <input name="booked" type="text">
+</form>
+
 <script src="js/chat-widget.js"></script>
 <script src="js/cookie-banner.js"></script>
 </body>
