@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parla con Sofia — Consulente SuperSerenità® | LuniversoTuo</title>
+  <meta name="description" content="Parla in privato con Sofia, la consulente virtuale di LuniversoTuo. Fai le tue domande sulla SuperSerenità® senza impegno, 24 ore su 24.">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '390681561312731');
+    fbq('track', 'PageView');
+  </script>
+  <style>
+    .chat-page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .chat-hero {
+      padding: 64px 0 40px;
+      background: var(--bg-main);
+      text-align: center;
+    }
+    .chat-hero__inner { max-width: 600px; margin: 0 auto; padding: 0 40px; }
+    .chat-hero__avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px; margin: 0 auto 20px; position: relative;
+    }
+    .chat-hero__status {
+      position: absolute; bottom: 4px; right: 4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #22c55e; border: 2.5px solid var(--bg-main);
+    }
+    .chat-hero__name { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 6px; }
+    .chat-hero__role { font-size: 14px; color: rgba(255,255,255,0.38); margin-bottom: 18px; }
+    .chat-hero__desc {
+      font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.7;
+      max-width: 420px; margin: 0 auto;
+    }
+    .chat-hero__note {
+      margin-top: 16px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.08);
+      border: 0.5px solid rgba(34,197,94,0.2);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 11.5px; color: rgba(34,197,94,0.7);
+    }
+    .chat-hero__note-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
+
+    /* CHAT CONTAINER */
+    .chat-main { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 0 20px 60px; }
+    .chat-box {
+      width: 100%; max-width: 680px;
+      background: #0e1019;
+      border: 0.5px solid rgba(255,255,255,0.09);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+      min-height: 520px;
+      display: flex; flex-direction: column;
+    }
+
+    /* MESSAGES */
+    #chat-messages {
+      flex: 1; min-height: 360px; padding: 28px 28px 20px;
+      display: flex; flex-direction: column; gap: 14px;
+      overflow-y: auto; scroll-behavior: smooth;
+    }
+    #chat-messages::-webkit-scrollbar { width: 5px; }
+    #chat-messages::-webkit-scrollbar-track { background: transparent; }
+    #chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+
+    .cmsg { display: flex; flex-direction: column; gap: 4px; max-width: 75%; }
+    .cmsg.ai { align-self: flex-start; }
+    .cmsg.user { align-self: flex-end; }
+
+    .cmsg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .cmsg.ai .cmsg-header { flex-direction: row; }
+    .cmsg.user .cmsg-header { display: none; }
+    .cmsg-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; flex-shrink: 0;
+    }
+    .cmsg-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); }
+
+    .cbubble {
+      padding: 13px 16px; border-radius: 16px;
+      font-size: 14.5px; line-height: 1.65;
+      letter-spacing: -0.1px;
+    }
+    .cmsg.ai .cbubble {
+      background: #1a1d2e;
+      border: 0.5px solid rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.88);
+      border-bottom-left-radius: 4px;
+    }
+    .cmsg.user .cbubble {
+      background: #2563EB;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .cmsg-time { font-size: 10px; color: rgba(255,255,255,0.2); padding: 0 4px; }
+    .cmsg.user .cmsg-time { text-align: right; }
+
+    /* TYPING */
+    .ctyping {
+      display: flex; align-items: center; gap: 5px;
+      padding: 13px 16px;
+      background: #1a1d2e;
+      border: 0.5px solid rgba(255,255,255,0.07);
+      border-radius: 16px; border-bottom-left-radius: 4px;
+      width: fit-content;
+    }
+    .cdot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.35); animation: cBounce 1.2s infinite; }
+    .cdot:nth-child(2) { animation-delay: 0.2s; }
+    .cdot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes cBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-7px); } }
+
+    /* QUICK REPLIES */
+    #chat-quick {
+      padding: 0 28px 20px;
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .cqr {
+      background: none;
+      border: 0.5px solid rgba(37,99,235,0.3);
+      border-radius: 20px; padding: 8px 16px;
+      color: rgba(147,186,255,0.8); font-size: 13px;
+      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .cqr:hover { background: rgba(37,99,235,0.1); border-color: rgba(37,99,235,0.5); }
+
+    /* INPUT */
+    .chat-input-bar {
+      border-top: 0.5px solid rgba(255,255,255,0.07);
+      padding: 16px 20px;
+      display: flex; gap: 10px; align-items: flex-end;
+      background: #0b0d14;
+    }
+    #chat-input {
+      flex: 1; background: #1a1d2e;
+      border: 0.5px solid rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 12px 16px;
+      color: rgba(255,255,255,0.9); font-size: 14.5px;
+      resize: none; outline: none; line-height: 1.5;
+      min-height: 46px; max-height: 120px;
+      transition: border-color 0.15s;
+    }
+    #chat-input::placeholder { color: rgba(255,255,255,0.22); }
+    #chat-input:focus { border-color: rgba(37,99,235,0.45); }
+    #chat-send {
+      width: 46px; height: 46px; border-radius: 13px;
+      background: #2563EB; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, transform 0.1s; flex-shrink: 0;
+    }
+    #chat-send:hover { background: #1d4ed8; }
+    #chat-send:active { transform: scale(0.93); }
+    #chat-send svg { width: 18px; height: 18px; fill: none; stroke: white; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .chat-hint { font-size: 11px; color: rgba(255,255,255,0.18); padding: 0 2px; margin-top: 4px; }
+
+    /* BOOKING CTA */
+    .chat-book-banner {
+      margin: 8px 28px 0;
+      background: linear-gradient(90deg, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.06) 100%);
+      border: 0.5px solid rgba(37,99,235,0.28);
+      border-radius: 14px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .chat-book-banner:hover { background: rgba(37,99,235,0.18); }
+    .chat-book-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(37,99,235,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .chat-book-icon svg { width: 18px; height: 18px; fill: none; stroke: #93baff; stroke-width: 2; }
+    .chat-book-title { font-size: 13.5px; font-weight: 600; color: rgba(147,186,255,0.9); }
+    .chat-book-sub { font-size: 11.5px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .chat-book-arrow { margin-left: auto; color: rgba(147,186,255,0.4); }
+    .chat-book-arrow svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+
+    /* SIDEBAR INFO */
+    .chat-layout { display: flex; gap: 28px; max-width: 1000px; width: 100%; }
+    .chat-sidebar {
+      width: 240px; flex-shrink: 0; padding-top: 0;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .sidebar-card {
+      background: #0e1019;
+      border: 0.5px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 20px;
+    }
+    .sidebar-card__title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+    .sidebar-stat { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .sidebar-stat:last-child { margin-bottom: 0; }
+    .sidebar-stat__lbl { font-size: 12.5px; color: rgba(255,255,255,0.38); }
+    .sidebar-stat__val { font-size: 14px; font-weight: 700; color: #fff; }
+    .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); }
+    .sidebar-link:last-child { border-bottom: none; }
+    .sidebar-link svg { width: 14px; height: 14px; fill: none; stroke: rgba(37,99,235,0.7); stroke-width: 2; flex-shrink: 0; }
+    .sidebar-link-text { font-size: 12.5px; color: rgba(255,255,255,0.45); }
+    .sidebar-link-text a { color: rgba(147,186,255,0.7); text-decoration: none; }
+
+    @media (max-width: 800px) {
+      .chat-layout { flex-direction: column; }
+      .chat-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+      .sidebar-card { flex: 1; min-width: 160px; }
+      .chat-hero__inner { padding: 0 20px; }
+    }
+
+    .cerror { font-size: 12px; color: rgba(239,68,68,0.65); padding: 4px 0; }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGAZIONE -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <img src="img/logo-luniversotuo.svg" alt="LuniversoTuo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="nav__logo-fallback" style="display:none">
+        <div class="nav__logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div>
+          <div class="nav__logo-text">LuniversoTuo</div>
+          <div class="nav__logo-sub">L'UNICO CHE ASSICURA LA SUPERSERENITÀ®</div>
+        </div>
+      </div>
+    </a>
+    <ul class="nav__menu">
+      <li><a href="superserenita.html">La SuperSerenità</a></li>
+      <li><a href="storie.html">Le Storie</a></li>
+      <li><a href="team.html">Il Team</a></li>
+      <li><a href="testimonianze.html">Testimonianze</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="contatti.html" class="nav__link-ghost">Scrivici</a>
+      <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-nav">Prenota ora</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-body chat-page">
+
+  <!-- HERO -->
+  <div class="chat-hero">
+    <div class="chat-hero__inner">
+      <div class="chat-hero__avatar">
+        ✦
+        <div class="chat-hero__status"></div>
+      </div>
+      <div class="chat-hero__name">Sofia</div>
+      <div class="chat-hero__role">Consulente Virtuale SuperSerenità® · LuniversoTuo</div>
+      <p class="chat-hero__desc">
+        Sono qui per ascoltarti, non per venderti niente. Parla con me delle tue preoccupazioni — le rispondo con la stessa cura che il team di Giancarlo mette in ogni consulenza.
+      </p>
+      <div class="chat-hero__note">
+        <div class="chat-hero__note-dot"></div>
+        Online ora · Risponde in pochi secondi
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT MAIN -->
+  <div class="chat-main">
+    <div class="chat-layout">
+
+      <!-- CHAT BOX -->
+      <div style="flex:1; display:flex; flex-direction:column; gap: 16px;">
+        <div class="chat-box">
+          <div id="chat-messages"></div>
+          <div id="chat-quick"></div>
+          <div class="chat-input-bar">
+            <div style="flex:1; display:flex; flex-direction:column; gap:4px;">
+              <textarea id="chat-input" placeholder="Scrivi la tua domanda a Sofia..." rows="1" autocomplete="off"></textarea>
+              <div class="chat-hint">Invio per inviare · Shift+Invio per andare a capo</div>
+            </div>
+            <button id="chat-send" aria-label="Invia">
+              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <p style="font-size:11px; color:rgba(255,255,255,0.15); text-align:center; padding-bottom:10px;">
+          Sofia è un'intelligenza artificiale. Per decisioni importanti, prenota sempre una consulenza con il team reale.
+        </p>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="chat-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-card__title">LuniversoTuo</div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat__lbl">Recensioni</span>
+            <span class="sidebar-stat__val">461 ★</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat__lbl">Rischi analizzati</span>
+            <span class="sidebar-stat__val">15.184</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat__lbl">Professionisti</span>
+            <span class="sidebar-stat__val">5</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat__lbl">Consulenza</span>
+            <span class="sidebar-stat__val">Gratuita</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sidebar-card__title">Contatti rapidi</div>
+          <div class="sidebar-link">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div class="sidebar-link-text"><a href="tel:+390572471391">0572 47139</a></div>
+          </div>
+          <div class="sidebar-link">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div class="sidebar-link-text"><a href="https://wa.me/39057247139" target="_blank">WhatsApp</a></div>
+          </div>
+          <div class="sidebar-link">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div class="sidebar-link-text"><a href="mailto:info@luniversotuo.it">info@luniversotuo.it</a></div>
+          </div>
+          <div class="sidebar-link">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="sidebar-link-text" style="font-size:11.5px;">Via Francesca Vecchia 43D, Pescia</div>
+          </div>
+        </div>
+
+        <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="chat-book-banner">
+          <div class="chat-book-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <div class="chat-book-title">Prenota la consulenza</div>
+            <div class="chat-book-sub">Gratuita · 60 min · Senza impegno</div>
+          </div>
+          <div class="chat-book-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/39057247139" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<!-- CHAT LOGIC -->
+<script>
+  (function () {
+    // ── CONFIGURAZIONE ── Cambia qui per usare l'API reale
+    const CONFIG = {
+      apiKey: 'INSERISCI_QUI_LA_TUA_CHIAVE_API',
+      model: 'claude-haiku-4-5-20251001',
+      bookingUrl: 'https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp',
+      systemPrompt: `Sei Sofia, la consulente virtuale di LuniversoTuo — agenzia Allianz a Pescia, Toscana.
+
+Parli sempre in italiano. Sei umana, calda, presente — non una macchina, non un robot assicurativo.
+Il tuo tono è quello di una persona che capisce davvero le paure delle famiglie italiane.
+
+La SuperSerenità® è uno stato emotivo: la libertà di vivere senza paure economiche, senza ansie, senza sorprese.
+Non è un prodotto. È un percorso in 4 movimenti: Vedere, Comprendere, Scegliere, Mantenere.
+
+LE TUE REGOLE:
+— Mai più di 4 frasi per risposta. Sii essenziale e caldo.
+— Zero tecnicismi: niente codici polizza, premi, franchigie, clausole.
+— Parla di paure concrete: il mutuo, i figli, la malattia, i genitori anziani, il lavoro.
+— Dopo 2–3 scambi, invita a prenotare la consulenza gratuita (60 minuti, zero impegno).
+— Se chiedono dati tecnici specifici, di' che il team li affronterà in consulenza.
+— Non inventare garanzie o importi specifici.
+— Sii rassicurante, mai allarmista.
+
+DATI: 461 recensioni ECCELLENTE · 15.184 rischi analizzati · 5 professionisti
+Prenotazione: https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp
+Tel: 0572 47139 · info@luniversotuo.it`
+    };
+
+    const QUICK_REPLIES = [
+      { label: 'Cos\'è la SuperSerenità®?', text: 'Cos\'è esattamente la SuperSerenità®? Non ho capito bene.' },
+      { label: 'Ho una preoccupazione...', text: 'Ho una preoccupazione che mi tormenta. Posso dirtela?' },
+      { label: 'Come funziona la consulenza?', text: 'Come funziona la consulenza gratuita? A cosa mi impegno?' },
+      { label: 'Ho già polizze, serve?', text: 'Ho già delle assicurazioni. La SuperSerenità® serve anche a me?' },
+      { label: 'Quanto costa?', text: 'Quanto costa la SuperSerenità®?' }
+    ];
+
+    const demoResponses = [
+      'Ciao! Sono Sofia. La SuperSerenità® non è una polizza — è uno stato emotivo. È la libertà di vivere senza quella voce in testa che ti chiede "e se mi succede qualcosa?". Il team di LuniversoTuo ha sviluppato un metodo per arrivarci, costruito attorno alla tua situazione reale. Cosa ti preoccupa di più?',
+      'Capisco. È una di quelle domande che a volte si fa fatica anche a dire ad alta voce. Il percorso della SuperSerenità® parte proprio da lì — non da prodotti, ma da quello che tieni più in cuore. Posso chiederti qualcosa in più?',
+      'Quello che mi stai raccontando è esattamente il tipo di preoccupazione che Giancarlo e il team affrontano ogni giorno. Una consulenza gratuita di 60 minuti potrebbe darti chiarezza vera — senza impegno, senza pressioni. Ti mando subito il link per prenotare quando vuoi.',
+      'Ha senso chiedersi queste cose. È segno che ci tieni davvero a proteggere quello che hai costruito. Il team è qui proprio per questo — per aiutarti a vedere la tua situazione reale e costruire la protezione giusta. Vuoi prenotare due chiacchiere gratuite con Giancarlo?'
+    ];
+    let demoIdx = 0;
+    let messages = [];
+    let isTyping = false;
+    let quickShown = true;
+    let bookShown = false;
+
+    function now() {
+      return new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+    }
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+    }
+    function scrollBot() {
+      const el = document.getElementById('chat-messages');
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+
+    function addMsg(role, text) {
+      const el = document.getElementById('chat-messages');
+      const w = document.createElement('div');
+      w.className = `cmsg ${role === 'assistant' ? 'ai' : 'user'}`;
+      let header = '';
+      if (role === 'assistant') {
+        header = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Sofia</div></div>`;
+      }
+      w.innerHTML = `${header}<div class="cbubble">${escHtml(text)}</div><div class="cmsg-time">${now()}</div>`;
+      el.appendChild(w);
+      scrollBot();
+    }
+
+    function showTyping() {
+      const el = document.getElementById('chat-messages');
+      const w = document.createElement('div');
+      w.className = 'cmsg ai'; w.id = 'chat-typing';
+      w.innerHTML = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Sofia</div></div><div class="ctyping"><div class="cdot"></div><div class="cdot"></div><div class="cdot"></div></div>`;
+      el.appendChild(w); scrollBot();
+    }
+    function hideTyping() { const t = document.getElementById('chat-typing'); if (t) t.remove(); }
+
+    function showBooking() {
+      if (bookShown) return;
+      bookShown = true;
+      const el = document.getElementById('chat-messages');
+      const a = document.createElement('a');
+      a.className = 'chat-book-banner'; a.href = CONFIG.bookingUrl; a.target = '_blank'; a.rel = 'noopener';
+      a.style.cssText = 'display:flex;margin:8px 0;';
+      a.innerHTML = `<div class="chat-book-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#93baff" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="chat-book-title">Prenota la consulenza gratuita</div><div class="chat-book-sub">60 minuti · Nessun impegno · Online o a Pescia</div></div><div class="chat-book-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>`;
+      el.appendChild(a); scrollBot();
+    }
+
+    function clearQuick() {
+      const el = document.getElementById('chat-quick');
+      if (el) el.innerHTML = '';
+      quickShown = false;
+    }
+
+    function renderQuick() {
+      const el = document.getElementById('chat-quick');
+      if (!el || !quickShown) return;
+      el.innerHTML = '';
+      QUICK_REPLIES.forEach(qr => {
+        const btn = document.createElement('button');
+        btn.className = 'cqr'; btn.textContent = qr.label;
+        btn.addEventListener('click', () => { clearQuick(); send(qr.text); });
+        el.appendChild(btn);
+      });
+    }
+
+    async function callAI(text) {
+      if (CONFIG.apiKey === 'INSERISCI_QUI_LA_TUA_CHIAVE_API') {
+        const resp = demoResponses[Math.min(demoIdx, demoResponses.length - 1)];
+        demoIdx++;
+        return new Promise(r => setTimeout(() => r(resp), 900 + Math.random() * 700));
+      }
+      messages.push({ role: 'user', content: text });
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': CONFIG.apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-calls': 'true'
+        },
+        body: JSON.stringify({ model: CONFIG.model, max_tokens: 350, system: CONFIG.systemPrompt, messages })
+      });
+      if (!res.ok) throw new Error('Errore API');
+      const data = await res.json();
+      const aiText = data.content[0].text;
+      messages.push({ role: 'assistant', content: aiText });
+      return aiText;
+    }
+
+    async function send(text) {
+      text = text.trim();
+      if (!text || isTyping) return;
+      clearQuick();
+      addMsg('user', text);
+      isTyping = true;
+      showTyping();
+      try {
+        const reply = await callAI(text);
+        hideTyping();
+        addMsg('assistant', reply);
+        if ((messages.length >= 4 || demoIdx >= 2) && !bookShown) showBooking();
+      } catch (e) {
+        hideTyping();
+        const el = document.getElementById('chat-messages');
+        const d = document.createElement('div');
+        d.className = 'cerror';
+        d.textContent = 'Errore di connessione. Contatta lo studio: 0572 47139 o info@luniversotuo.it';
+        el.appendChild(d); scrollBot();
+      } finally { isTyping = false; }
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('chat-input');
+      const sendBtn = document.getElementById('chat-send');
+
+      sendBtn.addEventListener('click', () => { send(input.value); input.value = ''; input.style.height = 'auto'; });
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault(); send(input.value); input.value = ''; input.style.height = 'auto';
+        }
+      });
+      input.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+      });
+
+      // Benvenuto
+      setTimeout(() => {
+        showTyping();
+        setTimeout(() => {
+          hideTyping();
+          addMsg('assistant', 'Ciao! Sono Sofia, la consulente virtuale di LuniversoTuo. Sono qui per ascoltarti — senza fretta, senza impegno. Da dove vuoi partire?');
+          renderQuick();
+        }, 1000);
+      }, 400);
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La SuperSerenità® — Il Metodo | LuniversoTuo</title>
+  <meta name="description" content="SuperSerenità® è un metodo scientifico in 4 movimenti per costruire la tua protezione su misura. Scopri il percorso, la consulenza gratuita, cosa ricevi.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero { padding: 90px 0 70px; background: var(--bg-main); }
+    .page-hero__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; max-width: 760px; }
+    .page-hero__h1 { font-size: 56px; font-weight: 800; color: #fff; letter-spacing: -2.2px; line-height: 1.06; margin-bottom: 24px; }
+    .page-hero__h1 em { font-style: normal; color: #2563EB; }
+    .page-hero__p { font-size: 19px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 36px; }
+
+    /* CONCETTO */
+    .concept { background: var(--bg-alt); padding: 80px 0; }
+    .concept__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .concept__quote { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.8px; line-height: 1.4; margin-bottom: 20px; }
+    .concept__quote em { font-style: normal; color: #2563EB; }
+    .concept__text { font-size: 16px; color: rgba(255,255,255,0.48); line-height: 1.75; margin-bottom: 16px; }
+    .concept__stat { display: flex; align-items: baseline; gap: 8px; margin-top: 28px; padding: 18px 22px; background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 12px; }
+    .concept__stat-num { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -1px; }
+    .concept__stat-lbl { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .concept__visual { position: relative; }
+
+    /* HOUSE OF SUPERSERENITA */
+    .house { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 32px; }
+    .house__title { font-size: 12px; font-weight: 700; color: rgba(37,99,235,0.8); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+    .house__layer {
+      padding: 12px 16px; border-radius: 8px; margin-bottom: 6px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85);
+    }
+    .house__layer-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+    .l1 { background: rgba(37,99,235,0.18); } .l1 .house__layer-dot { background: #2563EB; }
+    .l2 { background: rgba(34,197,94,0.12); } .l2 .house__layer-dot { background: #22c55e; }
+    .l3 { background: rgba(245,158,11,0.12); } .l3 .house__layer-dot { background: #F59E0B; }
+    .l4 { background: rgba(168,85,247,0.12); } .l4 .house__layer-dot { background: #a855f7; }
+    .l5 { background: rgba(239,68,68,0.12); } .l5 .house__layer-dot { background: #ef4444; }
+    .l6 { background: rgba(6,182,212,0.12); } .l6 .house__layer-dot { background: #06b6d4; }
+    .l7 { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); } .l7 .house__layer-dot { background: rgba(255,255,255,0.4); }
+
+    /* 4 MOVIMENTI DETAIL */
+    .movimenti { padding: 88px 0; }
+    .movimenti__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+    .movimento { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; margin-bottom: 80px; padding-bottom: 80px; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+    .movimento:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .movimento--reverse { direction: rtl; }
+    .movimento--reverse > * { direction: ltr; }
+    .movimento__num { font-size: 11px; font-weight: 700; color: rgba(37,99,235,0.65); letter-spacing: 2px; margin-bottom: 16px; }
+    .movimento__title { font-size: 38px; font-weight: 800; color: #fff; letter-spacing: -1.5px; line-height: 1.08; margin-bottom: 18px; }
+    .movimento__desc { font-size: 16px; color: rgba(255,255,255,0.45); line-height: 1.75; margin-bottom: 24px; }
+    .movimento__detail { font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.7; }
+    .movimento__visual {
+      background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 18px;
+      min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; padding: 32px; text-align: center;
+    }
+    .movimento__icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; }
+    .movimento__icon svg { width: 28px; height: 28px; stroke: #2563EB; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .movimento__caption { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+
+    /* 5 FASI CONSULENZA */
+    .consulenza { background: var(--bg-alt); padding: 88px 0; }
+    .fasi-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-top: 48px; }
+    .fase { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px 18px; text-align: center; position: relative; }
+    .fase__n { font-size: 10px; font-weight: 700; color: rgba(37,99,235,0.6); letter-spacing: 2px; margin-bottom: 14px; }
+    .fase__icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .fase__icon svg { width: 18px; height: 18px; stroke: #2563EB; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .fase__title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .fase__desc { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.55; }
+
+    /* COSA RICEVI */
+    .ricevi { padding: 88px 0; }
+    .ricevi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 48px; }
+    .ricevi-card { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 28px; }
+    .ricevi-card__icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .ricevi-card__icon svg { width: 22px; height: 22px; stroke: #2563EB; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .ricevi-card__title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .ricevi-card__desc { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.65; }
+
+    /* CTA BOOK */
+    .book-cta { background: #2563EB; padding: 80px 0; }
+    .book-cta__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; text-align: center; }
+    .book-cta__h2 { font-size: 42px; font-weight: 800; color: #fff; letter-spacing: -1.5px; margin-bottom: 12px; }
+    .book-cta__sub { font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 36px; }
+    .book-cta__btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: #fff; color: #2563EB; border: none; border-radius: 10px; padding: 16px 28px; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-white-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 15px 26px; font-size: 15px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+
+    @media(max-width:900px) {
+      .page-hero__h1 { font-size: 36px; }
+      .concept__inner { grid-template-columns: 1fr; }
+      .movimento { grid-template-columns: 1fr; }
+      .movimento--reverse { direction: ltr; }
+      .fasi-grid { grid-template-columns: repeat(2,1fr); }
+      .ricevi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <img src="img/logo-luniversotuo.svg" alt="LuniversoTuo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="nav__logo-fallback" style="display:none">
+        <div class="nav__logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div><div class="nav__logo-text">LuniversoTuo</div><div class="nav__logo-sub">L'UNICO CHE ASSICURA LA SUPERSERENITÀ®</div></div>
+      </div>
+    </a>
+    <ul class="nav__menu">
+      <li><a href="superserenita.html" class="active">La SuperSerenità</a></li>
+      <li><a href="storie.html">Le Storie</a></li>
+      <li><a href="team.html">Il Team</a></li>
+      <li><a href="testimonianze.html">Testimonianze</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="chat.html" class="nav__link-ghost">Parla con Sofia</a>
+      <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-nav">Prenota ora</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-body">
+
+  <section class="page-hero">
+    <div class="page-hero__inner container">
+      <div class="tag" style="margin-bottom:24px"><div class="tag__dot"></div>Il Metodo</div>
+      <h1 class="page-hero__h1">SuperSerenità®<br>non è una polizza.<br>È uno <em>stato emotivo.</em></h1>
+      <p class="page-hero__p">
+        È la libertà di vivere senza il peso delle preoccupazioni economiche.
+        È svegliarsi la mattina sapendo che la tua famiglia è protetta, il tuo reddito è garantito,
+        il tuo futuro è costruito. Un metodo scientifico. Un percorso umano. Un risultato misurabile.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="#movimenti" class="btn-outline">Scopri i 4 movimenti</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- IL CONCETTO -->
+  <section class="concept">
+    <div class="concept__inner">
+      <div>
+        <div class="eyebrow">Il concetto</div>
+        <p class="concept__quote">
+          &ldquo;Il denaro è <em>ossigeno sociale.</em><br>Quando manca, la vita si blocca.&rdquo;
+        </p>
+        <p class="concept__text">
+          Abbiamo catalogato e analizzato con un attuario statistico 15.184 rischi economici reali
+          che possono colpire una persona, una famiglia o un'azienda nel corso della vita.
+        </p>
+        <p class="concept__text">
+          La SuperSerenità® nasce da questa ricerca: un metodo per identificare i rischi davvero
+          importanti, distinguerli da quelli minori, e costruire una protezione precisa —
+          senza sprechi, senza lacune, senza sorprese.
+        </p>
+        <div class="concept__stat">
+          <div class="concept__stat-num">15.184</div>
+          <div class="concept__stat-lbl">rischi economici reali<br>catalogati e analizzati</div>
+        </div>
+      </div>
+      <div class="concept__visual">
+        <div class="house">
+          <div class="house__title">La Costruzione della SuperSerenità®</div>
+          <div class="house__layer l1"><div class="house__layer-dot"></div>Protezione del reddito</div>
+          <div class="house__layer l2"><div class="house__layer-dot"></div>Assistenza Long Term Care</div>
+          <div class="house__layer l3"><div class="house__layer-dot"></div>Casa &amp; Responsabilità civile</div>
+          <div class="house__layer l4"><div class="house__layer-dot"></div>Fondo di emergenza</div>
+          <div class="house__layer l5"><div class="house__layer-dot"></div>Pensione integrativa</div>
+          <div class="house__layer l6"><div class="house__layer-dot"></div>Salute &amp; Infortuni</div>
+          <div class="house__layer l7"><div class="house__layer-dot"></div>Risparmio &amp; Investimento</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 MOVIMENTI -->
+  <section class="movimenti" id="movimenti">
+    <div class="movimenti__inner">
+      <div style="max-width:600px; margin-bottom: 64px;">
+        <div class="eyebrow">Il Metodo SuperSerenità®</div>
+        <h2 class="section-title">4 movimenti.<br>Un percorso.</h2>
+        <p class="section-sub" style="margin-bottom:0">Non è vendita. È accompagnamento. Ogni passo ha un senso, una logica, un obiettivo preciso per te.</p>
+      </div>
+
+      <div class="movimento">
+        <div>
+          <div class="movimento__num">01 — VEDERE</div>
+          <h3 class="movimento__title">Vediamo<br>insieme la realtà.</h3>
+          <p class="movimento__desc">Prima di qualsiasi soluzione, ci prendiamo il tempo per capire davvero chi sei, cosa hai, cosa ti preoccupa e cosa non sai ancora di dover proteggere.</p>
+          <p class="movimento__detail">Con lo strumento Epheso analizziamo la tua situazione in modo completo e oggettivo. Non è un questionario assicurativo: è una mappa della tua vita economica.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="movimento__caption">Analisi completa con Epheso<br>della tua situazione reale</div>
+        </div>
+      </div>
+
+      <div class="movimento movimento--reverse">
+        <div>
+          <div class="movimento__num">02 — COMPRENDERE</div>
+          <h3 class="movimento__title">Comprendi i rischi<br>che non vedi.</h3>
+          <p class="movimento__desc">Ti mostriamo — con dati reali, storie vere e numeri concreti — cosa succederebbe senza protezione. Non per spaventarti: per darti consapevolezza.</p>
+          <p class="movimento__detail">Il costo di una badante è 2.500€ al mese. Una RSA in Toscana costa in media 3.500€ al mese. Un infortunio che blocca il reddito per 6 mesi può azzerare anni di risparmi. Sono fatti. Non ipotesi.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+          <div class="movimento__caption">Dati reali, numeri concreti<br>nessun allarme — solo chiarezza</div>
+        </div>
+      </div>
+
+      <div class="movimento">
+        <div>
+          <div class="movimento__num">03 — SCEGLIERE</div>
+          <h3 class="movimento__title">Scegli la soluzione<br>che è davvero tua.</h3>
+          <p class="movimento__desc">Non ti proponiamo prodotti. Costruiamo insieme la protezione su misura per la tua vita, il tuo budget, le tue priorità. Solo quello che serve davvero.</p>
+          <p class="movimento__detail">La differenza tra SuperSerenità® e un'assicurazione tradizionale: qui non parti dal prodotto e ci adatti la persona. Parti dalla persona e costruisci il prodotto.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="movimento__caption">Soluzione costruita su misura<br>per te — non un pacchetto standard</div>
+        </div>
+      </div>
+
+      <div class="movimento movimento--reverse">
+        <div>
+          <div class="movimento__num">04 — MANTENERE</div>
+          <h3 class="movimento__title">La SuperSerenità®<br>dura nel tempo.</h3>
+          <p class="movimento__desc">La vita cambia. La famiglia cresce. Il reddito evolve. Per questo ti affianchiamo ogni anno — per aggiornare la tua protezione alle nuove realtà.</p>
+          <p class="movimento__detail">Il 4° movimento è il più importante: la continuità. Non sei un cliente che compra una polizza e scompare. Sei una persona che ha scelto un percorso.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <div class="movimento__caption">Revisione annuale<br>protezione aggiornata nel tempo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 FASI CONSULENZA -->
+  <section class="consulenza">
+    <div class="container">
+      <div class="eyebrow">La consulenza</div>
+      <h2 class="section-title">Come funziona<br>il tuo incontro</h2>
+      <p class="section-sub">Ogni consulenza SuperSerenità® segue 5 fasi precise. Nessuna sorpresa, nessuna pressione. Solo un percorso chiaro verso la tua serenità.</p>
+      <div class="fasi-grid">
+        <div class="fase">
+          <div class="fase__n">01</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="fase__title">Ascolto</div>
+          <div class="fase__desc">Ti ascoltiamo davvero. Senza schemi, senza fretta.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">02</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+          <div class="fase__title">Consapevolezza</div>
+          <div class="fase__desc">Ti mostriamo i rischi reali con dati concreti.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">03</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+          <div class="fase__title">Priorità</div>
+          <div class="fase__desc">Ordiniamo insieme cosa proteggere prima.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">04</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="fase__title">Soluzione</div>
+          <div class="fase__desc">Costruiamo il piano su misura per te.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">05</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="fase__title">Continuità</div>
+          <div class="fase__desc">Ti affianchiamo nel tempo. Anno dopo anno.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COSA RICEVI -->
+  <section class="ricevi">
+    <div class="container">
+      <div class="eyebrow">Cosa ricevi</div>
+      <h2 class="section-title">Dalla consulenza,<br>non esci a mani vuote.</h2>
+      <p class="section-sub">Ogni consulenza SuperSerenità® — completamente gratuita — include tre elementi concreti che puoi portarti a casa.</p>
+      <div class="ricevi-grid">
+        <div class="ricevi-card">
+          <div class="ricevi-card__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="ricevi-card__title">3 ore di consulenza personalizzata</div>
+          <div class="ricevi-card__desc">Tre ore di ascolto, analisi e costruzione insieme. Non un appuntamento lampo: un vero percorso, senza fretta.</div>
+        </div>
+        <div class="ricevi-card">
+          <div class="ricevi-card__icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div class="ricevi-card__title">Analisi Epheso completa</div>
+          <div class="ricevi-card__desc">La mappa completa della tua situazione economica e dei rischi reali — generata con lo strumento professionale Epheso.</div>
+        </div>
+        <div class="ricevi-card">
+          <div class="ricevi-card__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+          <div class="ricevi-card__title">Il tuo Piano SuperSerenità®</div>
+          <div class="ricevi-card__desc">Un documento personalizzato con le tue priorità, le soluzioni su misura e un piano d'azione concreto — tuo, da portare a casa.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BOOK -->
+  <section class="book-cta">
+    <div class="book-cta__inner">
+      <h2 class="book-cta__h2">Inizia il tuo percorso<br>verso la SuperSerenità®</h2>
+      <p class="book-cta__sub">Consulenza gratuita &middot; Online o in agenzia a Pescia &middot; 60 minuti &middot; Nessun obbligo</p>
+      <div class="book-cta__btns">
+        <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-white">
+          Prenota la consulenza gratuita
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="https://wa.me/39057247139" target="_blank" class="btn-white-outline">Scrivici su WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="footer__grid">
+    <div>
+      <div class="footer__logo"><img src="img/logo-luniversotuo.svg" alt="LuniversoTuo" onerror="this.style.display='none'"></div>
+      <p class="footer__desc">L'unico che assicura la SuperSerenità®.<br>Agenzia Allianz &middot; Pescia (PT) &middot; Toscana.</p>
+    </div>
+    <div class="footer__col"><h4>Navigazione</h4><ul>
+      <li><a href="superserenita.html">La SuperSerenità</a></li>
+      <li><a href="storie.html">Le Storie</a></li>
+      <li><a href="team.html">Il Team</a></li>
+      <li><a href="testimonianze.html">Testimonianze</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul></div>
+    <div class="footer__col"><h4>Contatti</h4><ul>
+      <li><a href="tel:057247139">0572 47139</a></li>
+      <li><a href="mailto:info@luniversotuo.it">info@luniversotuo.it</a></li>
+      <li><a href="https://wa.me/39057247139">WhatsApp</a></li>
+    </ul></div>
+    <div class="footer__col"><h4>Orari</h4><ul>
+      <li><a>Lun–Ven: 9–13 / 16–19</a></li>
+      <li><a>Sab–Dom: chiuso</a></li>
+    </ul></div>
+  </div>
+  <div class="footer__bottom">
+    <div class="footer__legal">&copy; 2026 LuniversoTuo sas &middot; P.IVA 01563410479</div>
+    <div class="footer__trust">
+      <span class="trustbadge">TRUSTINDEX</span>
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <span style="font-size:11px;color:rgba(255,255,255,0.25);">461 recensioni ECCELLENTE</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/39057247139" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</a>
+
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=390681561312731&ev=PageView&noscript=1"/></noscript>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','390681561312731');fbq('track','PageView');</script>
+<script src="js/chat-widget.js"></script>
+</body>
+</html>

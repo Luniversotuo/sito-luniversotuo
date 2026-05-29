@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatti — Prenota la tua consulenza | LuniversoTuo</title>
+  <meta name="description" content="Prenota la tua consulenza gratuita di SuperSerenità®. Online o in agenzia a Pescia (PT). 60 minuti, nessun obbligo.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 60px; }
+    .booking-frame { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; min-height: 600px; }
+    .booking-frame iframe { width: 100%; height: 650px; border: none; }
+    .booking-fallback { padding: 48px; text-align: center; }
+    .booking-fallback h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .booking-fallback p { font-size: 14px; color: rgba(255,255,255,0.38); margin-bottom: 24px; line-height: 1.6; }
+    .info-block { margin-bottom: 32px; }
+    .info-block h3 { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    .info-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding: 14px 18px; background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 12px; transition: border-color 0.2s; }
+    .info-row:hover { border-color: rgba(37,99,235,0.3); }
+    .info-row__icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .info-row__icon svg { width: 18px; height: 18px; stroke: #2563EB; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .info-row__label { font-size: 10px; color: rgba(255,255,255,0.3); margin-bottom: 2px; letter-spacing: 0.5px; }
+    .info-row__val { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); }
+    .info-row a { color: inherit; }
+    .channels { display: flex; flex-direction: column; gap: 10px; }
+    .channel-btn { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-radius: 12px; border: 0.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; transition: all 0.2s; text-decoration: none; }
+    .channel-btn:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); }
+    .channel-btn--wa { border-color: rgba(37,211,102,0.3); background: rgba(37,211,102,0.08); color: #4ade80; }
+    .channel-btn--wa:hover { background: rgba(37,211,102,0.14); }
+    .channel-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .map-embed { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 16px; overflow: hidden; margin-top: 48px; }
+    .map-embed iframe { width: 100%; height: 280px; border: none; }
+    @media(max-width:900px){ .contact-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <img src="img/logo-luniversotuo.svg" alt="LuniversoTuo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="nav__logo-fallback" style="display:none"><div class="nav__logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div><div class="nav__logo-text">LuniversoTuo</div><div class="nav__logo-sub">L'UNICO CHE ASSICURA LA SUPERSERENITÀ®</div></div></div>
+    </a>
+    <ul class="nav__menu">
+      <li><a href="superserenita.html">La SuperSerenità</a></li>
+      <li><a href="storie.html">Le Storie</a></li>
+      <li><a href="team.html">Il Team</a></li>
+      <li><a href="testimonianze.html">Testimonianze</a></li>
+      <li><a href="contatti.html" class="active">Contatti</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="chat.html" class="nav__link-ghost">Parla con Sofia</a>
+      <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-nav">Prenota ora</a>
+    </div>
+  </div>
+</nav>
+<div class="page-body">
+  <section class="hero" style="padding:90px 0 40px;">
+    <div class="container">
+      <div class="tag" style="margin-bottom:24px"><div class="tag__dot"></div>Consulenza gratuita</div>
+      <h1 style="font-size:54px;font-weight:800;color:#fff;letter-spacing:-2px;line-height:1.06;margin-bottom:16px;max-width:640px;">Inizia il tuo percorso<br>verso la <span style="color:#2563EB">SuperSerenità®</span></h1>
+      <p style="font-size:17px;color:rgba(255,255,255,0.42);line-height:1.7;max-width:500px;">Prenota online, scegli data e ora. In agenzia a Pescia o in videocall. 60 minuti, completamente gratuito, nessun obbligo.</p>
+
+      <div class="contact-grid">
+
+        <!-- BOOKING DELERA -->
+        <div>
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Prenota online</div>
+          <div class="booking-frame">
+            <iframe
+              src="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp"
+              title="Prenota la tua consulenza SuperSerenità®"
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- INFO CONTATTO -->
+        <div>
+          <div class="info-block">
+            <h3>Oppure contattaci direttamente</h3>
+            <div class="channels">
+              <a href="https://wa.me/39057247139" target="_blank" class="channel-btn channel-btn--wa">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                Scrivici su WhatsApp
+              </a>
+              <a href="tel:057247139" class="channel-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.95-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Chiama: 0572 47139
+              </a>
+              <a href="mailto:info@luniversotuo.it" class="channel-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                info@luniversotuo.it
+              </a>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <h3>Dove siamo</h3>
+            <div class="info-row">
+              <div class="info-row__icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div><div class="info-row__label">Indirizzo</div><div class="info-row__val">Via Francesca Vecchia 43D<br>51017 Pescia (PT)</div></div>
+            </div>
+            <div class="info-row">
+              <div class="info-row__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div><div class="info-row__label">Orari</div><div class="info-row__val">Lun–Ven: 9:00–13:00 / 16:00–19:00<br>Sabato e Domenica: chiuso</div></div>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <h3>Note sulla consulenza</h3>
+            <div style="background:var(--bg-card);border:0.5px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px 22px;">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.45);">
+                  <div style="width:4px;height:4px;border-radius:50%;background:#2563EB;flex-shrink:0;margin-top:7px;"></div>
+                  Consulenza completamente gratuita — nessun costo nascosto
+                </div>
+                <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.45);">
+                  <div style="width:4px;height:4px;border-radius:50%;background:#2563EB;flex-shrink:0;margin-top:7px;"></div>
+                  Disponibile in agenzia a Pescia o in videocall
+                </div>
+                <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.45);">
+                  <div style="width:4px;height:4px;border-radius:50%;background:#2563EB;flex-shrink:0;margin-top:7px;"></div>
+                  Nessun obbligo di acquisto — solo un incontro per conoscerti
+                </div>
+                <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.45);">
+                  <div style="width:4px;height:4px;border-radius:50%;background:#2563EB;flex-shrink:0;margin-top:7px;"></div>
+                  Durata: circa 60 minuti
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MAPPA -->
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2860.8!2d10.6908!3d43.9044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a4c!2sVia+Francesca+Vecchia+43D+Pescia!5e0!3m2!1sit!2sit!4v1"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="LuniversoTuo — Via Francesca Vecchia 43D, Pescia">
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<footer class="footer"><div class="footer__grid"><div><div class="footer__logo"><img src="img/logo-luniversotuo.svg" alt="LuniversoTuo" onerror="this.style.display='none'"></div><p class="footer__desc">L'unico che assicura la SuperSerenità®.<br>Agenzia Allianz · Pescia (PT).</p></div><div class="footer__col"><h4>Navigazione</h4><ul><li><a href="superserenita.html">La SuperSerenità</a></li><li><a href="storie.html">Le Storie</a></li><li><a href="team.html">Il Team</a></li><li><a href="testimonianze.html">Testimonianze</a></li></ul></div><div class="footer__col"><h4>Contatti</h4><ul><li><a href="tel:057247139">0572 47139</a></li><li><a href="mailto:info@luniversotuo.it">info@luniversotuo.it</a></li><li><a href="https://wa.me/39057247139">WhatsApp</a></li></ul></div><div class="footer__col"><h4>Legale</h4><ul><li><a href="https://www.luniversotuo.it/informativa-sito-web-e-cookie">Privacy & Cookie</a></li><li><a>P.IVA 01563410479</a></li><li><a>N. A000073879</a></li></ul></div></div><div class="footer__bottom"><div class="footer__legal">&copy; 2026 LuniversoTuo sas · P.IVA 01563410479 · In collaborazione con APP BROKER SRL</div><div class="footer__trust"><span class="trustbadge">TRUSTINDEX</span><span style="font-size:11px;color:rgba(255,255,255,0.25);">461 recensioni ECCELLENTE</span></div></div></footer>
+<a href="https://wa.me/39057247139" target="_blank" class="wa-float" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=390681561312731&ev=PageView&noscript=1"/></noscript>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','390681561312731');fbq('track','PageView');</script>
+<script src="js/chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 46" width="260" height="46">
+  <!-- Shield icon — protezione, il cuore del brand -->
+  <path d="M5 10 L23 3 L41 10 L41 24 C41 35 23 43 23 43 C23 43 5 35 5 24 Z" fill="#2563EB"/>
+  <!-- Orbita intorno al centro — "universo" -->
+  <circle cx="23" cy="23" r="7.5" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.6"/>
+  <ellipse cx="23" cy="23" rx="13" ry="5.5" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1" transform="rotate(-25 23 23)"/>
+  <!-- Punto centrale -->
+  <circle cx="23" cy="23" r="2.5" fill="white"/>
+  <!-- Wordmark -->
+  <text x="52" y="22" font-family="Inter,ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="19" font-weight="800" fill="#ffffff" dominant-baseline="middle" letter-spacing="-0.6">LuniversoTuo</text>
+  <text x="53" y="37" font-family="Inter,ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="500" fill="rgba(255,255,255,0.32)" letter-spacing="1.4">L'UNICO CHE ASSICURA LA SUPERSERENITÀ®</text>
+</svg>
