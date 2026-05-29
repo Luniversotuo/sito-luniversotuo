@@ -621,21 +621,44 @@
   }
 
   async function resolveFilePath(file, token) {
-    // If we already know the base path, use it
-    const saved = getBase();
-    if (saved !== null) {
-      const res = await ghGet(saved + file, token);
-      if (res.ok) return { res, path: saved + file };
-      // Saved base no longer valid — re-detect
-      localStorage.removeItem('lt_gh_base');
+    localStorage.removeItem('lt_gh_base');
+    // Step 1: diagnose repo root
+    const rootRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`, {
+      headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    if (!rootRes.ok) {
+      const status = rootRes.status;
+      if (status===401) throw new Error('Token non valido o scaduto (401). Rimuovi il token e inseriscine uno nuovo.');
+      if (status===403) throw new Error('Accesso negato (403). Il token non ha i permessi "repo" sul repository.');
+      if (status===404) throw new Error(`Repository non trovato (404). Verifica che "${GITHUB_OWNER}/${GITHUB_REPO}" esista su GitHub e sia accessibile.`);
+      throw new Error(`Errore connessione repository: HTTP ${status}`);
     }
-    // Auto-detect: try root, then common subfolder names
-    const candidates = ['', 'sito-luniversotuo/', 'site/', 'www/'];
-    for (const prefix of candidates) {
-      const res = await ghGet(prefix + file, token);
-      if (res.ok) { setBase(prefix); return { res, path: prefix + file }; }
+    const rootFiles = await rootRes.json();
+    // Find the file in root or one level deep
+    const rootNames = Array.isArray(rootFiles) ? rootFiles.map(f=>f.name) : [];
+    if (rootNames.includes(file)) {
+      setBase('');
+      const res = await ghGet(file, token);
+      return { res, path: file };
     }
-    return null;
+    // Look for a subfolder containing HTML files
+    const dirs = Array.isArray(rootFiles) ? rootFiles.filter(f=>f.type==='dir') : [];
+    for (const dir of dirs) {
+      const subRes = await fetch(dir.url, {
+        headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+      });
+      if (!subRes.ok) continue;
+      const subFiles = await subRes.json();
+      if (Array.isArray(subFiles) && subFiles.some(f=>f.name===file)) {
+        const prefix = dir.name + '/';
+        setBase(prefix);
+        const res = await ghGet(prefix + file, token);
+        return { res, path: prefix + file };
+      }
+    }
+    // Not found — show what IS in the repo
+    const names = rootNames.length ? rootNames.join(', ') : '(cartella vuota)';
+    throw new Error(`"${file}" non trovato. File nella root del repo: ${names}`);
   }
 
   /* ── EDITOR: LOAD FILE ── */
@@ -646,21 +669,20 @@
     if (!token) { alert('Inserisci prima il token GitHub nel riquadro in alto.'); return; }
 
     const info = document.getElementById('editor-file-info');
-    info.textContent = 'Caricamento...';
+    info.textContent = 'Ricerca file nel repository...';
     document.getElementById('code-editor').value = '';
     currentFileSha = null; currentFileName = null;
 
     try {
       const found = await resolveFilePath(file, token);
-      if (!found) throw new Error('File non trovato nel repository (provate root e sottocartelle comuni).');
       const data = await found.res.json();
       const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
       document.getElementById('code-editor').value = content;
       currentFileSha = data.sha;
       currentFileName = found.path;
-      info.textContent = `${found.path} · ${(data.size/1024).toFixed(1)} KB · pronto per la modifica`;
+      info.textContent = `✓ ${found.path} · ${(data.size/1024).toFixed(1)} KB · pronto per la modifica`;
     } catch(e) {
-      info.textContent = 'Errore: ' + e.message;
+      info.textContent = '✗ ' + e.message;
     }
   }
 
