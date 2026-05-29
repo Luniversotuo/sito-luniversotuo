@@ -180,6 +180,28 @@
     .find-btn { background:rgba(255,255,255,0.06); border:0.5px solid var(--border); border-radius:8px; padding:7px 14px; color:var(--t2); font-size:12px; cursor:pointer; font-family:inherit; }
     .find-btn:hover { background:rgba(255,255,255,0.1); color:var(--t1); }
 
+    /* NUOVA PAGINA */
+    .nuova-card { background:var(--card); border:0.5px solid var(--blue-border); border-radius:var(--r2); padding:24px; margin-bottom:24px; }
+    .nuova-card-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+    .nuova-card-icon { width:40px; height:40px; border-radius:10px; background:var(--blue-dim); border:0.5px solid var(--blue-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .nuova-card-icon svg { width:18px; height:18px; fill:none; stroke:var(--blue-text); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .nuova-card-title { font-size:14px; font-weight:700; color:var(--white); }
+    .nuova-card-sub { font-size:12px; color:var(--t3); margin-top:2px; }
+    .nuova-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+    .nuova-field label { display:block; font-size:11px; font-weight:600; color:var(--t3); letter-spacing:0.4px; margin-bottom:6px; }
+    .nuova-input { width:100%; background:var(--card2); border:0.5px solid var(--border); border-radius:var(--r); padding:10px 14px; color:var(--t1); font-size:13px; outline:none; font-family:inherit; transition:border-color 0.15s; }
+    .nuova-input:focus { border-color:var(--blue-border); }
+    .nuova-url-prefix { font-size:12px; color:var(--t3); margin-top:6px; }
+    .nuova-url-prefix span { color:var(--blue-text); font-weight:600; }
+    .nuova-footer { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .nuova-btn { background:var(--blue); border:none; border-radius:var(--r); padding:10px 24px; color:white; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; display:flex; align-items:center; gap:8px; }
+    .nuova-btn:hover { background:#1d4ed8; }
+    .nuova-btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .nuova-status { font-size:12.5px; }
+    .nuova-status.ok { color:var(--green); }
+    .nuova-status.err { color:var(--red); }
+    @media(max-width:640px){ .nuova-fields { grid-template-columns:1fr; } }
+
     /* ── AGGIORNAMENTI RAPIDI TAB ── */
     .rapidi-main { max-width:900px; margin:0 auto; padding:28px 28px 60px; }
     .rapidi-desc { font-size:14px; color:var(--t3); margin-bottom:28px; line-height:1.7; }
@@ -440,6 +462,37 @@
             Token GitHub configurato · Repository: Luniversotuo/luniversotuo-sito
             <span class="token-change" onclick="removeToken()">Cambia</span>
           </div>
+        </div>
+      </div>
+
+      <!-- NUOVA PAGINA -->
+      <div class="nuova-card">
+        <div class="nuova-card-header">
+          <div class="nuova-card-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div>
+            <div class="nuova-card-title">Crea Nuova Pagina</div>
+            <div class="nuova-card-sub">La pagina viene creata in automatico con la struttura del sito e aperta nell'editor</div>
+          </div>
+        </div>
+        <div class="nuova-fields">
+          <div class="nuova-field">
+            <label>NOME PAGINA</label>
+            <input type="text" id="nuova-nome" class="nuova-input" placeholder="es. Servizi, FAQ, Chi siamo…" oninput="autoSlug()">
+          </div>
+          <div class="nuova-field">
+            <label>URL PAGINA</label>
+            <input type="text" id="nuova-slug" class="nuova-input" placeholder="es. servizi">
+            <div class="nuova-url-prefix">Il sito aprirà: <span id="nuova-url-preview">luniversotuo.it/…</span></div>
+          </div>
+        </div>
+        <div class="nuova-footer">
+          <button class="nuova-btn" id="nuova-btn" onclick="createNewPage()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin:round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Crea Pagina
+          </button>
+          <span class="nuova-status" id="nuova-status"></span>
         </div>
       </div>
 
@@ -824,6 +877,110 @@
     } else {
       statusEl.className='rapido-status err';
       statusEl.textContent=`Aggiornato ${updated} file. Errori: ${errors.join(', ')}`;
+    }
+  }
+
+  /* ── NUOVA PAGINA ── */
+  function autoSlug() {
+    const nome = document.getElementById('nuova-nome').value;
+    const slug = nome.toLowerCase()
+      .replace(/[àáâãäå]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
+      .replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u')
+      .replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+    document.getElementById('nuova-slug').value = slug;
+    document.getElementById('nuova-url-preview').textContent = slug ? `luniversotuo.it/${slug}` : 'luniversotuo.it/…';
+  }
+
+  async function createNewPage() {
+    const nome = document.getElementById('nuova-nome').value.trim();
+    const slug = document.getElementById('nuova-slug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'');
+    if (!nome) { alert('Inserisci il nome della pagina.'); return; }
+    if (!slug) { alert('Inserisci l\'URL (es. servizi).'); return; }
+
+    const token = getToken();
+    if (!token) { alert('Inserisci prima il token GitHub nell\'Editor Pagine.'); return; }
+
+    const btn = document.getElementById('nuova-btn');
+    const statusEl = document.getElementById('nuova-status');
+    btn.disabled = true;
+    statusEl.className = 'nuova-status';
+    statusEl.textContent = 'Creazione in corso…';
+
+    try {
+      const BASE = getBase() ?? '';
+
+      // 1. Carica template (contatti.html come base)
+      const tplRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${BASE}contatti.html`,{
+        headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+      });
+      if (!tplRes.ok) throw new Error('Impossibile caricare il template. Carica prima una pagina per rilevare il percorso corretto.');
+      const tplData = await tplRes.json();
+      let html = decodeURIComponent(escape(atob(tplData.content.replace(/\n/g,''))));
+
+      // 2. Personalizza per la nuova pagina
+      html = html.replace(/<title>[^<]*<\/title>/, `<title>${nome} — LuniversoTuo</title>`);
+      // Sostituisce la sezione <main>…</main> con contenuto base
+      html = html.replace(/<main[\s\S]*?<\/main>/,
+        `<main style="padding:100px 24px 80px;max-width:800px;margin:0 auto;min-height:60vh;">
+  <h1 style="font-size:clamp(28px,5vw,52px);font-weight:800;letter-spacing:-2px;color:#fff;margin-bottom:24px;">${nome}</h1>
+  <p style="font-size:17px;color:rgba(255,255,255,0.55);line-height:1.85;max-width:560px;">Questa è la nuova pagina <strong style="color:rgba(255,255,255,0.8);">${nome}</strong>. Modifica il testo qui sopra dall'Editor per personalizzarla come vuoi.</p>
+</main>`);
+
+      // 3. Crea il file su GitHub
+      const newPath = BASE + slug + '.html';
+      const createRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${newPath}`,{
+        method:'PUT',
+        headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
+        body: JSON.stringify({
+          message:`Admin: nuova pagina "${nome}" → ${slug}.html`,
+          content: btoa(unescape(encodeURIComponent(html)))
+        })
+      });
+      if (!createRes.ok){ const e=await createRes.json(); throw new Error(e.message||'Errore creazione file.'); }
+
+      // 4. Aggiorna vercel.json con il nuovo URL pulito
+      const vjPath = BASE + 'vercel.json';
+      const vjRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${vjPath}`,{
+        headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+      });
+      if (vjRes.ok){
+        const vjData = await vjRes.json();
+        const vj = JSON.parse(decodeURIComponent(escape(atob(vjData.content.replace(/\n/g,'')))));
+        if (!vj.rewrites) vj.rewrites = [];
+        if (!vj.rewrites.some(r=>r.source===`/${slug}`)){
+          vj.rewrites.push({ source:`/${slug}`, destination:`/${slug}.html` });
+          await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${vjPath}`,{
+            method:'PUT',
+            headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
+            body: JSON.stringify({
+              message:`Admin: URL /${slug} per "${nome}"`,
+              content: btoa(unescape(encodeURIComponent(JSON.stringify(vj,null,2)))),
+              sha: vjData.sha
+            })
+          });
+        }
+      }
+
+      // 5. Aggiungi al selettore e apri nell'editor
+      const select = document.getElementById('file-select');
+      const opt = document.createElement('option');
+      opt.value = slug + '.html';
+      opt.textContent = `${nome} (${slug}.html)`;
+      select.appendChild(opt);
+
+      document.getElementById('nuova-nome').value = '';
+      document.getElementById('nuova-slug').value = '';
+      document.getElementById('nuova-url-preview').textContent = 'luniversotuo.it/…';
+
+      statusEl.className = 'nuova-status ok';
+      statusEl.textContent = `✓ Pagina "${nome}" creata! Aperta nell'editor — personalizzala e premi Salva.`;
+      setTimeout(()=>{ openEditor(slug+'.html'); }, 600);
+
+    } catch(e){
+      statusEl.className = 'nuova-status err';
+      statusEl.textContent = '✗ ' + e.message;
+    } finally {
+      btn.disabled = false;
     }
   }
 
