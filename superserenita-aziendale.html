@@ -24,23 +24,36 @@
     .concept__stat-lbl { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; }
     .concept__visual { position: relative; }
 
-    /* HOUSE */
-    .house { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 32px; }
-    .house__title { font-size: 12px; font-weight: 700; color: rgba(37,99,235,0.8); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
-    .house__label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.25); letter-spacing: 1.5px; text-transform: uppercase; margin: 18px 0 8px; }
-    .house__layer {
-      padding: 12px 16px; border-radius: 8px; margin-bottom: 6px;
-      display: flex; align-items: center; gap: 12px;
-      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85);
+    /* PYRAMID AZIENDALE */
+    .house { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 28px 20px 32px; }
+    .house__title { font-size: 11px; font-weight: 700; color: rgba(37,99,235,0.8); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 22px; text-align: center; }
+    .pyr { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .pyr-tier { border-radius: 10px; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.09); }
+    .pyr-tier--top { width: 58%; }
+    .pyr-tier--mid { width: 79%; }
+    .pyr-tier--base { width: 100%; }
+    .pyr-tier__label {
+      font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.3);
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 7px 12px 5px; text-align: center;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 0.5px solid rgba(255,255,255,0.07);
     }
-    .house__layer-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-    .l1 { background: rgba(37,99,235,0.18); } .l1 .house__layer-dot { background: #2563EB; }
-    .l2 { background: rgba(34,197,94,0.12); } .l2 .house__layer-dot { background: #22c55e; }
-    .l3 { background: rgba(245,158,11,0.12); } .l3 .house__layer-dot { background: #F59E0B; }
-    .l4 { background: rgba(168,85,247,0.12); } .l4 .house__layer-dot { background: #a855f7; }
-    .l5 { background: rgba(239,68,68,0.12); } .l5 .house__layer-dot { background: #ef4444; }
-    .l6 { background: rgba(6,182,212,0.12); } .l6 .house__layer-dot { background: #06b6d4; }
-    .l7 { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); } .l7 .house__layer-dot { background: rgba(255,255,255,0.4); }
+    .pyr-item {
+      padding: 8px 12px; font-size: 10.5px; font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      display: flex; align-items: center; gap: 8px;
+      border-top: 0.5px solid rgba(255,255,255,0.05);
+    }
+    .pyr-item + .pyr-item { border-top: 0.5px solid rgba(255,255,255,0.05); }
+    .pyr-dot { width: 6px; height: 6px; border-radius: 2px; flex-shrink: 0; }
+    .l1 { background: rgba(37,99,235,0.16); } .l1 .pyr-dot { background: #2563EB; }
+    .l2 { background: rgba(34,197,94,0.11); } .l2 .pyr-dot { background: #22c55e; }
+    .l3 { background: rgba(245,158,11,0.11); } .l3 .pyr-dot { background: #F59E0B; }
+    .l4 { background: rgba(168,85,247,0.11); } .l4 .pyr-dot { background: #a855f7; }
+    .l5 { background: rgba(239,68,68,0.11); } .l5 .pyr-dot { background: #ef4444; }
+    .l6 { background: rgba(6,182,212,0.11); } .l6 .pyr-dot { background: #06b6d4; }
+    .l7 { background: rgba(255,255,255,0.05); } .l7 .pyr-dot { background: rgba(255,255,255,0.4); }
 
     /* PROFILI */
     .profili { padding: 88px 0; }
@@ -108,6 +121,10 @@
       .fasi-grid { grid-template-columns: repeat(2,1fr); }
       .profili-grid { grid-template-columns: 1fr; }
       .ricevi-grid { grid-template-columns: 1fr; }
+      .pyr-tier--top { width: 72%; }
+      .pyr-tier--mid { width: 86%; }
+      .pyr-tier--base { width: 100%; }
+      .pyr-item { font-size: 11px; padding: 9px 14px; }
     }
   </style>
 </head>
@@ -188,16 +205,27 @@
       <div class="concept__visual">
         <div class="house">
           <div class="house__title">La Casa della SuperSerenità® Aziendale</div>
-          <div class="house__label">Fondamenta — Sopravvivenza</div>
-          <div class="house__layer l1"><div class="house__layer-dot"></div>Continuità del reddito del titolare</div>
-          <div class="house__layer l2"><div class="house__layer-dot"></div>Responsabilità civile professionale</div>
-          <div class="house__layer l3"><div class="house__layer-dot"></div>Beni aziendali &amp; RC verso terzi</div>
-          <div class="house__label">Primo Piano — Sicurezza</div>
-          <div class="house__layer l4"><div class="house__layer-dot"></div>Tutela dei collaboratori chiave</div>
-          <div class="house__layer l5"><div class="house__layer-dot"></div>Salute &amp; Infortuni del titolare</div>
-          <div class="house__label">Tetto — Continuità e crescita</div>
-          <div class="house__layer l6"><div class="house__layer-dot"></div>Previdenza integrativa aziendale</div>
-          <div class="house__layer l7"><div class="house__layer-dot"></div>Piano di successione &amp; futuro</div>
+          <div class="pyr">
+            <!-- TETTO — apex, narrowest -->
+            <div class="pyr-tier pyr-tier--top">
+              <div class="pyr-tier__label">Tetto — Continuità e crescita</div>
+              <div class="pyr-item l6"><div class="pyr-dot"></div>Previdenza integrativa aziendale</div>
+              <div class="pyr-item l7"><div class="pyr-dot"></div>Piano di successione &amp; futuro</div>
+            </div>
+            <!-- PRIMO PIANO — middle -->
+            <div class="pyr-tier pyr-tier--mid">
+              <div class="pyr-tier__label">Primo Piano — Sicurezza</div>
+              <div class="pyr-item l4"><div class="pyr-dot"></div>Tutela dei collaboratori chiave</div>
+              <div class="pyr-item l5"><div class="pyr-dot"></div>Salute &amp; Infortuni del titolare</div>
+            </div>
+            <!-- FONDAMENTA — base, widest -->
+            <div class="pyr-tier pyr-tier--base">
+              <div class="pyr-tier__label">Fondamenta — Sopravvivenza</div>
+              <div class="pyr-item l1"><div class="pyr-dot"></div>Continuità del reddito del titolare</div>
+              <div class="pyr-item l2"><div class="pyr-dot"></div>Responsabilità civile professionale</div>
+              <div class="pyr-item l3"><div class="pyr-dot"></div>Beni aziendali &amp; RC verso terzi</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

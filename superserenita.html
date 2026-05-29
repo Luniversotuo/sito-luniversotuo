@@ -24,22 +24,32 @@
     .concept__stat-lbl { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; }
     .concept__visual { position: relative; }
 
-    /* HOUSE OF SUPERSERENITA */
-    .house { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 32px; }
-    .house__title { font-size: 12px; font-weight: 700; color: rgba(37,99,235,0.8); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
-    .house__layer {
-      padding: 12px 16px; border-radius: 8px; margin-bottom: 6px;
-      display: flex; align-items: center; gap: 12px;
-      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85);
+    /* PYRAMID SUPERSERENITA */
+    .house { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 28px 20px 32px; }
+    .house__title { font-size: 11px; font-weight: 700; color: rgba(37,99,235,0.8); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 22px; text-align: center; }
+    .pyr { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .pyr-row {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 12px; border-radius: 7px;
+      font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85);
+      text-align: center; line-height: 1.35; transition: opacity 0.15s;
     }
-    .house__layer-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-    .l1 { background: rgba(37,99,235,0.18); } .l1 .house__layer-dot { background: #2563EB; }
-    .l2 { background: rgba(34,197,94,0.12); } .l2 .house__layer-dot { background: #22c55e; }
-    .l3 { background: rgba(245,158,11,0.12); } .l3 .house__layer-dot { background: #F59E0B; }
-    .l4 { background: rgba(168,85,247,0.12); } .l4 .house__layer-dot { background: #a855f7; }
-    .l5 { background: rgba(239,68,68,0.12); } .l5 .house__layer-dot { background: #ef4444; }
-    .l6 { background: rgba(6,182,212,0.12); } .l6 .house__layer-dot { background: #06b6d4; }
-    .l7 { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); } .l7 .house__layer-dot { background: rgba(255,255,255,0.4); }
+    .pyr-row:hover { opacity: 0.8; }
+    .pyr-dot { width: 6px; height: 6px; border-radius: 2px; flex-shrink: 0; }
+    .pyr-row:nth-child(1) { width: 46%; }
+    .pyr-row:nth-child(2) { width: 55%; }
+    .pyr-row:nth-child(3) { width: 64%; }
+    .pyr-row:nth-child(4) { width: 73%; }
+    .pyr-row:nth-child(5) { width: 82%; }
+    .pyr-row:nth-child(6) { width: 91%; }
+    .pyr-row:nth-child(7) { width: 100%; }
+    .l1 { background: rgba(37,99,235,0.18); } .l1 .pyr-dot { background: #2563EB; }
+    .l2 { background: rgba(34,197,94,0.12); } .l2 .pyr-dot { background: #22c55e; }
+    .l3 { background: rgba(245,158,11,0.12); } .l3 .pyr-dot { background: #F59E0B; }
+    .l4 { background: rgba(168,85,247,0.12); } .l4 .pyr-dot { background: #a855f7; }
+    .l5 { background: rgba(239,68,68,0.12); } .l5 .pyr-dot { background: #ef4444; }
+    .l6 { background: rgba(6,182,212,0.12); } .l6 .pyr-dot { background: #06b6d4; }
+    .l7 { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); } .l7 .pyr-dot { background: rgba(255,255,255,0.4); }
 
     /* 4 MOVIMENTI DETAIL */
     .movimenti { padding: 88px 0; }
@@ -96,6 +106,14 @@
       .movimento--reverse { direction: ltr; }
       .fasi-grid { grid-template-columns: repeat(2,1fr); }
       .ricevi-grid { grid-template-columns: 1fr; }
+      .pyr-row { font-size: 11.5px; padding: 10px 14px; }
+      .pyr-row:nth-child(1) { width: 55%; }
+      .pyr-row:nth-child(2) { width: 63%; }
+      .pyr-row:nth-child(3) { width: 71%; }
+      .pyr-row:nth-child(4) { width: 79%; }
+      .pyr-row:nth-child(5) { width: 87%; }
+      .pyr-row:nth-child(6) { width: 94%; }
+      .pyr-row:nth-child(7) { width: 100%; }
     }
   </style>
 </head>
@@ -170,13 +188,15 @@
       <div class="concept__visual">
         <div class="house">
           <div class="house__title">La Costruzione della SuperSerenità®</div>
-          <div class="house__layer l1"><div class="house__layer-dot"></div>Protezione del reddito</div>
-          <div class="house__layer l2"><div class="house__layer-dot"></div>Assistenza Long Term Care</div>
-          <div class="house__layer l3"><div class="house__layer-dot"></div>Casa &amp; Responsabilità civile</div>
-          <div class="house__layer l4"><div class="house__layer-dot"></div>Fondo di emergenza</div>
-          <div class="house__layer l5"><div class="house__layer-dot"></div>Pensione integrativa</div>
-          <div class="house__layer l6"><div class="house__layer-dot"></div>Salute &amp; Infortuni</div>
-          <div class="house__layer l7"><div class="house__layer-dot"></div>Risparmio &amp; Investimento</div>
+          <div class="pyr">
+            <div class="pyr-row l7"><div class="pyr-dot"></div>Risparmio &amp; Investimento</div>
+            <div class="pyr-row l5"><div class="pyr-dot"></div>Pensione integrativa</div>
+            <div class="pyr-row l6"><div class="pyr-dot"></div>Salute &amp; Infortuni</div>
+            <div class="pyr-row l4"><div class="pyr-dot"></div>Fondo di emergenza</div>
+            <div class="pyr-row l3"><div class="pyr-dot"></div>Casa &amp; Responsabilità civile</div>
+            <div class="pyr-row l2"><div class="pyr-dot"></div>Assistenza Long Term Care</div>
+            <div class="pyr-row l1"><div class="pyr-dot"></div>Protezione del reddito</div>
+          </div>
         </div>
       </div>
     </div>
