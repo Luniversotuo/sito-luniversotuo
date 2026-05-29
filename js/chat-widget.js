@@ -16,10 +16,11 @@
   const SESSION_PAGE = window.location.pathname.split('/').pop().replace('.html', '') || 'home';
   let sessionLogged = false;
   let bookedCTA = false;
+  let userLog = [];   // domande utente (funziona sia in demo che con API reale)
+  let msgCount = 0;   // contatore totale messaggi
 
   async function logSession() {
-    const userMessages = messages.filter(m => m.role === 'user');
-    if (sessionLogged || userMessages.length < 1) return;
+    if (sessionLogged || userLog.length < 1) return;
     sessionLogged = true;
     try {
       const body = new URLSearchParams({
@@ -27,9 +28,9 @@
         'session_id': SESSION_ID,
         'timestamp': new Date().toISOString(),
         'page': SESSION_PAGE,
-        'messages_count': String(messages.length),
-        'first_question': userMessages[0]?.content || '',
-        'user_questions': userMessages.map(m => m.content).join(' ||| '),
+        'messages_count': String(msgCount),
+        'first_question': userLog[0] || '',
+        'user_questions': userLog.join(' ||| '),
         'booked': bookedCTA ? 'si' : 'no'
       });
       await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
@@ -358,6 +359,8 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
   }
 
   function addMessage(role, text) {
+    msgCount++;
+    if (role === 'user') userLog.push(text);
     const el = getMessagesEl();
     const wrap = document.createElement('div');
     wrap.className = `ss-msg ${role === 'assistant' ? 'ai' : 'user'}`;
@@ -512,8 +515,8 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       if (messages.length >= 4 && !document.getElementById('ss-book-cta')) {
         showBookingCTA();
       }
-      // Log dopo il 2° scambio completo
-      if (messages.length >= 4) logSession();
+      // Log dopo il 2° scambio completo (funziona in demo e con API reale)
+      if (userLog.length >= 2) logSession();
     } catch (err) {
       hideTyping();
       const el = getMessagesEl();
