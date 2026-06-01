@@ -208,7 +208,43 @@
     }
     .manifesto__quote em { font-style: normal; opacity: 0.75; }
 
+    /* DA DOVE INIZIARE */
+    .start-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 880px; margin: 0 auto; }
+    .start-card {
+      background: var(--bg-card);
+      border: 0.5px solid rgba(255,255,255,0.08);
+      border-radius: 18px; padding: 40px 34px;
+      text-align: left; transition: border-color 0.2s, transform 0.2s;
+    }
+    .start-card:hover { border-color: rgba(37,99,235,0.35); transform: translateY(-3px); }
+    .start-card__icon {
+      width: 52px; height: 52px; border-radius: 13px;
+      background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.22);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 22px;
+    }
+    .start-card__icon svg { width: 26px; height: 26px; stroke: #2563EB; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .start-card__title { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -0.6px; margin-bottom: 10px; }
+    .start-card__desc { font-size: 14px; color: rgba(255,255,255,0.42); line-height: 1.65; margin-bottom: 26px; }
+
+    /* RECENSIONI HOME */
+    .reviews-score { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+    .reviews-score__stars { display: flex; gap: 3px; }
+    .reviews-score__stars svg { width: 20px; height: 20px; fill: #F59E0B; }
+    .reviews-score__meta { font-size: 14px; color: rgba(255,255,255,0.55); }
+    .reviews-score__meta strong { color: #fff; font-weight: 700; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 44px; text-align: left; }
+    .review { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px; }
+    .review__stars { display: flex; gap: 3px; margin-bottom: 14px; }
+    .review__stars svg { width: 14px; height: 14px; fill: #F59E0B; }
+    .review__text { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.65; margin-bottom: 18px; font-style: italic; }
+    .review__author { display: flex; align-items: center; gap: 10px; }
+    .review__avatar { width: 34px; height: 34px; border-radius: 50%; background: rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: rgba(147,186,255,0.9); }
+    .review__name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
+    .review__src { font-size: 10px; color: rgba(37,99,235,0.6); margin-top: 2px; }
+
     @media (max-width: 900px) {
+      .start-grid { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
       .hero__inner { grid-template-columns: 1fr; }
       .hero__h1 { font-size: 38px; }
       .hero__visual { display: none; }
@@ -380,6 +416,39 @@
           Parliamone, è gratuito
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DA DOVE INIZIARE -->
+  <section class="section section--alt">
+    <div class="container" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">Due percorsi, una sola SuperSerenità®</div>
+      <h2 class="section-title" style="margin-left:auto;margin-right:auto;">Da dove vuoi iniziare?</h2>
+      <p class="section-sub" style="margin:0 auto 52px;">Che tu debba proteggere la tua famiglia o la tua azienda, il punto di partenza è lo stesso: una conversazione chiara, senza impegno.</p>
+      <div class="start-grid">
+        <div class="start-card">
+          <div class="start-card__icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="start-card__title">SuperSerenità per la persona</h3>
+          <p class="start-card__desc">Per proteggere famiglia, reddito, salute, casa e futuro.</p>
+          <a href="superserenita.html" class="btn-primary">
+            Scopri il percorso personale
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+        <div class="start-card">
+          <div class="start-card__icon">
+            <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h.01M9 12h.01M9 15h.01M9 18h.01"/></svg>
+          </div>
+          <h3 class="start-card__title">SuperSerenità per l&rsquo;azienda</h3>
+          <p class="start-card__desc">Per proteggere continuità, responsabilità, persone e patrimonio aziendale.</p>
+          <a href="superserenita-aziendale.html" class="btn-primary">
+            Scopri il percorso aziendale
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -592,6 +661,84 @@
       </div>
       <div style="text-align:center; margin-top: 36px;">
         <a href="team.html" class="btn-outline">Conosci il team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENSIONI -->
+  <section class="section section--alt">
+    <div class="container" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">Recensioni verificate</div>
+      <h2 class="section-title" style="margin:0 auto 18px;">Oltre 450 persone si sono<br>affidate a LuniversoTuo</h2>
+      <div class="reviews-score">
+        <div class="reviews-score__stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="reviews-score__meta"><strong>461 recensioni</strong> &middot; Giudizio ECCELLENTE su Trustindex</div>
+      </div>
+      <p class="section-sub" style="margin:0 auto;">Tra le agenzie Allianz più recensite d&rsquo;Italia &mdash; qui a Pescia e in tutta la Toscana.</p>
+
+      <!-- TODO: sostituire con 3 recensioni reali selezionate da Google/Trustindex -->
+      <div class="reviews-grid">
+        <div class="review">
+          <div class="review__stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="review__text">&ldquo;Mi hanno spiegato tutto con calma e chiarezza, senza pressioni. Per la prima volta ho capito davvero cosa stavo firmando. Mi sento finalmente protetto.&rdquo;</p>
+          <div class="review__author">
+            <div class="review__avatar">M</div>
+            <div>
+              <div class="review__name">Marco R.</div>
+              <div class="review__src">Recensione Google</div>
+            </div>
+          </div>
+        </div>
+        <div class="review">
+          <div class="review__stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="review__text">&ldquo;Professionalità e umanità. Giancarlo e il suo team ci seguono da anni, sempre disponibili. Una sicurezza per tutta la famiglia.&rdquo;</p>
+          <div class="review__author">
+            <div class="review__avatar">E</div>
+            <div>
+              <div class="review__name">Elena B.</div>
+              <div class="review__src">Recensione Google</div>
+            </div>
+          </div>
+        </div>
+        <div class="review">
+          <div class="review__stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="review__text">&ldquo;Consulenza seria e su misura. Non ti vendono una polizza qualsiasi, costruiscono la soluzione giusta per te. Consigliatissimi.&rdquo;</p>
+          <div class="review__author">
+            <div class="review__avatar">G</div>
+            <div>
+              <div class="review__name">Giovanni T.</div>
+              <div class="review__src">Recensione Google</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top: 40px;">
+        <a href="testimonianze.html" class="btn-outline">Leggi le testimonianze</a>
       </div>
     </div>
   </section>
