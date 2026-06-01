@@ -7,22 +7,28 @@
   <meta name="description" content="Storie vere di persone che hanno scelto la SuperSerenità®. Non polizze — esperienze reali che cambiano la vita.">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .storie-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 52px; }
-    .sc { background: var(--bg-alt); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 24px 24px 22px; display:flex; flex-direction:column; min-height:230px; transition: border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
-    .sc::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent,#2563EB); opacity:0.9; }
-    .sc:hover { transform: translateY(-3px); border-color: var(--accent,#2563EB); }
-    .sc__cat { display:inline-flex; align-self:flex-start; font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:5px 11px; border-radius:100px; border:0.5px solid; }
-    .sc__quote { font-family:Georgia,'Times New Roman',serif; font-size:50px; line-height:0.4; height:24px; color:var(--accent,#2563EB); opacity:0.55; margin:18px 0 2px; }
-    .sc__desc { font-size:15px; color:rgba(255,255,255,0.78); line-height:1.62; flex:1; }
-    .sc__name { font-size:13px; font-weight:700; color:rgba(255,255,255,0.55); letter-spacing:0.2px; margin-top:18px; text-transform:uppercase; }
-    .sc__link { display:inline-flex;align-items:center;gap:5px;font-size:13px;color:#2563EB;font-weight:600;margin-top:8px; }
-    .sc__link svg { width:14px;height:14px;stroke:#2563EB;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round; }
+    .storie-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:52px; }
+    .sc { background:var(--bg-alt); border:0.5px solid rgba(255,255,255,0.12); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:border-color .2s, transform .2s; position:relative; }
+    .sc:hover { transform:translateY(-3px); border-color:var(--accent,#2563EB); }
+    .sc__img { position:relative; height:180px; overflow:hidden; background:var(--bg-card2); }
+    .sc__img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .sc__cat { font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:100px; border:0.5px solid; color:var(--cat-text,#9dbdf5); border-color:var(--cat-bd,rgba(37,99,235,0.45)); }
+    .sc__img .sc__cat { position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.55); backdrop-filter:blur(6px); }
+    .sc__body { padding:20px 22px; display:flex; flex-direction:column; flex:1; }
+    .sc__desc { font-size:14px; color:rgba(255,255,255,0.78); line-height:1.6; flex:1; }
+    .sc__name { font-size:12px; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.3px; margin-top:14px; }
+    .sc__link { display:inline-flex; align-items:center; gap:5px; font-size:13px; color:var(--accent,#2563EB); font-weight:600; margin-top:8px; }
+    .sc__link svg { width:14px; height:14px; stroke:var(--accent,#2563EB); fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+    .sc--noimg { padding:24px 24px 22px; }
+    .sc--noimg::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent,#2563EB); }
+    .sc--noimg .sc__cat { align-self:flex-start; background:rgba(255,255,255,0.06); }
+    .sc--noimg .sc__quote { font-family:Georgia,serif; font-size:50px; line-height:0.4; height:24px; color:var(--accent,#2563EB); opacity:0.55; margin:18px 0 2px; }
     .cat-filter { display:flex;gap:8px;flex-wrap:wrap;margin-top:28px; }
     .cat-btn { background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.66);font-size:12px;font-weight:500;padding:7px 16px;border-radius:100px;cursor:pointer;transition:all 0.2s;font-family:inherit; }
     .cat-btn:hover,.cat-btn.active { background:rgba(37,99,235,0.15);border-color:rgba(37,99,235,0.35);color:rgba(147,186,255,0.9); }
-    .sc--fam { --accent:#2563EB; } .sc--fam .sc__cat { color:#9dbdf5; background:rgba(37,99,235,0.18); border-color:rgba(37,99,235,0.45); }
-    .sc--ltc { --accent:#F59E0B; } .sc--ltc .sc__cat { color:#f6c87a; background:rgba(245,158,11,0.16); border-color:rgba(245,158,11,0.42); } .sc--ltc .sc__link, .sc--ltc .sc__link svg { color:#F59E0B; stroke:#F59E0B; }
-    .sc--red { --accent:#22c55e; } .sc--red .sc__cat { color:#86e0a5; background:rgba(34,197,94,0.16); border-color:rgba(34,197,94,0.42); } .sc--red .sc__link, .sc--red .sc__link svg { color:#22c55e; stroke:#22c55e; }
+    .sc--fam { --accent:#2563EB; --cat-text:#9dbdf5; --cat-bd:rgba(37,99,235,0.45); }
+    .sc--ltc { --accent:#F59E0B; --cat-text:#f6c87a; --cat-bd:rgba(245,158,11,0.42); }
+    .sc--red { --accent:#22c55e; --cat-text:#86e0a5; --cat-bd:rgba(34,197,94,0.42); }
     @media(max-width:900px){ .storie-grid{grid-template-columns:1fr;} }
   </style>
 </head>
@@ -73,211 +79,137 @@
       <div class="storie-grid">
 
         <a href="storia-mattia.html" data-cat="famiglia imprenditori" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Sta per diventare padre. E una domanda non lo lascia dormire: «sarò all’altezza, qualunque cosa accada?»</div>
-          <div class="sc__name">La storia di Mattia</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-mattia.jpg" alt="La storia di Mattia"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Sta per diventare padre. E una domanda non lo lascia dormire: «sarò all’altezza, qualunque cosa accada?»</div><div class="sc__name">La storia di Mattia</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-lavinia.html" data-cat="ltc" class="sc sc--ltc">
-          <span class="sc__cat">Long Term Care</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Si prende cura di sua madre ogni giorno. E pensa ai figli: «non voglio che un domani tocchi a loro reggere tutto».</div>
-          <div class="sc__name">La storia di Lavinia</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-lavinia.jpg" alt="La storia di Lavinia"><span class="sc__cat">Long Term Care</span></div>
+          <div class="sc__body"><div class="sc__desc">Si prende cura di sua madre ogni giorno. E pensa ai figli: «non voglio che un domani tocchi a loro reggere tutto».</div><div class="sc__name">La storia di Lavinia</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-riccardo.html" data-cat="reddito" class="sc sc--red">
-          <span class="sc__cat">Protezione reddito</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Una caduta in doccia, due centimetri dal dramma. In un attimo capisce quanto può cambiare tutto.</div>
-          <div class="sc__name">La storia di Riccardo</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-riccardo.jpg" alt="La storia di Riccardo"><span class="sc__cat">Protezione reddito</span></div>
+          <div class="sc__body"><div class="sc__desc">Una caduta in doccia, due centimetri dal dramma. In un attimo capisce quanto può cambiare tutto.</div><div class="sc__name">La storia di Riccardo</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-martina.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Tra vecchie foto ritrova sua madre — e capisce che amare non è solo reggere tutto da sola: è anche proteggere.</div>
-          <div class="sc__name">La storia di Martina</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-martina.jpg" alt="La storia di Martina"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Tra vecchie foto ritrova sua madre — e capisce che amare non è solo reggere tutto da sola: è anche proteggere.</div><div class="sc__name">La storia di Martina</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-giacomo.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Il primo Natale senza suo padre. E scopre che le scelte fatte da lui li proteggono ancora.</div>
-          <div class="sc__name">La storia di Giacomo</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-giacomo.jpg" alt="La storia di Giacomo"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Il primo Natale senza suo padre. E scopre che le scelte fatte da lui li proteggono ancora.</div><div class="sc__name">La storia di Giacomo</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-anna.html" data-cat="famiglia ltc" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Su una panchina guarda una giovane coppia di corsa. E ripensa a quando lei e suo marito scelsero di fermarsi.</div>
-          <div class="sc__name">La storia di Anna</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-anna.jpg" alt="La storia di Anna"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Su una panchina guarda una giovane coppia di corsa. E ripensa a quando lei e suo marito scelsero di fermarsi.</div><div class="sc__name">La storia di Anna</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-cristina.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Stringe suo figlio e una domanda la attraversa: «e se un giorno non potessi più esserci per lui?»</div>
-          <div class="sc__name">La storia di Cristina</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-cristina.jpg" alt="La storia di Cristina"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Stringe suo figlio e una domanda la attraversa: «e se un giorno non potessi più esserci per lui?»</div><div class="sc__name">La storia di Cristina</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-paolo-2.html" data-cat="ltc" class="sc sc--ltc">
-          <span class="sc__cat">Long Term Care</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Sua figlia va a vivere da sola. Lui desidera una cosa sola: non diventare mai un peso per lei.</div>
-          <div class="sc__name">La storia di Paolo</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-paolo-2.jpg" alt="La storia di Paolo"><span class="sc__cat">Long Term Care</span></div>
+          <div class="sc__body"><div class="sc__desc">Sua figlia va a vivere da sola. Lui desidera una cosa sola: non diventare mai un peso per lei.</div><div class="sc__name">La storia di Paolo</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-valentina.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Un sabato come tanti, una telefonata: incidente. Da quella paura nasce una scelta che cambia tutto.</div>
-          <div class="sc__name">La storia di Valentina</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-valentina.jpg" alt="La storia di Valentina"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Un sabato come tanti, una telefonata: incidente. Da quella paura nasce una scelta che cambia tutto.</div><div class="sc__name">La storia di Valentina</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-giovanni.html" data-cat="reddito imprenditori" class="sc sc--red">
-          <span class="sc__cat">Protezione reddito</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Prima casa, prime bollette, un malore sul treno. E la scoperta che indipendenza vuol dire anche proteggersi.</div>
-          <div class="sc__name">La storia di Giovanni</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-giovanni.jpg" alt="La storia di Giovanni"><span class="sc__cat">Protezione reddito</span></div>
+          <div class="sc__body"><div class="sc__desc">Prima casa, prime bollette, un malore sul treno. E la scoperta che indipendenza vuol dire anche proteggersi.</div><div class="sc__name">La storia di Giovanni</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
-        <a href="storia-carla.html" data-cat="ltc" class="sc sc--ltc">
+        <a href="storia-carla.html" data-cat="ltc" class="sc sc--ltc sc--noimg">
           <span class="sc__cat">Long Term Care</span>
           <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Settant’anni e nessuna paura: ha già scelto come restare libera e dignitosa, senza pesare sui figli.</div>
-          <div class="sc__name">La storia di Carla</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__desc">Settant’anni e nessuna paura: ha già scelto come restare libera e dignitosa, senza pesare sui figli.</div><div class="sc__name">La storia di Carla</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         </a>
 
         <a href="storia-francesco.html" data-cat="reddito" class="sc sc--red">
-          <span class="sc__cat">Protezione reddito</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Al bar, negli occhi dell’amico di sempre vede la paura. E ringrazia di aver pensato prima ai suoi.</div>
-          <div class="sc__name">La storia di Francesco</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-francesco.jpg" alt="La storia di Francesco"><span class="sc__cat">Protezione reddito</span></div>
+          <div class="sc__body"><div class="sc__desc">Al bar, negli occhi dell’amico di sempre vede la paura. E ringrazia di aver pensato prima ai suoi.</div><div class="sc__name">La storia di Francesco</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-emma.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Cambiano città, lasciano tutto. E imparano che la serenità non è un traguardo, ma una scelta di ogni giorno.</div>
-          <div class="sc__name">La storia di Emma</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-emma.jpg" alt="La storia di Emma"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Cambiano città, lasciano tutto. E imparano che la serenità non è un traguardo, ma una scelta di ogni giorno.</div><div class="sc__name">La storia di Emma</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-alberto.html" data-cat="ltc" class="sc sc--ltc">
-          <span class="sc__cat">Long Term Care</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">«Come sarò da anziano?» Se lo chiede oggi — perché il futuro, dice, si costruisce un giorno alla volta.</div>
-          <div class="sc__name">La storia di Alberto</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-alberto.jpg" alt="La storia di Alberto"><span class="sc__cat">Long Term Care</span></div>
+          <div class="sc__body"><div class="sc__desc">«Come sarò da anziano?» Se lo chiede oggi — perché il futuro, dice, si costruisce un giorno alla volta.</div><div class="sc__name">La storia di Alberto</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-luigi.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Sua madre lo aspettava ogni giorno fuori da scuola. Ora i ruoli si invertono, e lui c’è.</div>
-          <div class="sc__name">La storia di Luigi</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-luigi.jpg" alt="La storia di Luigi"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Sua madre lo aspettava ogni giorno fuori da scuola. Ora i ruoli si invertono, e lui c’è.</div><div class="sc__name">La storia di Luigi</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-camilla.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Con gli occhi di una bambina: perché a casa, a Natale, ci si sente così al sicuro?</div>
-          <div class="sc__name">La storia di Camilla</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-camilla.jpg" alt="La storia di Camilla"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Con gli occhi di una bambina: perché a casa, a Natale, ci si sente così al sicuro?</div><div class="sc__name">La storia di Camilla</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-alessia.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Due figli piccoli, vicini diventati amici, una casa da proteggere. La sua serenità inizia dalla porta di casa.</div>
-          <div class="sc__name">La storia di Alessia</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-alessia.jpg" alt="La storia di Alessia"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Due figli piccoli, vicini diventati amici, una casa da proteggere. La sua serenità inizia dalla porta di casa.</div><div class="sc__name">La storia di Alessia</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-marco.html" data-cat="reddito" class="sc sc--red">
-          <span class="sc__cat">Protezione reddito</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">«Cosa potrebbe mai succedere?» diceva. Poi un giorno la realtà lo travolge — ed è pronto ad affrontarla.</div>
-          <div class="sc__name">La storia di Marco</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-marco.jpg" alt="La storia di Marco"><span class="sc__cat">Protezione reddito</span></div>
+          <div class="sc__body"><div class="sc__desc">«Cosa potrebbe mai succedere?» diceva. Poi un giorno la realtà lo travolge — ed è pronto ad affrontarla.</div><div class="sc__name">La storia di Marco</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-matteo.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Ha rischiato di perdere suo fratello. E ha scoperto che lui aveva già messo al sicuro la sua famiglia.</div>
-          <div class="sc__name">La storia di Matteo</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-matteo.jpg" alt="La storia di Matteo"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Ha rischiato di perdere suo fratello. E ha scoperto che lui aveva già messo al sicuro la sua famiglia.</div><div class="sc__name">La storia di Matteo</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-stefania.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Una casa abbandonata diventa il loro nido. Le mura che custodiscono una vita intera.</div>
-          <div class="sc__name">La storia di Stefania</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-stefania.jpg" alt="La storia di Stefania"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Una casa abbandonata diventa il loro nido. Le mura che custodiscono una vita intera.</div><div class="sc__name">La storia di Stefania</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-paolo.html" data-cat="reddito" class="sc sc--red">
-          <span class="sc__cat">Protezione reddito</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Un ramo cede, tre metri di caduta, mesi di coma. La sua famiglia, però, non è caduta con lui.</div>
-          <div class="sc__name">La storia di Paolo</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-paolo.jpg" alt="La storia di Paolo"><span class="sc__cat">Protezione reddito</span></div>
+          <div class="sc__body"><div class="sc__desc">Un ramo cede, tre metri di caduta, mesi di coma. La sua famiglia, però, non è caduta con lui.</div><div class="sc__name">La storia di Paolo</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-luisa.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Un maglione della nonna salva la mano del babbo falegname — e il lavoro che tiene in piedi la famiglia.</div>
-          <div class="sc__name">La storia di Luisa</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-luisa.jpg" alt="La storia di Luisa"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Un maglione della nonna salva la mano del babbo falegname — e il lavoro che tiene in piedi la famiglia.</div><div class="sc__name">La storia di Luisa</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
         <a href="storia-giada.html" data-cat="famiglia" class="sc sc--fam">
-          <span class="sc__cat">Famiglia</span>
-          <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Torna da un mese di viaggio e capisce che la felicità, spesso, è semplicemente tornare a casa.</div>
-          <div class="sc__name">La storia di Giada</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__img"><img src="img/storia-giada.jpg" alt="La storia di Giada"><span class="sc__cat">Famiglia</span></div>
+          <div class="sc__body"><div class="sc__desc">Torna da un mese di viaggio e capisce che la felicità, spesso, è semplicemente tornare a casa.</div><div class="sc__name">La storia di Giada</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
         </a>
 
-        <a href="storia-filippo.html" data-cat="ltc" class="sc sc--ltc">
+        <a href="storia-filippo.html" data-cat="ltc" class="sc sc--ltc sc--noimg">
           <span class="sc__cat">Long Term Care</span>
           <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Saluta la donna che l’ha cresciuto, e lei non lo riconosce più. Allora pensa: «e se toccasse a mia madre?»</div>
-          <div class="sc__name">La storia di Filippo</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__desc">Saluta la donna che l’ha cresciuto, e lei non lo riconosce più. Allora pensa: «e se toccasse a mia madre?»</div><div class="sc__name">La storia di Filippo</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         </a>
 
-        <a href="storia-barbara.html" data-cat="famiglia" class="sc sc--fam">
+        <a href="storia-barbara.html" data-cat="famiglia" class="sc sc--fam sc--noimg">
           <span class="sc__cat">Famiglia</span>
           <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Un’amicizia nata in prima fila a scuola. E la certezza che, nella tempesta, serve un porto sicuro.</div>
-          <div class="sc__name">La storia di Barbara</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__desc">Un’amicizia nata in prima fila a scuola. E la certezza che, nella tempesta, serve un porto sicuro.</div><div class="sc__name">La storia di Barbara</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         </a>
 
-        <a href="storia-fabrizio.html" data-cat="reddito" class="sc sc--red">
+        <a href="storia-fabrizio.html" data-cat="reddito" class="sc sc--red sc--noimg">
           <span class="sc__cat">Protezione reddito</span>
           <div class="sc__quote">&ldquo;</div>
-          <div class="sc__desc">Ha perso l’amico di una vita in un incidente. Oggi guarda sua figlia dormire — e sa che sarà al sicuro.</div>
-          <div class="sc__name">La storia di Fabrizio</div>
-          <div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="sc__desc">Ha perso l’amico di una vita in un incidente. Oggi guarda sua figlia dormire — e sa che sarà al sicuro.</div><div class="sc__name">La storia di Fabrizio</div><div class="sc__link">Leggi la storia <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         </a>
 
       </div>
