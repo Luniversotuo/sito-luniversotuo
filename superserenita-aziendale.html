@@ -113,6 +113,32 @@
     .btn-white { background: #fff; color: #2563EB; border: none; border-radius: 10px; padding: 16px 28px; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
     .btn-white-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 15px 26px; font-size: 15px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
 
+    /* --- RIPROVA SOCIALE / OBIEZIONI / BARRA FISSA (campagna) --- */
+    .hero-proof { display:flex; align-items:flex-start; gap:8px; margin-top:24px; font-size:13px; color:rgba(255,255,255,0.55); line-height:1.5; }
+    .hero-proof svg { width:15px; height:15px; fill:#F59E0B; flex-shrink:0; margin-top:2px; }
+    .lp-reviews { background: var(--bg-alt); padding: 80px 0; }
+    .lp-reviews__head { text-align:center; max-width:680px; margin:0 auto 44px; }
+    .lp-reviews-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; max-width:900px; margin:0 auto; }
+    .lp-review { background:var(--bg-card); border:0.5px solid rgba(255,255,255,0.07); border-radius:14px; padding:26px; text-align:left; }
+    .lp-review__text { font-size:15px; color:rgba(255,255,255,0.62); line-height:1.65; margin-bottom:16px; font-style:italic; }
+    .lp-review__author { font-size:13px; font-weight:600; color:rgba(255,255,255,0.7); }
+    .lp-review__src { font-size:11px; color:rgba(37,99,235,0.6); margin-top:2px; }
+    .lp-badge { display:inline-flex; align-items:center; gap:8px; margin-top:32px; padding:10px 18px; background:rgba(37,99,235,0.08); border:0.5px solid rgba(37,99,235,0.2); border-radius:100px; font-size:12px; color:rgba(255,255,255,0.6); }
+    .obiez { padding: 88px 0; }
+    .obiez-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; max-width:980px; margin:40px auto 36px; }
+    .obiez-card { background:var(--bg-card); border:0.5px solid rgba(255,255,255,0.07); border-radius:14px; padding:24px 26px; }
+    .obiez-q { font-size:15px; font-weight:700; color:#fff; margin-bottom:8px; }
+    .obiez-a { font-size:14px; color:rgba(255,255,255,0.45); line-height:1.65; }
+    .cta-fixed { display:none; }
+    @media(max-width:900px){
+      .lp-reviews-grid { grid-template-columns:1fr; }
+      .obiez-grid { grid-template-columns:1fr; }
+      body { padding-bottom: 80px; }
+      .cta-fixed { display:flex; position:fixed; left:0; right:0; bottom:0; z-index:95; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); background:rgba(11,13,20,0.96); border-top:0.5px solid rgba(255,255,255,0.12); }
+      .cta-fixed a { flex:1; justify-content:center; }
+      .wa-float { bottom: 92px !important; }
+    }
+
     @media(max-width:900px) {
       .page-hero__h1 { font-size: 36px; }
       .concept__inner { grid-template-columns: 1fr; }
@@ -176,6 +202,10 @@
         <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
         <a href="#movimenti" class="btn-outline">Scopri il metodo</a>
       </div>
+      <div class="hero-proof">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span><strong style="color:rgba(255,255,255,0.82);font-weight:600;">461 recensioni ECCELLENTE</strong> &middot; Imprenditori, artigiani e professionisti della Toscana si fidano di noi.</span>
+      </div>
     </div>
   </section>
 
@@ -197,9 +227,8 @@
           impresa, tutelare i tuoi collaboratori chiave e garantirti di non dover scegliere
           tra la tua famiglia e la tua azienda in un momento difficile.
         </p>
-        <div class="concept__stat">
-          <div class="concept__stat-num">4M€</div>
-          <div class="concept__stat-lbl">fatturato massimo delle imprese<br>che seguiamo con il metodo SuperSerenità®</div>
+        <div class="concept__stat" style="align-items:flex-start;">
+          <div class="concept__stat-lbl" style="font-size:14px;color:rgba(255,255,255,0.55);">Seguiamo con il metodo SuperSerenità® imprese <strong style="color:#fff;font-weight:700;">fino a ~4M€ di fatturato</strong> — artigiani, PMI, commercianti e professionisti. Non sai se rientri? Te lo diciamo nella prima chiamata, gratis.</div>
         </div>
       </div>
       <div class="concept__visual">
@@ -261,6 +290,31 @@
           <div class="profilo-card__title">Liberi Professionisti</div>
           <div class="profilo-card__desc">Medici, avvocati, commercialisti, ingegneri, consulenti. La vostra RC professionale e la tutela da eventi imprevisti sono pilastri fondamentali della serenità.</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIPROVA SOCIALE BUSINESS -->
+  <section class="lp-reviews">
+    <div class="container">
+      <div class="lp-reviews__head">
+        <h2 class="section-title" style="margin:0 auto 0;">Imprenditori come te,<br>già protetti.</h2>
+      </div>
+      <!-- ⚠️ PLACEHOLDER — sostituire con testimonianze REALI di clienti business (nome + settore) prima del lancio -->
+      <div class="lp-reviews-grid">
+        <div class="lp-review">
+          <p class="lp-review__text">&ldquo;Da titolare, il mio primo pensiero era: se mi fermo io, chi manda avanti tutto? Mi hanno aiutato a mettere in sicurezza il reddito e l'attività.&rdquo;</p>
+          <div class="lp-review__author">[Nome]</div>
+          <div class="lp-review__src">[Settore — es. Titolare officina, Pescia]</div>
+        </div>
+        <div class="lp-review">
+          <p class="lp-review__text">&ldquo;Consulenza concreta, numeri alla mano. Non un pacchetto generico per 'le aziende', ma una soluzione sulla mia realtà.&rdquo;</p>
+          <div class="lp-review__author">[Nome]</div>
+          <div class="lp-review__src">[Settore]</div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="lp-badge">⭐ 461 recensioni &middot; ECCELLENTE su Trustindex</span>
       </div>
     </div>
   </section>
@@ -395,11 +449,40 @@
     </div>
   </section>
 
+  <!-- OBIEZIONI -->
+  <section class="obiez">
+    <div class="container">
+      <div class="eyebrow">Prima di chiamarci</div>
+      <h2 class="section-title">Le domande che ogni imprenditore<br>si fa prima di chiamarci.</h2>
+      <div class="obiez-grid">
+        <div class="obiez-card">
+          <div class="obiez-q">Non ho tempo.</div>
+          <div class="obiez-a">La prima consulenza è di circa 30 minuti, anche online. La strutturiamo intorno ai tuoi impegni.</div>
+        </div>
+        <div class="obiez-card">
+          <div class="obiez-q">Ho già un'assicurazione.</div>
+          <div class="obiez-a">Bene. La analizziamo insieme: ti diciamo dove sei già coperto e dove sei scoperto. Senza venderti doppioni.</div>
+        </div>
+        <div class="obiez-card">
+          <div class="obiez-q">È davvero gratis?</div>
+          <div class="obiez-a">Sì, la prima consulenza e la mappa dei rischi sono gratuite e senza impegno.</div>
+        </div>
+        <div class="obiez-card">
+          <div class="obiez-q">La mia attività è troppo piccola/grande?</div>
+          <div class="obiez-a">Seguiamo dall'artigiano singolo all'azienda con ~20 dipendenti. Nel dubbio, chiedici.</div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="book-cta">
     <div class="book-cta__inner">
       <h2 class="book-cta__h2">La tua impresa merita<br>la stessa serenità tua.</h2>
-      <p class="book-cta__sub">Consulenza gratuita &middot; Online o in agenzia a Pescia &middot; 60 minuti &middot; Nessun obbligo</p>
+      <p class="book-cta__sub">Consulenza gratuita &middot; Online o in agenzia a Pescia &middot; Circa 30 minuti &middot; Nessun obbligo</p>
       <div class="book-cta__btns">
         <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-white">
           Prenota la consulenza gratuita
@@ -463,6 +546,11 @@
 <a href="https://wa.me/39057247139" target="_blank" class="wa-float" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
 </a>
+
+<!-- BARRA CTA FISSA (mobile) -->
+<div class="cta-fixed">
+  <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita</a>
+</div>
 
 <script src="js/chat-widget.js"></script>
 <script src="js/cookie-banner.js"></script>
