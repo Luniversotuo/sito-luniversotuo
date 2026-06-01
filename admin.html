@@ -11,8 +11,8 @@
     :root {
       --bg:#0b0d14;--bg2:#0e1019;--card:#13151f;--card2:#1a1d2e;
       --blue:#2563EB;--blue-dim:rgba(37,99,235,0.1);--blue-border:rgba(37,99,235,0.25);--blue-text:rgba(147,186,255,0.9);
-      --white:#fff;--t1:rgba(255,255,255,0.9);--t2:rgba(255,255,255,0.5);--t3:rgba(255,255,255,0.28);
-      --border:rgba(255,255,255,0.07);--green:#22c55e;--gold:#F59E0B;--red:#ef4444;--r:12px;--r2:18px;
+      --white:#fff;--t1:rgba(255,255,255,0.9);--t2:rgba(255,255,255,0.66);--t3:rgba(255,255,255,0.44);
+      --border:rgba(255,255,255,0.12);--green:#22c55e;--gold:#F59E0B;--red:#ef4444;--r:12px;--r2:18px;
     }
     body { font-family:'Inter',ui-sans-serif,system-ui,sans-serif; background:var(--bg); color:var(--t1); min-height:100vh; }
 
@@ -44,7 +44,7 @@
     .topbar-badge { font-size:10px; font-weight:600; color:var(--blue-text); background:var(--blue-dim); border:0.5px solid var(--blue-border); border-radius:100px; padding:3px 10px; letter-spacing:0.5px; }
     .topbar-right { display:flex; align-items:center; gap:8px; }
     .logout-btn { background:none; border:0.5px solid var(--border); border-radius:8px; padding:6px 14px; color:var(--t2); font-size:12px; cursor:pointer; font-family:inherit; }
-    .logout-btn:hover { color:var(--t1); border-color:rgba(255,255,255,0.2); }
+    .logout-btn:hover { color:var(--t1); border-color:rgba(255,255,255,0.36); }
 
     /* ── TABS ── */
     .tabs-bar { background:var(--card); border-bottom:0.5px solid var(--border); padding:0 28px; display:flex; gap:0; }
@@ -229,7 +229,7 @@
 
     /* SPINNER */
     @keyframes spin { to { transform:rotate(360deg); } }
-    .spinner { width:14px; height:14px; border:2px solid rgba(255,255,255,0.2); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; }
+    .spinner { width:14px; height:14px; border:2px solid rgba(255,255,255,0.36); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; }
 
     @media (max-width:900px) {
       .dash-main,.editor-main,.rapidi-main { padding:16px 14px 40px; }
@@ -697,7 +697,7 @@
       <div class="card">
         <div class="card-title">Traffico & Analisi esterne</div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-          <a href="https://app.netlify.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(0,173,127,0.35)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+          <a href="https://app.netlify.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(0,173,127,0.35)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
             <div style="display:flex;align-items:center;gap:9px;">
               <div style="width:30px;height:30px;border-radius:8px;background:rgba(0,173,127,0.12);border:0.5px solid rgba(0,173,127,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ad7f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -706,7 +706,7 @@
             </div>
             <span style="font-size:11px;color:var(--t3);line-height:1.5;">Visite, bandwidth e deploy del sito</span>
           </a>
-          <a href="https://analytics.google.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(245,158,11,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+          <a href="https://analytics.google.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(245,158,11,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
             <div style="display:flex;align-items:center;gap:9px;">
               <div style="width:30px;height:30px;border-radius:8px;background:rgba(245,158,11,0.1);border:0.5px solid rgba(245,158,11,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="18.5 8 13 13.5 8 8.5 3 14"/></svg>
@@ -715,7 +715,7 @@
             </div>
             <span style="font-size:11px;color:var(--t3);line-height:1.5;">Configura GA4 per il traffico dettagliato</span>
           </a>
-          <a href="https://www.facebook.com/LuniversoTuo/insights" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(37,99,235,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+          <a href="https://www.facebook.com/LuniversoTuo/insights" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(37,99,235,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
             <div style="display:flex;align-items:center;gap:9px;">
               <div style="width:30px;height:30px;border-radius:8px;background:rgba(37,99,235,0.1);border:0.5px solid rgba(37,99,235,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>

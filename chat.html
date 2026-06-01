@@ -27,9 +27,9 @@
       background: #22c55e; border: 2.5px solid var(--bg-main);
     }
     .chat-hero__name { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 6px; }
-    .chat-hero__role { font-size: 14px; color: rgba(255,255,255,0.38); margin-bottom: 18px; }
+    .chat-hero__role { font-size: 14px; color: rgba(255,255,255,0.56); margin-bottom: 18px; }
     .chat-hero__desc {
-      font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.7;
+      font-size: 15px; color: rgba(255,255,255,0.66); line-height: 1.7;
       max-width: 420px; margin: 0 auto;
     }
     .chat-hero__note {
@@ -63,7 +63,7 @@
     }
     #chat-messages::-webkit-scrollbar { width: 5px; }
     #chat-messages::-webkit-scrollbar-track { background: transparent; }
-    #chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+    #chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.13); border-radius: 3px; }
 
     .cmsg { display: flex; flex-direction: column; gap: 4px; max-width: 75%; }
     .cmsg.ai { align-self: flex-start; }
@@ -78,7 +78,7 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 12px; flex-shrink: 0;
     }
-    .cmsg-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); }
+    .cmsg-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.54); }
 
     .cbubble {
       padding: 13px 16px; border-radius: 16px;
@@ -87,7 +87,7 @@
     }
     .cmsg.ai .cbubble {
       background: #1a1d2e;
-      border: 0.5px solid rgba(255,255,255,0.07);
+      border: 0.5px solid rgba(255,255,255,0.12);
       color: rgba(255,255,255,0.88);
       border-bottom-left-radius: 4px;
     }
@@ -96,7 +96,7 @@
       color: white;
       border-bottom-right-radius: 4px;
     }
-    .cmsg-time { font-size: 10px; color: rgba(255,255,255,0.2); padding: 0 4px; }
+    .cmsg-time { font-size: 10px; color: rgba(255,255,255,0.36); padding: 0 4px; }
     .cmsg.user .cmsg-time { text-align: right; }
 
     /* TYPING */
@@ -104,11 +104,11 @@
       display: flex; align-items: center; gap: 5px;
       padding: 13px 16px;
       background: #1a1d2e;
-      border: 0.5px solid rgba(255,255,255,0.07);
+      border: 0.5px solid rgba(255,255,255,0.12);
       border-radius: 16px; border-bottom-left-radius: 4px;
       width: fit-content;
     }
-    .cdot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.35); animation: cBounce 1.2s infinite; }
+    .cdot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.54); animation: cBounce 1.2s infinite; }
     .cdot:nth-child(2) { animation-delay: 0.2s; }
     .cdot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes cBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-7px); } }
@@ -130,7 +130,7 @@
 
     /* INPUT */
     .chat-input-bar {
-      border-top: 0.5px solid rgba(255,255,255,0.07);
+      border-top: 0.5px solid rgba(255,255,255,0.12);
       padding: 16px 20px;
       display: flex; gap: 10px; align-items: flex-end;
       background: #0b0d14;
@@ -144,7 +144,7 @@
       min-height: 46px; max-height: 120px;
       transition: border-color 0.15s;
     }
-    #chat-input::placeholder { color: rgba(255,255,255,0.22); }
+    #chat-input::placeholder { color: rgba(255,255,255,0.38); }
     #chat-input:focus { border-color: rgba(37,99,235,0.45); }
     #chat-send {
       width: 46px; height: 46px; border-radius: 13px;
@@ -173,7 +173,7 @@
     }
     .chat-book-icon svg { width: 18px; height: 18px; fill: none; stroke: #93baff; stroke-width: 2; }
     .chat-book-title { font-size: 13.5px; font-weight: 600; color: rgba(147,186,255,0.9); }
-    .chat-book-sub { font-size: 11.5px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .chat-book-sub { font-size: 11.5px; color: rgba(255,255,255,0.48); margin-top: 2px; }
     .chat-book-arrow { margin-left: auto; color: rgba(147,186,255,0.4); }
     .chat-book-arrow svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
@@ -185,18 +185,18 @@
     }
     .sidebar-card {
       background: #0e1019;
-      border: 0.5px solid rgba(255,255,255,0.07);
+      border: 0.5px solid rgba(255,255,255,0.12);
       border-radius: 16px; padding: 20px;
     }
-    .sidebar-card__title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+    .sidebar-card__title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.48); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
     .sidebar-stat { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .sidebar-stat:last-child { margin-bottom: 0; }
-    .sidebar-stat__lbl { font-size: 12.5px; color: rgba(255,255,255,0.38); }
+    .sidebar-stat__lbl { font-size: 12.5px; color: rgba(255,255,255,0.56); }
     .sidebar-stat__val { font-size: 14px; font-weight: 700; color: #fff; }
     .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); }
     .sidebar-link:last-child { border-bottom: none; }
     .sidebar-link svg { width: 14px; height: 14px; fill: none; stroke: rgba(37,99,235,0.7); stroke-width: 2; flex-shrink: 0; }
-    .sidebar-link-text { font-size: 12.5px; color: rgba(255,255,255,0.45); }
+    .sidebar-link-text { font-size: 12.5px; color: rgba(255,255,255,0.62); }
     .sidebar-link-text a { color: rgba(147,186,255,0.7); text-decoration: none; }
 
     @media (max-width: 800px) {
@@ -595,11 +595,11 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
   })();
 </script>
 
-<div style="text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,0.22);border-top:0.5px solid rgba(255,255,255,0.05);">
+<div style="text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,0.38);border-top:0.5px solid rgba(255,255,255,0.05);">
   Chiara è un'intelligenza artificiale. Per decisioni importanti prenota una consulenza reale. &nbsp;·&nbsp;
-  <a href="informativa-privacy.html" style="color:rgba(255,255,255,0.35);">Privacy</a> &nbsp;·&nbsp;
-  <a href="cookie-policy.html" style="color:rgba(255,255,255,0.35);">Cookie</a> &nbsp;·&nbsp;
-  <a href="whistleblowing.html" style="color:rgba(255,255,255,0.35);">Whistleblowing</a>
+  <a href="informativa-privacy.html" style="color:rgba(255,255,255,0.54);">Privacy</a> &nbsp;·&nbsp;
+  <a href="cookie-policy.html" style="color:rgba(255,255,255,0.54);">Cookie</a> &nbsp;·&nbsp;
+  <a href="whistleblowing.html" style="color:rgba(255,255,255,0.54);">Whistleblowing</a>
 </div>
 <script src="js/cookie-banner.js"></script>
 </body>
