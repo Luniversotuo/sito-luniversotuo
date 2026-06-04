@@ -394,14 +394,15 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     const wrap = document.createElement('div');
     wrap.id = 'ss-chat-widget';
     wrap.innerHTML = `
-      <button id="ss-chat-btn" aria-label="Chat con Chiara — Consulente SuperSerenità®">
-        <div id="ss-chat-badge">1</div>
+      <button id="ss-chat-btn" aria-label="Chat con Chiara — Assistente SuperSerenità®">
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <img src="img/chiara-avatar.png" alt="Chiara" onerror="this.remove()" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+        <div id="ss-chat-badge">1</div>
       </button>
 
       <div id="ss-chat-panel" role="dialog" aria-label="Chat con Chiara">
         <div id="ss-chat-header">
-          <div id="ss-avatar">✦<div id="ss-avatar-status"></div></div>
+          <div id="ss-avatar">✦<img src="img/chiara-avatar.png" alt="Chiara" onerror="this.remove()" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;"><div id="ss-avatar-status"></div></div>
           <div id="ss-header-info">
             <div id="ss-header-name">Chiara</div>
             <div id="ss-header-role">Assistente SuperSerenità® · Online ora</div>
