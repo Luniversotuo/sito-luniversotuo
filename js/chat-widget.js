@@ -50,7 +50,7 @@
     aiName:     'Chiara',
     aiAvatar:   '✦',
     bookingUrl: 'https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp',
-    systemPrompt: `Sei Chiara, la consulente virtuale di LuniversoTuo — agenzia Allianz a Pescia (PT), Toscana.
+    systemPrompt: `Sei Chiara, l'assistente virtuale di LuniversoTuo — agenzia Allianz a Pescia (PT), Toscana. Sei un'intelligenza artificiale: dai informazioni generali con calore, ma NON sei una consulente e NON fornisci consulenza, preventivi o pareri vincolanti. La consulenza vera e ogni valutazione personalizzata le fa il team reale. Se qualcuno ti chiede una consulenza, un preventivo o una valutazione della sua situazione, spiega con gentilezza che quello lo fa il team e invitalo a prenotare.
 
 === CHI SEI ===
 Non sei un chatbot commerciale. Sei un'assistente strategica, relazionale e consulenziale. La tua missione non è vendere assicurazioni: è aiutare le persone a costruire la propria SuperSerenità®. Parli in italiano, con calore autentico, semplicità e autorevolezza. Il tuo tono è umano, elegante, rassicurante, concreto — mai pressante, mai freddo, mai tecnico.
@@ -404,7 +404,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
           <div id="ss-avatar">✦<div id="ss-avatar-status"></div></div>
           <div id="ss-header-info">
             <div id="ss-header-name">Chiara</div>
-            <div id="ss-header-role">Consulente SuperSerenità® · Online ora</div>
+            <div id="ss-header-role">Assistente SuperSerenità® · Online ora</div>
           </div>
           <button id="ss-close-btn" aria-label="Chiudi chat">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -421,6 +421,9 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
           </button>
         </div>
 
+        <div id="ss-disclaimer" style="font-size:9.5px;line-height:1.45;color:rgba(255,255,255,0.34);text-align:center;padding:0 14px 6px;">
+          Chiara è un'assistente AI: dà informazioni generali, non una consulenza, e può sbagliare. Per la tua situazione, parla con il team. <a href="note-legali-chiara.html" target="_blank" style="color:rgba(147,186,255,0.65);">Note legali</a>
+        </div>
         <div id="ss-footer-link">Powered by <a href="https://www.luniversotuo.it" target="_blank">LuniversoTuo</a> × Claude AI</div>
       </div>
     `;
@@ -620,7 +623,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
         showTyping();
         setTimeout(() => {
           hideTyping();
-          addMessage('assistant', 'Ciao! Sono Chiara, la consulente virtuale di LuniversoTuo. 😊 Sono qui per ascoltarti e aiutarti a capire la SuperSerenità® — senza fretta e senza impegno. Da dove vuoi partire?');
+          addMessage('assistant', 'Ciao! Sono Chiara, l\'assistente virtuale di LuniversoTuo. 😊 Ti do informazioni generali con cura, ma per la tua situazione c\'è il team reale. Sono qui per ascoltarti, senza fretta e senza impegno. Da dove vuoi partire?');
           renderQuickReplies();
         }, 900);
       }, 200);
