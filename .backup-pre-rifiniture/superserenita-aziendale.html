@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuperSerenità® Aziendale — Proteggi la tua impresa | LuniversoTuo</title>
+  <meta name="description" content="SuperSerenità® Aziendale: il metodo per proteggere la tua impresa, il tuo reddito e i tuoi collaboratori. Consulenza gratuita per imprenditori fino a 4M€ di fatturato.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero { padding: 90px 0 70px; background: var(--bg-main); }
+    .page-hero__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; max-width: 760px; }
+    .page-hero__h1 { font-size: 56px; font-weight: 800; color: #fff; letter-spacing: -2.2px; line-height: 1.06; margin-bottom: 24px; }
+    .page-hero__h1 em { font-style: normal; color: #2563EB; }
+    .page-hero__p { font-size: 19px; color: rgba(255,255,255,0.66); line-height: 1.7; margin-bottom: 36px; }
+
+    /* CONCETTO */
+    .concept { background: var(--bg-alt); padding: 80px 0; }
+    .concept__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .concept__quote { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.8px; line-height: 1.4; margin-bottom: 20px; }
+    .concept__quote em { font-style: normal; color: #2563EB; }
+    .concept__text { font-size: 16px; color: rgba(255,255,255,0.64); line-height: 1.75; margin-bottom: 16px; }
+    .concept__stat { display: flex; align-items: baseline; gap: 8px; margin-top: 28px; padding: 18px 22px; background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 12px; }
+    .concept__stat-num { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -1px; }
+    .concept__stat-lbl { font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.5; }
+    .concept__visual { position: relative; }
+
+    /* PYRAMID AZIENDALE */
+    .house { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 28px 20px 32px; }
+    .house__title { font-size: 11px; font-weight: 700; color: rgba(37,99,235,0.8); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 22px; text-align: center; }
+    .pyr { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .pyr-tier { border-radius: 10px; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.09); }
+    .pyr-tier--top { width: 58%; }
+    .pyr-tier--mid { width: 79%; }
+    .pyr-tier--base { width: 100%; }
+    .pyr-tier__label {
+      font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.48);
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 7px 12px 5px; text-align: center;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 0.5px solid rgba(255,255,255,0.12);
+    }
+    .pyr-item {
+      padding: 8px 12px; font-size: 10.5px; font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      display: flex; align-items: center; gap: 8px;
+      border-top: 0.5px solid rgba(255,255,255,0.05);
+    }
+    .pyr-item + .pyr-item { border-top: 0.5px solid rgba(255,255,255,0.05); }
+    .pyr-dot { width: 6px; height: 6px; border-radius: 2px; flex-shrink: 0; }
+    .l1 { background: rgba(37,99,235,0.16); } .l1 .pyr-dot { background: #2563EB; }
+    .l2 { background: rgba(34,197,94,0.11); } .l2 .pyr-dot { background: #22c55e; }
+    .l3 { background: rgba(245,158,11,0.11); } .l3 .pyr-dot { background: #F59E0B; }
+    .l4 { background: rgba(168,85,247,0.11); } .l4 .pyr-dot { background: #a855f7; }
+    .l5 { background: rgba(239,68,68,0.11); } .l5 .pyr-dot { background: #ef4444; }
+    .l6 { background: rgba(6,182,212,0.11); } .l6 .pyr-dot { background: #06b6d4; }
+    .l7 { background: rgba(255,255,255,0.05); } .l7 .pyr-dot { background: rgba(255,255,255,0.58); }
+
+    /* PROFILI */
+    .profili { padding: 88px 0; }
+    .profili__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+    .profili-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 48px; }
+    .profilo-card { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 28px; }
+    .profilo-card__icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .profilo-card__icon svg { width: 22px; height: 22px; stroke: #2563EB; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .profilo-card__title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .profilo-card__desc { font-size: 13px; color: rgba(255,255,255,0.56); line-height: 1.65; }
+
+    /* 4 MOVIMENTI */
+    .movimenti { padding: 88px 0; }
+    .movimenti__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+    .movimento { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; margin-bottom: 80px; padding-bottom: 80px; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+    .movimento:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .movimento--reverse { direction: rtl; }
+    .movimento--reverse > * { direction: ltr; }
+    .movimento__num { font-size: 11px; font-weight: 700; color: rgba(37,99,235,0.65); letter-spacing: 2px; margin-bottom: 16px; }
+    .movimento__title { font-size: 38px; font-weight: 800; color: #fff; letter-spacing: -1.5px; line-height: 1.08; margin-bottom: 18px; }
+    .movimento__desc { font-size: 16px; color: rgba(255,255,255,0.62); line-height: 1.75; margin-bottom: 24px; }
+    .movimento__detail { font-size: 14px; color: rgba(255,255,255,0.54); line-height: 1.7; }
+    .movimento__visual {
+      background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 18px;
+      min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; padding: 32px; text-align: center;
+    }
+    .movimento__icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; }
+    .movimento__icon svg { width: 28px; height: 28px; stroke: #2563EB; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .movimento__caption { font-size: 12px; color: rgba(255,255,255,0.48); line-height: 1.6; }
+
+    /* 5 FASI */
+    .consulenza { background: var(--bg-alt); padding: 88px 0; }
+    .fasi-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-top: 48px; }
+    .fase { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 24px 18px; text-align: center; }
+    .fase__n { font-size: 10px; font-weight: 700; color: rgba(37,99,235,0.6); letter-spacing: 2px; margin-bottom: 14px; }
+    .fase__icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .fase__icon svg { width: 18px; height: 18px; stroke: #2563EB; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .fase__title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .fase__desc { font-size: 11px; color: rgba(255,255,255,0.54); line-height: 1.55; }
+
+    /* COSA RICEVI */
+    .ricevi { padding: 88px 0; }
+    .ricevi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 48px; }
+    .ricevi-card { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 28px; }
+    .ricevi-card__icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .ricevi-card__icon svg { width: 22px; height: 22px; stroke: #2563EB; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .ricevi-card__title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .ricevi-card__desc { font-size: 13px; color: rgba(255,255,255,0.56); line-height: 1.65; }
+
+    /* CTA */
+    .book-cta { background: #2563EB; padding: 80px 0; }
+    .book-cta__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; text-align: center; }
+    .book-cta__h2 { font-size: 42px; font-weight: 800; color: #fff; letter-spacing: -1.5px; margin-bottom: 12px; }
+    .book-cta__sub { font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 36px; }
+    .book-cta__btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: #fff; color: #2563EB; border: none; border-radius: 10px; padding: 16px 28px; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+    .btn-white-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.58); border-radius: 10px; padding: 15px 26px; font-size: 15px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+
+    /* --- RIPROVA SOCIALE / OBIEZIONI / BARRA FISSA (campagna) --- */
+    .hero-proof { display:flex; align-items:flex-start; gap:8px; margin-top:24px; font-size:13px; color:rgba(255,255,255,0.55); line-height:1.5; }
+    .hero-proof svg { width:15px; height:15px; fill:#F59E0B; flex-shrink:0; margin-top:2px; }
+    .lp-reviews { background: var(--bg-alt); padding: 80px 0; }
+    .lp-reviews__head { text-align:center; max-width:680px; margin:0 auto 44px; }
+    .lp-reviews-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; max-width:900px; margin:0 auto; }
+    .lp-review { background:var(--bg-card); border:0.5px solid rgba(255,255,255,0.12); border-radius:14px; padding:26px; text-align:left; }
+    .lp-review__text { font-size:15px; color:rgba(255,255,255,0.62); line-height:1.65; margin-bottom:16px; font-style:italic; }
+    .lp-review__author { font-size:13px; font-weight:600; color:rgba(255,255,255,0.7); }
+    .lp-review__src { font-size:11px; color:rgba(37,99,235,0.6); margin-top:2px; }
+    .lp-badge { display:inline-flex; align-items:center; gap:8px; margin-top:32px; padding:10px 18px; background:rgba(37,99,235,0.08); border:0.5px solid rgba(37,99,235,0.2); border-radius:100px; font-size:12px; color:rgba(255,255,255,0.6); }
+    .obiez { padding: 88px 0; }
+    .obiez-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; max-width:980px; margin:40px auto 36px; }
+    .obiez-card { background:var(--bg-card); border:0.5px solid rgba(255,255,255,0.12); border-radius:14px; padding:24px 26px; }
+    .obiez-q { font-size:15px; font-weight:700; color:#fff; margin-bottom:8px; }
+    .obiez-a { font-size:14px; color:rgba(255,255,255,0.62); line-height:1.65; }
+    .cta-fixed { display:none; }
+    @media(max-width:900px){
+      .lp-reviews-grid { grid-template-columns:1fr; }
+      .obiez-grid { grid-template-columns:1fr; }
+      body { padding-bottom: 80px; }
+      .cta-fixed { display:flex; position:fixed; left:0; right:0; bottom:0; z-index:95; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); background:rgba(11,13,20,0.96); border-top:0.5px solid rgba(255,255,255,0.12); }
+      .cta-fixed a { flex:1; justify-content:center; }
+      .wa-float { bottom: 92px !important; }
+    }
+
+    @media(max-width:900px) {
+      .page-hero__h1 { font-size: 36px; }
+      .concept__inner { grid-template-columns: 1fr; }
+      .movimento { grid-template-columns: 1fr; }
+      .movimento--reverse { direction: ltr; }
+      .fasi-grid { grid-template-columns: repeat(2,1fr); }
+      .profili-grid { grid-template-columns: 1fr; }
+      .ricevi-grid { grid-template-columns: 1fr; }
+      .pyr-tier--top { width: 72%; }
+      .pyr-tier--mid { width: 86%; }
+      .pyr-tier--base { width: 100%; }
+      .pyr-item { font-size: 11px; padding: 9px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#2563EB;display:inline-block;flex-shrink:0;"></span>
+      <span style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.5px;line-height:1;">LuniversoTuo</span>
+    </a>
+    <ul class="nav__menu">
+      <li class="nav__dropdown">
+      <a href="#" class="nav__dropdown-toggle active">La SuperSerenità <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <ul class="nav__dropdown-menu">
+        <li><a href="superserenita.html">SuperSerenità Personale</a></li>
+        <li><a href="superserenita-aziendale.html" class="active">SuperSerenità Aziendale</a></li>
+      </ul>
+    </li>
+      <li><a href="storie.html">Le Storie</a></li>
+      <li><a href="team.html">Il Team</a></li>
+      <li><a href="testimonianze.html">Testimonianze</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="chat.html" class="nav__link-ghost">Parla con Chiara</a>
+      <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-nav">Prenota ora</a>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-body">
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero__inner container">
+      <div class="tag" style="margin-bottom:24px"><div class="tag__dot"></div>Per Imprenditori</div>
+      <h1 class="page-hero__h1">SuperSerenità®<br>Aziendale.<br>La tua impresa <em>non si ferma.</em></h1>
+      <p class="page-hero__p">
+        Se sei imprenditore, artigiano o libero professionista, la tua azienda sei tu.
+        Un'assenza improvvisa, un danno, una causa — e tutto quello che hai costruito
+        rischia di fermarsi. La SuperSerenità® Aziendale è il metodo per proteggere
+        la tua impresa, il tuo reddito e le persone che lavorano con te.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="#movimenti" class="btn-outline">Scopri il metodo</a>
+      </div>
+      <div class="hero-proof">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span><strong style="color:rgba(255,255,255,0.82);font-weight:600;">461 recensioni ECCELLENTE</strong> &middot; Imprenditori, artigiani e professionisti della Toscana si fidano di noi.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- IL CONCETTO -->
+  <section class="concept">
+    <div class="concept__inner">
+      <div>
+        <div class="eyebrow">Il rischio imprenditoriale</div>
+        <p class="concept__quote">
+          &ldquo;L'imprenditore è l'azienda.<br>Se si ferma lui, si ferma <em>tutto.</em>&rdquo;
+        </p>
+        <p class="concept__text">
+          Tra i 15.184 rischi economici reali che abbiamo analizzato, quelli che colpiscono
+          le imprese sono spesso i più devastanti: non perché siano più probabili,
+          ma perché coinvolgono al tempo stesso il reddito personale, la famiglia e l'attività.
+        </p>
+        <p class="concept__text">
+          La SuperSerenità® Aziendale nasce per questo: proteggere la continuità della tua
+          impresa, tutelare i tuoi collaboratori chiave e garantirti di non dover scegliere
+          tra la tua famiglia e la tua azienda in un momento difficile.
+        </p>
+        <div class="concept__stat" style="align-items:flex-start;">
+          <div class="concept__stat-lbl" style="font-size:14px;color:rgba(255,255,255,0.55);">Seguiamo con il metodo SuperSerenità® imprese <strong style="color:#fff;font-weight:700;">fino a ~4M€ di fatturato</strong> — artigiani, PMI, commercianti e professionisti. Non sai se rientri? Te lo diciamo nella prima chiamata, gratis.</div>
+        </div>
+      </div>
+      <div class="concept__visual">
+        <div class="house">
+          <div class="house__title">La Casa della SuperSerenità® Aziendale</div>
+          <div class="pyr">
+            <!-- TETTO — apex, narrowest -->
+            <div class="pyr-tier pyr-tier--top">
+              <div class="pyr-tier__label">Tetto — Continuità e crescita</div>
+              <div class="pyr-item l6"><div class="pyr-dot"></div>Previdenza integrativa aziendale</div>
+              <div class="pyr-item l7"><div class="pyr-dot"></div>Piano di successione &amp; futuro</div>
+            </div>
+            <!-- PRIMO PIANO — middle -->
+            <div class="pyr-tier pyr-tier--mid">
+              <div class="pyr-tier__label">Primo Piano — Sicurezza</div>
+              <div class="pyr-item l4"><div class="pyr-dot"></div>Tutela dei collaboratori chiave</div>
+              <div class="pyr-item l5"><div class="pyr-dot"></div>Salute &amp; Infortuni del titolare</div>
+            </div>
+            <!-- FONDAMENTA — base, widest -->
+            <div class="pyr-tier pyr-tier--base">
+              <div class="pyr-tier__label">Fondamenta — Sopravvivenza</div>
+              <div class="pyr-item l1"><div class="pyr-dot"></div>Continuità del reddito del titolare</div>
+              <div class="pyr-item l2"><div class="pyr-dot"></div>Responsabilità civile professionale</div>
+              <div class="pyr-item l3"><div class="pyr-dot"></div>Beni aziendali &amp; RC verso terzi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PER CHI È -->
+  <section class="profili">
+    <div class="profili__inner">
+      <div style="max-width:600px; margin-bottom: 64px;">
+        <div class="eyebrow">Per chi è</div>
+        <h2 class="section-title">Il metodo giusto<br>per ogni imprenditore.</h2>
+        <p class="section-sub" style="margin-bottom:0">Che tu abbia un'officina, uno studio professionale o un'azienda con 20 dipendenti, i rischi cambiano — il metodo resta lo stesso.</p>
+      </div>
+      <div class="profili-grid">
+        <div class="profilo-card">
+          <div class="profilo-card__icon">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div class="profilo-card__title">Artigiani &amp; PMI</div>
+          <div class="profilo-card__desc">Falegnami, idraulici, elettricisti, meccanici, edili. Chi lavora con le mani sa che un infortunio può fermare tutto. Proteggere il reddito è la prima priorità.</div>
+        </div>
+        <div class="profilo-card">
+          <div class="profilo-card__icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div class="profilo-card__title">Commercianti &amp; Ristoratori</div>
+          <div class="profilo-card__desc">Negozi, bar, ristoranti, attività al dettaglio. La tua continuità operativa dipende dalla tua presenza. Un'assenza prolungata mette a rischio anni di lavoro.</div>
+        </div>
+        <div class="profilo-card">
+          <div class="profilo-card__icon">
+            <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div class="profilo-card__title">Liberi Professionisti</div>
+          <div class="profilo-card__desc">Medici, avvocati, commercialisti, ingegneri, consulenti. La vostra RC professionale e la tutela da eventi imprevisti sono pilastri fondamentali della serenità.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIPROVA SOCIALE BUSINESS -->
+  <section class="lp-reviews">
+    <div class="container">
+      <div class="lp-reviews__head">
+        <h2 class="section-title" style="margin:0 auto 0;">Imprenditori come te,<br>già protetti.</h2>
+      </div>
+      <!-- ⚠️ PLACEHOLDER — sostituire con testimonianze REALI di clienti business (nome + settore) prima del lancio -->
+      <div class="lp-reviews-grid">
+        <div class="lp-review">
+          <p class="lp-review__text">&ldquo;Da titolare, il mio primo pensiero era: se mi fermo io, chi manda avanti tutto? Mi hanno aiutato a mettere in sicurezza il reddito e l'attività.&rdquo;</p>
+          <div class="lp-review__author">[Nome]</div>
+          <div class="lp-review__src">[Settore — es. Titolare officina, Pescia]</div>
+        </div>
+        <div class="lp-review">
+          <p class="lp-review__text">&ldquo;Consulenza concreta, numeri alla mano. Non un pacchetto generico per 'le aziende', ma una soluzione sulla mia realtà.&rdquo;</p>
+          <div class="lp-review__author">[Nome]</div>
+          <div class="lp-review__src">[Settore]</div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="lp-badge">⭐ 461 recensioni &middot; ECCELLENTE su Trustindex</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 MOVIMENTI -->
+  <section class="movimenti" id="movimenti" style="background: var(--bg-alt);">
+    <div class="movimenti__inner">
+      <div style="max-width:600px; margin-bottom: 64px;">
+        <div class="eyebrow">Il Metodo SuperSerenità® Aziendale</div>
+        <h2 class="section-title">4 movimenti.<br>La tua impresa protetta.</h2>
+        <p class="section-sub" style="margin-bottom:0">Lo stesso metodo della SuperSerenità® Personale, applicato all'impresa. Stesso rigore, stessa cura, stessa assenza di pressione commerciale.</p>
+      </div>
+
+      <div class="movimento">
+        <div>
+          <div class="movimento__num">01 — ANALIZZARE</div>
+          <h3 class="movimento__title">Mappiamo<br>i rischi della tua impresa.</h3>
+          <p class="movimento__desc">Ogni azienda è diversa. Prima di tutto, capiamo come funziona la tua — il tuo ruolo, i tuoi collaboratori, i tuoi beni, la tua esposizione.</p>
+          <p class="movimento__detail">Con lo strumento Epheso analizziamo i rischi specifici della tua attività: dall'infortunio del titolare alla responsabilità verso i clienti, dai danni ai macchinari alla tutela dei dipendenti chiave.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="movimento__caption">Analisi completa dei rischi<br>specifici della tua attività</div>
+        </div>
+      </div>
+
+      <div class="movimento movimento--reverse">
+        <div>
+          <div class="movimento__num">02 — COMPRENDERE</div>
+          <h3 class="movimento__title">Quanto costa<br>fermarsi un mese?</h3>
+          <p class="movimento__desc">Ti mostriamo, con numeri reali, cosa succede alla tua azienda se tu non puoi lavorare. Non è pessimismo: è pianificazione intelligente.</p>
+          <p class="movimento__detail">Un artigiano che si rompe un braccio perde in media 3.200€ al mese di reddito netto. Un commerciante che si ammala per 60 giorni può perdere clienti che non tornano più. Una causa da RC professionale non coperta può costare decine di migliaia di euro.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="movimento__caption">Numeri reali sull'impatto<br>di un'assenza sulla tua azienda</div>
+        </div>
+      </div>
+
+      <div class="movimento">
+        <div>
+          <div class="movimento__num">03 — COSTRUIRE</div>
+          <h3 class="movimento__title">Costruiamo<br>la protezione su misura.</h3>
+          <p class="movimento__desc">Non un pacchetto generico per "le aziende". Una soluzione costruita attorno alla tua impresa specifica, al tuo budget, alle tue priorità reali.</p>
+          <p class="movimento__detail">Partiamo sempre dai rischi più importanti — quelli che, se si concretizzano, mettono in pericolo la continuità. Poi aggiungiamo strato per strato, senza sprechi.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="movimento__caption">Protezione costruita attorno<br>alla tua impresa specifica</div>
+        </div>
+      </div>
+
+      <div class="movimento movimento--reverse">
+        <div>
+          <div class="movimento__num">04 — CONTINUARE</div>
+          <h3 class="movimento__title">La tua impresa<br>cresce. La protezione anche.</h3>
+          <p class="movimento__desc">La tua azienda cambia ogni anno — dipendenti, fatturato, beni, rischi. Per questo ti affianchiamo nel tempo, aggiornando la protezione alla realtà.</p>
+          <p class="movimento__detail">Non sei un contratto. Sei un imprenditore con un percorso. Il nostro lavoro è assicurarci che la tua serenità aziendale cresca insieme alla tua impresa.</p>
+        </div>
+        <div class="movimento__visual">
+          <div class="movimento__icon"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <div class="movimento__caption">Revisione annuale<br>protezione che evolve con te</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 FASI CONSULENZA -->
+  <section class="consulenza">
+    <div class="container">
+      <div class="eyebrow">La consulenza aziendale</div>
+      <h2 class="section-title">Come funziona<br>il tuo incontro</h2>
+      <p class="section-sub">La consulenza SuperSerenità® Aziendale segue 5 fasi precise. Nessuna sorpresa, nessun prodotto preconfezionato. Solo chiarezza e soluzioni reali.</p>
+      <div class="fasi-grid">
+        <div class="fase">
+          <div class="fase__n">01</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="fase__title">Ascolto</div>
+          <div class="fase__desc">Capiamo la tua impresa, il tuo ruolo, le tue preoccupazioni reali.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">02</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+          <div class="fase__title">Analisi rischi</div>
+          <div class="fase__desc">Mappiamo i rischi specifici della tua attività con dati concreti.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">03</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+          <div class="fase__title">Priorità</div>
+          <div class="fase__desc">Decidiamo insieme cosa proteggere prima — in base al tuo budget.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">04</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="fase__title">Piano aziendale</div>
+          <div class="fase__desc">Costruiamo la protezione su misura per la tua impresa specifica.</div>
+        </div>
+        <div class="fase">
+          <div class="fase__n">05</div>
+          <div class="fase__icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="fase__title">Continuità</div>
+          <div class="fase__desc">Ti affianchiamo ogni anno, mentre la tua impresa cresce.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COSA RICEVI -->
+  <section class="ricevi">
+    <div class="container">
+      <div class="eyebrow">Cosa ricevi</div>
+      <h2 class="section-title">Dalla consulenza,<br>esci con un piano concreto.</h2>
+      <p class="section-sub">La consulenza SuperSerenità® Aziendale è completamente gratuita. Porti a casa tre strumenti pratici per la tua impresa.</p>
+      <div class="ricevi-grid">
+        <div class="ricevi-card">
+          <div class="ricevi-card__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="ricevi-card__title">Consulenza dedicata alla tua impresa</div>
+          <div class="ricevi-card__desc">Un incontro focalizzato sulla tua realtà imprenditoriale — non un pitch generico. Analizziamo insieme la tua situazione specifica.</div>
+        </div>
+        <div class="ricevi-card">
+          <div class="ricevi-card__icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div class="ricevi-card__title">Mappa dei rischi aziendali</div>
+          <div class="ricevi-card__desc">L'analisi completa dei rischi specifici della tua attività — generata con Epheso. Sai esattamente dove sei esposto e dove sei già protetto.</div>
+        </div>
+        <div class="ricevi-card">
+          <div class="ricevi-card__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+          <div class="ricevi-card__title">Piano SuperSerenità® Aziendale</div>
+          <div class="ricevi-card__desc">Un piano d'azione personalizzato con priorità, soluzioni su misura e budget realistico — pensato per la tua impresa, non per un'azienda generica.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBIEZIONI -->
+  <section class="obiez">
+    <div class="container">
+      <div class="eyebrow">Prima di chiamarci</div>
+      <h2 class="section-title">Le domande che ogni imprenditore<br>si fa prima di chiamarci.</h2>
+      <div class="obiez-grid">
+        <div class="obiez-card">
+          <div class="obiez-q">Non ho tempo.</div>
+          <div class="obiez-a">La prima consulenza è di circa 30 minuti, anche online. La strutturiamo intorno ai tuoi impegni.</div>
+        </div>
+        <div class="obiez-card">
+          <div class="obiez-q">Ho già un'assicurazione.</div>
+          <div class="obiez-a">Bene. La analizziamo insieme: ti diciamo dove sei già coperto e dove sei scoperto. Senza venderti doppioni.</div>
+        </div>
+        <div class="obiez-card">
+          <div class="obiez-q">È davvero gratis?</div>
+          <div class="obiez-a">Sì, la prima consulenza e la mappa dei rischi sono gratuite e senza impegno.</div>
+        </div>
+        <div class="obiez-card">
+          <div class="obiez-q">La mia attività è troppo piccola/grande?</div>
+          <div class="obiez-a">Seguiamo dall'artigiano singolo all'azienda con ~20 dipendenti. Nel dubbio, chiedici.</div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="book-cta">
+    <div class="book-cta__inner">
+      <h2 class="book-cta__h2">La tua impresa merita<br>la stessa serenità tua.</h2>
+      <p class="book-cta__sub">Consulenza gratuita &middot; Online o in agenzia a Pescia &middot; Circa 30 minuti &middot; Nessun obbligo</p>
+      <div class="book-cta__btns">
+        <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-white">
+          Prenota la consulenza gratuita
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="https://wa.me/39057247139" target="_blank" class="btn-white-outline">Scrivici su WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="footer__grid">
+    <div>
+      <div class="footer__logo"><img src="img/logo-luniversotuo.svg" alt="LuniversoTuo" onerror="this.style.display='none'"></div>
+      <p class="footer__desc">L'unico che assicura la SuperSerenità®.<br>Agenzia Allianz &middot; Pescia (PT) &middot; Toscana.</p>
+    </div>
+    <div class="footer__col"><h4>Navigazione</h4><ul>
+      <li><a href="superserenita.html">SuperSerenità Personale</a></li>
+      <li><a href="superserenita-aziendale.html">SuperSerenità Aziendale</a></li>
+      <li><a href="storie.html">Le Storie</a></li>
+      <li><a href="team.html">Il Team</a></li>
+      <li><a href="testimonianze.html">Testimonianze</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul></div>
+    <div class="footer__col"><h4>Contatti</h4><ul>
+      <li><a href="tel:057247139">0572 47139</a></li>
+      <li><a href="mailto:info@luniversotuo.it">info@luniversotuo.it</a></li>
+      <li><a href="https://wa.me/39057247139">WhatsApp</a></li>
+    </ul></div>
+    <div class="footer__col"><h4>Orari</h4><ul>
+      <li><a>Lun–Ven: 9–13 / 16–19</a></li>
+      <li><a>Sab–Dom: chiuso</a></li>
+    </ul></div>
+  </div>
+  <div class="footer__bottom">
+    <div class="footer__legal">&copy; 2026 LuniversoTuo sas &middot; P.IVA 01563410479 &middot; Iscritta sezione A Registro Intermediari n. A000073879<br>
+      <a href="informativa-privacy.html" style="color:inherit">Privacy</a>
+      &nbsp;&middot;&nbsp;
+      <a href="cookie-policy.html" style="color:inherit">Cookie Policy</a>
+      &nbsp;&middot;&nbsp;
+      <a href="whistleblowing.html" style="color:inherit">Whistleblowing</a>
+      &nbsp;&middot;&nbsp;
+      In collaborazione con APP BROKER SRL &middot; Mandataria Allianz
+    </div>
+    <div class="footer__trust">
+      <span class="trustbadge">TRUSTINDEX</span>
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <span style="font-size:11px;color:rgba(255,255,255,0.42);">461 recensioni ECCELLENTE</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/39057247139" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</a>
+
+<!-- BARRA CTA FISSA (mobile) -->
+<div class="cta-fixed">
+  <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita</a>
+</div>
+
+<script src="js/chat-widget.js"></script>
+<script src="js/cookie-banner.js"></script>
+</body>
+</html>

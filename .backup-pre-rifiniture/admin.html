@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Team — LuniversoTuo</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0b0d14;--bg2:#0e1019;--card:#13151f;--card2:#1a1d2e;
+      --blue:#2563EB;--blue-dim:rgba(37,99,235,0.1);--blue-border:rgba(37,99,235,0.25);--blue-text:rgba(147,186,255,0.9);
+      --white:#fff;--t1:rgba(255,255,255,0.9);--t2:rgba(255,255,255,0.66);--t3:rgba(255,255,255,0.44);
+      --border:rgba(255,255,255,0.12);--green:#22c55e;--gold:#F59E0B;--red:#ef4444;--r:12px;--r2:18px;
+    }
+    body { font-family:'Inter',ui-sans-serif,system-ui,sans-serif; background:var(--bg); color:var(--t1); min-height:100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(37,99,235,0.12) 0%,transparent 70%); padding:20px; }
+    .login-box { width:100%; max-width:400px; background:var(--card); border:0.5px solid var(--border); border-radius:var(--r2); padding:40px 36px; box-shadow:0 24px 80px rgba(0,0,0,0.5); }
+    .login-logo { display:flex; align-items:center; gap:10px; margin-bottom:32px; }
+    .login-logo-icon { width:40px; height:40px; border-radius:10px; background:var(--blue); display:flex; align-items:center; justify-content:center; }
+    .login-logo-icon svg { width:22px; height:22px; fill:none; stroke:white; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .login-logo-text { font-size:15px; font-weight:700; color:var(--white); }
+    .login-logo-sub { font-size:10px; color:var(--t3); letter-spacing:0.5px; margin-top:1px; }
+    .login-title { font-size:24px; font-weight:800; color:var(--white); letter-spacing:-0.8px; margin-bottom:6px; }
+    .login-sub { font-size:13.5px; color:var(--t3); margin-bottom:28px; line-height:1.5; }
+    .login-label { font-size:12px; font-weight:600; color:var(--t2); letter-spacing:0.3px; margin-bottom:8px; display:block; }
+    .login-input { width:100%; background:var(--card2); border:0.5px solid var(--border); border-radius:var(--r); padding:12px 16px; color:var(--t1); font-size:14px; outline:none; margin-bottom:16px; transition:border-color 0.15s; font-family:inherit; }
+    .login-input:focus { border-color:var(--blue-border); }
+    .login-btn { width:100%; background:var(--blue); border:none; border-radius:var(--r); padding:13px; color:white; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; }
+    .login-btn:hover { background:#1d4ed8; }
+    .login-error { font-size:12.5px; color:var(--red); margin-top:-8px; margin-bottom:12px; display:none; }
+    .login-note { font-size:11px; color:var(--t3); text-align:center; margin-top:20px; line-height:1.6; }
+
+    /* ── TOPBAR ── */
+    #dashboard { display:none; }
+    .topbar { background:var(--card); border-bottom:0.5px solid var(--border); padding:0 28px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+    .topbar-left { display:flex; align-items:center; gap:12px; }
+    .topbar-logo-icon { width:32px; height:32px; border-radius:8px; background:var(--blue); display:flex; align-items:center; justify-content:center; }
+    .topbar-logo-icon svg { width:16px; height:16px; fill:none; stroke:white; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+    .topbar-name { font-size:14px; font-weight:700; color:var(--white); }
+    .topbar-badge { font-size:10px; font-weight:600; color:var(--blue-text); background:var(--blue-dim); border:0.5px solid var(--blue-border); border-radius:100px; padding:3px 10px; letter-spacing:0.5px; }
+    .topbar-right { display:flex; align-items:center; gap:8px; }
+    .logout-btn { background:none; border:0.5px solid var(--border); border-radius:8px; padding:6px 14px; color:var(--t2); font-size:12px; cursor:pointer; font-family:inherit; }
+    .logout-btn:hover { color:var(--t1); border-color:rgba(255,255,255,0.36); }
+
+    /* ── TABS ── */
+    .tabs-bar { background:var(--card); border-bottom:0.5px solid var(--border); padding:0 28px; display:flex; gap:0; }
+    .tab-btn { padding:12px 20px; font-size:13px; font-weight:500; color:var(--t3); background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; font-family:inherit; transition:color 0.15s,border-color 0.15s; display:flex; align-items:center; gap:7px; }
+    .tab-btn svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .tab-btn:hover { color:var(--t1); }
+    .tab-btn.active { color:var(--blue-text); border-bottom-color:var(--blue); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    /* ── MAIN LAYOUT ── */
+    .dash-main { max-width:1200px; margin:0 auto; padding:28px 28px 60px; }
+
+    /* STATS */
+    .stats-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+    .stat-card { background:var(--card); border:0.5px solid var(--border); border-radius:var(--r); padding:18px 20px; }
+    .stat-card__val { font-size:26px; font-weight:800; color:var(--white); letter-spacing:-1px; }
+    .stat-card__val.green { color:var(--green); }
+    .stat-card__val.blue { color:#60a5fa; }
+    .stat-card__lbl { font-size:11.5px; color:var(--t3); margin-top:4px; }
+
+    /* CARDS */
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .card { background:var(--card); border:0.5px solid var(--border); border-radius:var(--r); padding:20px 22px; }
+    .card-title { font-size:13px; font-weight:700; color:var(--white); margin-bottom:14px; letter-spacing:-0.2px; }
+
+    /* PAGE LIST */
+    .page-item { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:0.5px solid var(--border); }
+    .page-item:last-child { border-bottom:none; padding-bottom:0; }
+    .page-item:first-child { padding-top:0; }
+    .page-item-left { display:flex; align-items:center; gap:10px; }
+    .page-dot { width:7px; height:7px; border-radius:50%; background:var(--green); flex-shrink:0; }
+    .page-name { font-size:13px; font-weight:600; color:var(--t1); }
+    .page-path { font-size:11px; color:var(--t3); }
+    .page-actions { display:flex; gap:6px; }
+    .page-btn { font-size:11px; font-weight:500; padding:4px 10px; border-radius:7px; border:none; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-family:inherit; transition:background 0.15s; }
+    .page-btn.view { background:rgba(255,255,255,0.06); color:var(--t2); }
+    .page-btn.view:hover { background:rgba(255,255,255,0.1); color:var(--t1); }
+    .page-btn.edit { background:var(--blue-dim); color:var(--blue-text); border:0.5px solid var(--blue-border); }
+    .page-btn.edit:hover { background:rgba(37,99,235,0.2); }
+
+    /* RISORSE */
+    .risorsa-link { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:0.5px solid var(--border); text-decoration:none; transition:opacity 0.15s; }
+    .risorsa-link:last-child { border-bottom:none; }
+    .risorsa-link:hover { opacity:0.8; }
+    .risorsa-icon { width:34px; height:34px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .risorsa-icon svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .risorsa-name { font-size:13px; font-weight:600; color:var(--t1); }
+    .risorsa-desc { font-size:11px; color:var(--t3); margin-top:1px; }
+    .risorsa-arrow { margin-left:auto; color:var(--t3); }
+    .risorsa-arrow svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* QA BUTTON */
+    .qa-btn { display:flex; align-items:center; gap:12px; padding:13px 16px; border-radius:var(--r); background:var(--card2); border:0.5px solid var(--border); text-decoration:none; transition:border-color 0.2s; margin-bottom:8px; }
+    .qa-btn:last-child { margin-bottom:0; }
+    .qa-btn:hover { border-color:rgba(37,99,235,0.3); }
+    .qa-icon { width:36px; height:36px; border-radius:9px; background:var(--blue-dim); border:0.5px solid var(--blue-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .qa-icon svg { width:16px; height:16px; fill:none; stroke:var(--blue-text); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .qa-text { flex:1; }
+    .qa-title { font-size:13px; font-weight:600; color:var(--t1); }
+    .qa-sub { font-size:11px; color:var(--t3); margin-top:1px; }
+    .qa-arrow { color:var(--t3); }
+    .qa-arrow svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2.5; }
+
+    /* TEAM */
+    .member-row { display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:0.5px solid var(--border); }
+    .member-row:last-child { border-bottom:none; }
+    .member-avatar { width:32px; height:32px; border-radius:50%; background:var(--card2); border:0.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--blue-text); flex-shrink:0; }
+    .member-name { font-size:13px; font-weight:600; color:var(--t1); }
+    .member-role { font-size:11px; color:var(--t3); }
+    .member-tag { font-size:10px; font-weight:600; padding:3px 8px; border-radius:6px; background:var(--blue-dim); color:var(--blue-text); border:0.5px solid var(--blue-border); }
+
+    /* SOFIA */
+    .sofia-status { display:flex; align-items:center; gap:10px; margin-bottom:16px; padding:14px 16px; border-radius:var(--r); }
+    .sofia-status.ok { background:rgba(34,197,94,0.07); border:0.5px solid rgba(34,197,94,0.2); }
+    .sofia-status.warning { background:rgba(245,158,11,0.07); border:0.5px solid rgba(245,158,11,0.25); }
+    .sofia-dot { width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0; }
+    .sofia-status.warning .sofia-dot { background:var(--gold); }
+    .sofia-text { font-size:12.5px; color:var(--t2); line-height:1.5; }
+    .sofia-text strong { color:var(--t1); }
+
+    /* ── EDITOR TAB ── */
+    .editor-main { max-width:1200px; margin:0 auto; padding:28px 28px 60px; }
+
+    /* TOKEN SETUP */
+    .token-setup { background:var(--card); border:0.5px solid var(--blue-border); border-radius:var(--r2); padding:28px; margin-bottom:24px; display:flex; align-items:center; gap:20px; }
+    .token-setup.hidden { display:none; }
+    .token-icon { width:44px; height:44px; border-radius:12px; background:var(--blue-dim); border:0.5px solid var(--blue-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .token-icon svg { width:20px; height:20px; fill:none; stroke:var(--blue-text); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .token-body { flex:1; }
+    .token-title { font-size:14px; font-weight:700; color:var(--white); margin-bottom:6px; }
+    .token-desc { font-size:12.5px; color:var(--t3); margin-bottom:14px; line-height:1.5; }
+    .token-row { display:flex; gap:8px; align-items:center; }
+    .token-input { flex:1; background:var(--card2); border:0.5px solid var(--border); border-radius:var(--r); padding:10px 14px; color:var(--t1); font-size:13px; outline:none; font-family:'Courier New',monospace; transition:border-color 0.15s; }
+    .token-input:focus { border-color:var(--blue-border); }
+    .token-save-btn { background:var(--blue); border:none; border-radius:var(--r); padding:10px 18px; color:white; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; white-space:nowrap; }
+    .token-save-btn:hover { background:#1d4ed8; }
+    .token-ok { display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--green); }
+    .token-change { font-size:11px; color:var(--t3); cursor:pointer; margin-left:8px; }
+    .token-change:hover { color:var(--t2); }
+
+    /* EDITOR CARD */
+    .editor-card { background:var(--card); border:0.5px solid var(--border); border-radius:var(--r2); overflow:hidden; }
+    .editor-toolbar { padding:16px 20px; border-bottom:0.5px solid var(--border); display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .editor-select { background:var(--card2); border:0.5px solid var(--border); border-radius:var(--r); padding:8px 14px; color:var(--t1); font-size:13px; outline:none; font-family:inherit; cursor:pointer; min-width:220px; }
+    .editor-select:focus { border-color:var(--blue-border); }
+    .editor-load-btn { background:var(--blue-dim); border:0.5px solid var(--blue-border); border-radius:var(--r); padding:8px 16px; color:var(--blue-text); font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
+    .editor-load-btn:hover { background:rgba(37,99,235,0.2); }
+    .editor-file-info { font-size:12px; color:var(--t3); margin-left:auto; }
+    #code-editor {
+      width:100%; min-height:520px; background:#0b0d14;
+      border:none; outline:none; resize:vertical;
+      color:rgba(255,255,255,0.85); font-family:'Courier New',Courier,monospace;
+      font-size:13px; line-height:1.65; padding:20px; tab-size:2;
+    }
+    .editor-footer { padding:14px 20px; border-top:0.5px solid var(--border); display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .save-btn { background:var(--blue); border:none; border-radius:var(--r); padding:10px 24px; color:white; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; display:flex; align-items:center; gap:8px; }
+    .save-btn:hover { background:#1d4ed8; }
+    .save-btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .save-btn svg { width:14px; height:14px; fill:none; stroke:white; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+    #save-status { font-size:12.5px; }
+    #save-status.ok { color:var(--green); }
+    #save-status.err { color:var(--red); }
+    #save-status.loading { color:var(--t3); }
+    .editor-hint { font-size:11.5px; color:var(--t3); line-height:1.6; margin-left:auto; text-align:right; }
+
+    /* FIND & REPLACE */
+    .find-bar { padding:12px 20px; border-bottom:0.5px solid var(--border); display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:rgba(255,255,255,0.02); }
+    .find-input { background:var(--card2); border:0.5px solid var(--border); border-radius:8px; padding:7px 12px; color:var(--t1); font-size:12.5px; outline:none; font-family:inherit; width:200px; }
+    .find-input:focus { border-color:var(--blue-border); }
+    .find-label { font-size:11px; color:var(--t3); font-weight:600; letter-spacing:0.5px; }
+    .find-btn { background:rgba(255,255,255,0.06); border:0.5px solid var(--border); border-radius:8px; padding:7px 14px; color:var(--t2); font-size:12px; cursor:pointer; font-family:inherit; }
+    .find-btn:hover { background:rgba(255,255,255,0.1); color:var(--t1); }
+
+    /* NUOVA PAGINA */
+    .nuova-card { background:var(--card); border:0.5px solid var(--blue-border); border-radius:var(--r2); padding:24px; margin-bottom:24px; }
+    .nuova-card-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+    .nuova-card-icon { width:40px; height:40px; border-radius:10px; background:var(--blue-dim); border:0.5px solid var(--blue-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .nuova-card-icon svg { width:18px; height:18px; fill:none; stroke:var(--blue-text); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .nuova-card-title { font-size:14px; font-weight:700; color:var(--white); }
+    .nuova-card-sub { font-size:12px; color:var(--t3); margin-top:2px; }
+    .nuova-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+    .nuova-field label { display:block; font-size:11px; font-weight:600; color:var(--t3); letter-spacing:0.4px; margin-bottom:6px; }
+    .nuova-input { width:100%; background:var(--card2); border:0.5px solid var(--border); border-radius:var(--r); padding:10px 14px; color:var(--t1); font-size:13px; outline:none; font-family:inherit; transition:border-color 0.15s; }
+    .nuova-input:focus { border-color:var(--blue-border); }
+    .nuova-url-prefix { font-size:12px; color:var(--t3); margin-top:6px; }
+    .nuova-url-prefix span { color:var(--blue-text); font-weight:600; }
+    .nuova-footer { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .nuova-btn { background:var(--blue); border:none; border-radius:var(--r); padding:10px 24px; color:white; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; display:flex; align-items:center; gap:8px; }
+    .nuova-btn:hover { background:#1d4ed8; }
+    .nuova-btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .nuova-status { font-size:12.5px; }
+    .nuova-status.ok { color:var(--green); }
+    .nuova-status.err { color:var(--red); }
+    @media(max-width:640px){ .nuova-fields { grid-template-columns:1fr; } }
+
+    /* ── AGGIORNAMENTI RAPIDI TAB ── */
+    .rapidi-main { max-width:900px; margin:0 auto; padding:28px 28px 60px; }
+    .rapidi-desc { font-size:14px; color:var(--t3); margin-bottom:28px; line-height:1.7; }
+    .rapido-card { background:var(--card); border:0.5px solid var(--border); border-radius:var(--r2); padding:24px; margin-bottom:16px; }
+    .rapido-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+    .rapido-icon { width:40px; height:40px; border-radius:10px; background:var(--blue-dim); border:0.5px solid var(--blue-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .rapido-icon svg { width:18px; height:18px; fill:none; stroke:var(--blue-text); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .rapido-title { font-size:15px; font-weight:700; color:var(--white); letter-spacing:-0.3px; }
+    .rapido-sub { font-size:12px; color:var(--t3); margin-top:3px; }
+    .rapido-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .rapido-field { display:flex; flex-direction:column; gap:5px; }
+    .rapido-label { font-size:11px; font-weight:600; color:var(--t3); letter-spacing:0.5px; }
+    .rapido-input { background:var(--card2); border:0.5px solid var(--border); border-radius:var(--r); padding:10px 14px; color:var(--t1); font-size:15px; font-weight:700; outline:none; width:140px; text-align:center; font-family:inherit; }
+    .rapido-input:focus { border-color:var(--blue-border); }
+    .rapido-arrow { font-size:18px; color:var(--t3); }
+    .rapido-btn { background:var(--blue); border:none; border-radius:var(--r); padding:10px 20px; color:white; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
+    .rapido-btn:hover { background:#1d4ed8; }
+    .rapido-status { font-size:12px; margin-top:8px; }
+    .rapido-status.ok { color:var(--green); }
+    .rapido-status.err { color:var(--red); }
+    .rapido-pages { font-size:11.5px; color:var(--t3); margin-top:8px; line-height:1.6; }
+
+    /* GITHUB STATUS */
+    .github-status { display:flex; align-items:center; gap:8px; padding:10px 14px; border-radius:var(--r); background:rgba(34,197,94,0.06); border:0.5px solid rgba(34,197,94,0.15); font-size:12px; color:var(--green); margin-bottom:20px; }
+
+    /* SPINNER */
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .spinner { width:14px; height:14px; border:2px solid rgba(255,255,255,0.36); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; }
+
+    @media (max-width:900px) {
+      .dash-main,.editor-main,.rapidi-main { padding:16px 14px 40px; }
+      .stats-strip { grid-template-columns:repeat(2,1fr); }
+      .grid-2,.grid-3 { grid-template-columns:1fr; }
+      .topbar { padding:0 14px; }
+      .tabs-bar { padding:0 14px; }
+      #code-editor { font-size:12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="login-logo-text">LuniversoTuo</div>
+        <div class="login-logo-sub">AREA RISERVATA TEAM</div>
+      </div>
+    </div>
+    <h1 class="login-title">Bentornato</h1>
+    <p class="login-sub">Accedi con la password del team per gestire il sito.</p>
+    <label class="login-label" for="pwd-input">PASSWORD</label>
+    <input type="password" id="pwd-input" class="login-input" placeholder="••••••••••••••••" autocomplete="current-password">
+    <div class="login-error" id="login-error">Password non corretta. Riprova.</div>
+    <button class="login-btn" id="login-btn">Accedi</button>
+    <p class="login-note">Accesso riservato al team LuniversoTuo.<br>Problemi? Contatta Giancarlo.</p>
+  </div>
+</div>
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div id="dashboard">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+      <span class="topbar-name">LuniversoTuo</span>
+      <span class="topbar-badge">AREA TEAM</span>
+    </div>
+    <div class="topbar-right">
+      <button class="logout-btn" id="logout-btn">Esci</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" data-tab="pannello">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Pannello
+    </button>
+    <button class="tab-btn" data-tab="editor">
+      <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Editor Pagine
+    </button>
+    <button class="tab-btn" data-tab="rapidi">
+      <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Aggiornamenti Rapidi
+    </button>
+    <button class="tab-btn" data-tab="statistiche">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Statistiche
+    </button>
+  </div>
+
+  <!-- ══════════ TAB: PANNELLO ══════════ -->
+  <div id="tab-pannello" class="tab-panel active">
+    <div class="dash-main">
+
+      <!-- STATS -->
+      <div class="stats-strip">
+        <div class="stat-card"><div class="stat-card__val green">461 ★</div><div class="stat-card__lbl">Recensioni ECCELLENTE</div></div>
+        <div class="stat-card"><div class="stat-card__val">15.184</div><div class="stat-card__lbl">Rischi analizzati</div></div>
+        <div class="stat-card"><div class="stat-card__val blue">8</div><div class="stat-card__lbl">Pagine sito attive</div></div>
+        <div class="stat-card"><div class="stat-card__val">5</div><div class="stat-card__lbl">Professionisti team</div></div>
+      </div>
+
+      <!-- PAGINE + AZIONI -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Pagine del sito</div>
+
+          <div class="page-item">
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Homepage</div><div class="page-path">index.html</div></div></div>
+            <div class="page-actions">
+              <a href="index.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
+              <button class="page-btn edit" onclick="openEditor('index.html')">Modifica</button>
+            </div>
+          </div>
+
+          <div class="page-item">
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">La SuperSerenità®</div><div class="page-path">superserenita.html</div></div></div>
+            <div class="page-actions">
+              <a href="superserenita.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
+              <button class="page-btn edit" onclick="openEditor('superserenita.html')">Modifica</button>
+            </div>
+          </div>
+
+          <div class="page-item">
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Il Team</div><div class="page-path">team.html</div></div></div>
+            <div class="page-actions">
+              <a href="team.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
+              <button class="page-btn edit" onclick="openEditor('team.html')">Modifica</button>
+            </div>
+          </div>
+
+          <div class="page-item">
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Le Storie</div><div class="page-path">storie.html</div></div></div>
+            <div class="page-actions">
+              <a href="storie.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
+              <button class="page-btn edit" onclick="openEditor('storie.html')">Modifica</button>
+            </div>
+          </div>
+
+          <div class="page-item">
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Testimonianze</div><div class="page-path">testimonianze.html</div></div></div>
+            <div class="page-actions">
+              <a href="testimonianze.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
+              <button class="page-btn edit" onclick="openEditor('testimonianze.html')">Modifica</button>
+            </div>
+          </div>
+
+          <div class="page-item">
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Contatti</div><div class="page-path">contatti.html</div></div></div>
+            <div class="page-actions">
+              <a href="contatti.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
+              <button class="page-btn edit" onclick="openEditor('contatti.html')">Modifica</button>
+            </div>
+          </div>
+
+          <div class="page-item">
+            <div class="page-item-left"><div class="page-dot"></div><div><div class="page-name">Chat con Chiara</div><div class="page-path">chat.html</div></div></div>
+            <div class="page-actions">
+              <a href="chat.html" target="_blank" class="page-btn view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vedi</a>
+              <button class="page-btn edit" onclick="openEditor('chat.html')">Modifica</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- AZIONI RAPIDE -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-title">Chiara — AI del sito</div>
+            <div class="sofia-status" id="chiara-status-bar"><div class="sofia-dot"></div><div class="sofia-text" id="chiara-status-text">Controllo stato Chiara...</div></div>
+            <a href="https://console.anthropic.com" target="_blank" class="qa-btn">
+              <div class="qa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+              <div class="qa-text"><div class="qa-title">Console Anthropic</div><div class="qa-sub">Crea/gestisci la chiave API di Chiara</div></div>
+              <div class="qa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+            </a>
+          </div>
+          <div class="card">
+            <div class="card-title">Prenotazioni</div>
+            <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="qa-btn" style="margin-bottom:8px;">
+              <div class="qa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+              <div class="qa-text"><div class="qa-title">Calendario Delera</div><div class="qa-sub">Vedi e gestisci le prenotazioni</div></div>
+              <div class="qa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+            </a>
+            <a href="https://wa.me/39057247139" target="_blank" class="qa-btn">
+              <div class="qa-icon" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25);"><svg viewBox="0 0 24 24" stroke="#22c55e"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+              <div class="qa-text"><div class="qa-title">WhatsApp studio</div><div class="qa-sub">0572 47139</div></div>
+              <div class="qa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RISORSE + TEAM -->
+      <div class="grid-3" style="margin-top:12px;">
+        <div class="card">
+          <div class="card-title">Risorse esterne</div>
+          <a href="https://www.trustindex.io" target="_blank" class="risorsa-link"><div class="risorsa-icon" style="background:rgba(245,158,11,0.1);color:#F59E0B;"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div><div class="risorsa-name">Trustindex</div><div class="risorsa-desc">461 recensioni — gestiscile qui</div></div><div class="risorsa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></a>
+          <a href="https://www.facebook.com/LuniversoTuo" target="_blank" class="risorsa-link"><div class="risorsa-icon" style="background:rgba(37,99,235,0.1);color:#60a5fa;"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div><div><div class="risorsa-name">Facebook</div><div class="risorsa-desc">Pagina LuniversoTuo</div></div><div class="risorsa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></a>
+          <a href="https://www.luniversotuo.it/wp-admin/" target="_blank" class="risorsa-link"><div class="risorsa-icon" style="background:rgba(37,99,235,0.1);color:var(--blue-text);"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="risorsa-name">WordPress</div><div class="risorsa-desc">Blog & Storie</div></div><div class="risorsa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></a>
+          <a href="https://github.com/Luniversotuo/luniversotuo-sito" target="_blank" class="risorsa-link"><div class="risorsa-icon" style="background:rgba(255,255,255,0.05);color:var(--t2);"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><div><div class="risorsa-name">GitHub</div><div class="risorsa-desc">Repository del sito</div></div><div class="risorsa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Il Team</div>
+          <div class="member-row"><div class="member-avatar">G</div><div><div class="member-name">Giancarlo Basile</div><div class="member-role">Fondatore · SuperSerenità®</div></div><span class="member-tag">Admin</span></div>
+          <div class="member-row"><div class="member-avatar">F</div><div><div class="member-name">Francesco</div><div class="member-role">Consulente · Sviluppo clienti</div></div></div>
+          <div class="member-row"><div class="member-avatar">E</div><div><div class="member-name">Elisabetta</div><div class="member-role">Gestione clienti · Continuità</div></div></div>
+          <div class="member-row"><div class="member-avatar">G</div><div><div class="member-name">Gabriele</div><div class="member-role">Consulente · Nuove soluzioni</div></div></div>
+          <div class="member-row"><div class="member-avatar">S</div><div><div class="member-name">Sara</div><div class="member-role">Comunicazione · Storie</div></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Sito live</div>
+          <div class="github-status"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Pubblicato su Netlify · Deploy automatico attivo</div>
+          <a href="https://ornate-sherbet-511176.netlify.app" target="_blank" class="qa-btn" style="margin-bottom:8px;">
+            <div class="qa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+            <div class="qa-text"><div class="qa-title">Apri sito live</div><div class="qa-sub">ornate-sherbet-511176.netlify.app</div></div>
+            <div class="qa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          </a>
+          <a href="https://app.netlify.com" target="_blank" class="qa-btn">
+            <div class="qa-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+            <div class="qa-text"><div class="qa-title">Pannello Netlify</div><div class="qa-sub">Vedi i deploy e le statistiche</div></div>
+            <div class="qa-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TAB: EDITOR ══════════ -->
+  <div id="tab-editor" class="tab-panel">
+    <div class="editor-main">
+
+      <!-- TOKEN SETUP -->
+      <div class="token-setup" id="token-setup-box">
+        <div class="token-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="token-body">
+          <div class="token-title">Collega GitHub per salvare le modifiche</div>
+          <div class="token-desc">Inserisci il tuo GitHub Personal Access Token (ghp_...). Lo salviamo nel browser — non serve reinserirlo ogni volta.</div>
+          <div class="token-row">
+            <input type="password" id="token-input" class="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxx">
+            <button class="token-save-btn" onclick="saveToken()">Salva token</button>
+          </div>
+          <div style="font-size:11.5px; color:var(--t3); margin-top:8px;">Non hai ancora il token? <a href="https://github.com/settings/tokens" target="_blank" style="color:var(--blue-text);">Crealo qui</a> — spunta "repo" e nessuna scadenza.</div>
+        </div>
+      </div>
+
+      <div class="token-setup hidden" id="token-ok-box">
+        <div class="token-icon" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25);"><svg viewBox="0 0 24 24" stroke="#22c55e"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="token-body">
+          <div class="token-ok">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Token GitHub configurato · Repository: Luniversotuo/luniversotuo-sito
+            <span class="token-change" onclick="removeToken()">Cambia</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NUOVA PAGINA -->
+      <div class="nuova-card">
+        <div class="nuova-card-header">
+          <div class="nuova-card-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div>
+            <div class="nuova-card-title">Crea Nuova Pagina</div>
+            <div class="nuova-card-sub">La pagina viene creata in automatico con la struttura del sito e aperta nell'editor</div>
+          </div>
+        </div>
+        <div class="nuova-fields">
+          <div class="nuova-field">
+            <label>NOME PAGINA</label>
+            <input type="text" id="nuova-nome" class="nuova-input" placeholder="es. Servizi, FAQ, Chi siamo…" oninput="autoSlug()">
+          </div>
+          <div class="nuova-field">
+            <label>URL PAGINA</label>
+            <input type="text" id="nuova-slug" class="nuova-input" placeholder="es. servizi">
+            <div class="nuova-url-prefix">Il sito aprirà: <span id="nuova-url-preview">luniversotuo.it/…</span></div>
+          </div>
+        </div>
+        <div class="nuova-footer">
+          <button class="nuova-btn" id="nuova-btn" onclick="createNewPage()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin:round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Crea Pagina
+          </button>
+          <span class="nuova-status" id="nuova-status"></span>
+        </div>
+      </div>
+
+      <!-- EDITOR CARD -->
+      <div class="editor-card">
+        <div class="editor-toolbar">
+          <select id="file-select" class="editor-select">
+            <option value="">— Seleziona pagina da modificare —</option>
+            <option value="index.html">Homepage (index.html)</option>
+            <option value="superserenita.html">La SuperSerenità® (superserenita.html)</option>
+            <option value="team.html">Il Team (team.html)</option>
+            <option value="storie.html">Le Storie (storie.html)</option>
+            <option value="testimonianze.html">Testimonianze (testimonianze.html)</option>
+            <option value="contatti.html">Contatti (contatti.html)</option>
+            <option value="chat.html">Chat con Chiara (chat.html)</option>
+            <option value="css/style.css">CSS condiviso (style.css)</option>
+          </select>
+          <button class="editor-load-btn" onclick="loadFile()">Carica</button>
+          <span class="editor-file-info" id="editor-file-info"></span>
+        </div>
+
+        <!-- FIND & REPLACE -->
+        <div class="find-bar">
+          <span class="find-label">TROVA</span>
+          <input type="text" id="find-input" class="find-input" placeholder="Testo da cercare...">
+          <span class="find-label" style="margin-left:8px;">SOSTITUISCI</span>
+          <input type="text" id="replace-input" class="find-input" placeholder="Sostituisci con...">
+          <button class="find-btn" onclick="doFindReplace()">Sostituisci tutto</button>
+          <button class="find-btn" onclick="doFind()">Cerca</button>
+        </div>
+
+        <textarea id="code-editor" placeholder="Carica un file per iniziare a modificarlo..."></textarea>
+
+        <div class="editor-footer">
+          <button class="save-btn" onclick="saveFile()" id="save-btn">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Salva e Pubblica
+          </button>
+          <span id="save-status"></span>
+          <div class="editor-hint">Il sito si aggiorna automaticamente<br>entro 30 secondi dopo il salvataggio.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TAB: AGGIORNAMENTI RAPIDI ══════════ -->
+  <div id="tab-rapidi" class="tab-panel">
+    <div class="rapidi-main">
+      <p class="rapidi-desc">Aggiorna i dati chiave del sito in un clic. Le modifiche vengono applicate a <strong>tutte le pagine</strong> in automatico e il sito si aggiorna entro 30 secondi.</p>
+
+      <!-- RECENSIONI -->
+      <div class="rapido-card">
+        <div class="rapido-header">
+          <div class="rapido-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div><div class="rapido-title">Numero recensioni Trustindex</div><div class="rapido-sub">Attualmente: <strong>461</strong> — aggiorna quando Trustindex mostra un numero diverso</div></div>
+        </div>
+        <div class="rapido-row">
+          <div class="rapido-field"><div class="rapido-label">VALORE ATTUALE</div><input class="rapido-input" value="461" id="reviews-old" readonly style="opacity:0.5;"></div>
+          <div class="rapido-arrow">→</div>
+          <div class="rapido-field"><div class="rapido-label">NUOVO VALORE</div><input class="rapido-input" id="reviews-new" placeholder="es. 480" type="number"></div>
+          <button class="rapido-btn" onclick="updateAllFiles('reviews')">Aggiorna su tutto il sito</button>
+        </div>
+        <div class="rapido-status" id="reviews-status"></div>
+        <div class="rapido-pages">Aggiorna: index.html, testimonianze.html, chat.html, admin.html</div>
+      </div>
+
+      <!-- RISCHI -->
+      <div class="rapido-card">
+        <div class="rapido-header">
+          <div class="rapido-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div><div class="rapido-title">Rischi economici analizzati</div><div class="rapido-sub">Attualmente: <strong>15.184</strong> — aggiorna periodicamente</div></div>
+        </div>
+        <div class="rapido-row">
+          <div class="rapido-field"><div class="rapido-label">VALORE ATTUALE</div><input class="rapido-input" value="15.184" id="risks-old" readonly style="opacity:0.5;"></div>
+          <div class="rapido-arrow">→</div>
+          <div class="rapido-field"><div class="rapido-label">NUOVO VALORE</div><input class="rapido-input" id="risks-new" placeholder="es. 16.000"></div>
+          <button class="rapido-btn" onclick="updateAllFiles('risks')">Aggiorna su tutto il sito</button>
+        </div>
+        <div class="rapido-status" id="risks-status"></div>
+        <div class="rapido-pages">Aggiorna: index.html, superserenita.html, chat.html</div>
+      </div>
+
+      <!-- URL NETLIFY -->
+      <div class="rapido-card">
+        <div class="rapido-header">
+          <div class="rapido-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div><div class="rapido-title">URL sito live</div><div class="rapido-sub">Quando collegherai il dominio luniversotuo.it, aggiornalo qui</div></div>
+        </div>
+        <div class="rapido-row">
+          <div class="rapido-field" style="flex:1;"><div class="rapido-label">DOMINIO ATTUALE</div><input class="rapido-input" value="ornate-sherbet-511176.netlify.app" id="domain-old" readonly style="opacity:0.5;width:320px;font-size:12px;"></div>
+          <div class="rapido-arrow">→</div>
+          <div class="rapido-field" style="flex:1;"><div class="rapido-label">NUOVO DOMINIO</div><input class="rapido-input" id="domain-new" placeholder="luniversotuo.it" style="width:200px;"></div>
+          <button class="rapido-btn" onclick="updateAllFiles('domain')">Aggiorna</button>
+        </div>
+        <div class="rapido-status" id="domain-status"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TAB: STATISTICHE ══════════ -->
+  <div id="tab-statistiche" class="tab-panel">
+    <div class="dash-main">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div>
+          <div style="font-size:15px;font-weight:700;color:var(--white);letter-spacing:-0.3px;">Statistiche sito</div>
+          <div style="font-size:12px;color:var(--t3);margin-top:3px;" id="stat-updated-at">Premi "Aggiorna" per caricare i dati live</div>
+        </div>
+        <button onclick="loadStatistiche()" id="stat-refresh-btn" style="background:var(--blue-dim);border:0.5px solid var(--blue-border);border-radius:var(--r);padding:9px 18px;color:var(--blue-text);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Aggiorna
+        </button>
+      </div>
+
+      <!-- KPI Strip -->
+      <div class="stats-strip" style="margin-bottom:20px;">
+        <div class="stat-card">
+          <div class="stat-card__val" id="kpi-status" style="font-size:18px;letter-spacing:0;">—</div>
+          <div class="stat-card__lbl">Stato sito</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__val blue" id="kpi-pages">—</div>
+          <div class="stat-card__lbl">Pagine HTML attive</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__val" id="kpi-commits">—</div>
+          <div class="stat-card__lbl">Aggiornamenti (30gg)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__val blue" id="kpi-lastcommit" style="font-size:15px;letter-spacing:-0.3px;">—</div>
+          <div class="stat-card__lbl">Ultimo aggiornamento</div>
+        </div>
+      </div>
+
+      <!-- Commit log + File repo -->
+      <div class="grid-2" style="margin-bottom:12px;">
+
+        <!-- Ultimi aggiornamenti -->
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div class="card-title" style="margin-bottom:0;">Ultimi aggiornamenti sito</div>
+            <a href="https://github.com/Luniversotuo/sito-luniversotuo/commits/main" target="_blank" style="font-size:11px;color:var(--blue-text);text-decoration:none;flex-shrink:0;">Vedi su GitHub →</a>
+          </div>
+          <div id="commit-list">
+            <div style="font-size:12.5px;color:var(--t3);text-align:center;padding:24px 0;">Premi "Aggiorna" per caricare</div>
+          </div>
+        </div>
+
+        <!-- File nel repo -->
+        <div class="card">
+          <div class="card-title">File nel repository</div>
+          <div id="files-list">
+            <div style="font-size:12.5px;color:var(--t3);text-align:center;padding:24px 0;">Premi "Aggiorna" per caricare</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Chiara Analytics -->
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div>
+            <div class="card-title" style="margin-bottom:2px;">Conversazioni con Chiara</div>
+            <div style="font-size:11.5px;color:var(--t3);">Dati live da Netlify Blobs — accesso con password admin</div>
+          </div>
+          <button onclick="loadChatLog()" id="chatlog-refresh-btn" style="background:var(--blue-dim);border:0.5px solid var(--blue-border);border-radius:8px;padding:7px 14px;color:var(--blue-text);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Carica dati chat</button>
+        </div>
+
+        <!-- KPI chat -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:var(--white);letter-spacing:-0.5px;" id="chat-kpi-total">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Sessioni totali</div>
+          </div>
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:#60a5fa;letter-spacing:-0.5px;" id="chat-kpi-week">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Ultimi 7 giorni</div>
+          </div>
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:var(--green);letter-spacing:-0.5px;" id="chat-kpi-booked">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Prenotazioni cliccate</div>
+          </div>
+          <div style="background:var(--card2);border:0.5px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:22px;font-weight:800;color:var(--gold);letter-spacing:-0.5px;" id="chat-kpi-msgs">—</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">Msg medi/sessione</div>
+          </div>
+        </div>
+
+        <!-- Conversation log -->
+        <div id="chat-log-list">
+          <div style="font-size:12.5px;color:var(--t3);text-align:center;padding:20px 0;">Inserisci il token Netlify e premi "Carica dati chat"</div>
+        </div>
+      </div>
+
+      <!-- Traffico & Analytics -->
+      <div class="card">
+        <div class="card-title">Traffico & Analisi esterne</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          <a href="https://app.netlify.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(0,173,127,0.35)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(0,173,127,0.12);border:0.5px solid rgba(0,173,127,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ad7f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:600;color:var(--t1);">Netlify Analytics</span>
+            </div>
+            <span style="font-size:11px;color:var(--t3);line-height:1.5;">Visite, bandwidth e deploy del sito</span>
+          </a>
+          <a href="https://analytics.google.com" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(245,158,11,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(245,158,11,0.1);border:0.5px solid rgba(245,158,11,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="18.5 8 13 13.5 8 8.5 3 14"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:600;color:var(--t1);">Google Analytics</span>
+            </div>
+            <span style="font-size:11px;color:var(--t3);line-height:1.5;">Configura GA4 per il traffico dettagliato</span>
+          </a>
+          <a href="https://www.facebook.com/LuniversoTuo/insights" target="_blank" style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:var(--r);background:var(--card2);border:0.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(37,99,235,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(37,99,235,0.1);border:0.5px solid rgba(37,99,235,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:600;color:var(--t1);">Facebook Insights</span>
+            </div>
+            <span style="font-size:11px;color:var(--t3);line-height:1.5;">Statistiche pagina Facebook LuniversoTuo</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /dashboard -->
+
+<script>
+  /* ── CONFIG ── */
+  const GITHUB_OWNER = 'Luniversotuo';
+  const GITHUB_REPO  = 'sito-luniversotuo';
+  const HASH_CORRECT = '5b26f0a6ffbc3cef40ce58ae2885d7132fe9de3aa82fcc05aa398fef2885da27';
+
+  let currentFileSha = null;
+  let currentFileName = null;
+
+  /* ── SHA256 ── */
+  async function sha256(msg) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  /* ── SESSION / LOGIN ── */
+  if (sessionStorage.getItem('lt_admin_auth')==='1') showDash();
+
+  document.getElementById('login-btn').addEventListener('click', async()=>{
+    const pwd = document.getElementById('pwd-input').value;
+    if (await sha256(pwd) === HASH_CORRECT) {
+      sessionStorage.setItem('lt_admin_auth','1'); sessionStorage.setItem('lt_admin_pwd', pwd); showDash();
+    } else {
+      const e = document.getElementById('login-error');
+      e.style.display='block'; document.getElementById('pwd-input').value='';
+      document.getElementById('pwd-input').focus();
+      setTimeout(()=>{ e.style.display='none'; }, 3000);
+    }
+  });
+  document.getElementById('pwd-input').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('login-btn').click(); });
+  document.getElementById('logout-btn').addEventListener('click',()=>{
+    sessionStorage.removeItem('lt_admin_auth'); sessionStorage.removeItem('lt_admin_pwd');
+    document.getElementById('dashboard').style.display='none';
+    document.getElementById('login-screen').style.display='flex';
+    document.getElementById('pwd-input').value='';
+  });
+  function showDash() {
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    checkToken();
+    checkChiaraStatus();
+  }
+
+  async function checkChiaraStatus() {
+    const bar  = document.getElementById('chiara-status-bar');
+    const text = document.getElementById('chiara-status-text');
+    if (!bar || !text) return;
+    try {
+      const res  = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 10, messages: [{ role: 'user', content: 'ping' }] })
+      });
+      const data = await res.json();
+      if (data.demo) {
+        bar.className  = 'sofia-status warning';
+        text.innerHTML = '<strong>Demo attiva</strong> — chiave API Anthropic non trovata su Netlify.';
+      } else {
+        bar.className  = 'sofia-status ok';
+        text.innerHTML = '<strong>Chiara attiva</strong> — AI reale operativa.';
+      }
+    } catch {
+      bar.className  = 'sofia-status warning';
+      text.innerHTML = 'Impossibile verificare lo stato di Chiara.';
+    }
+  }
+
+  /* ── TABS ── */
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'statistiche' && !statLoaded) loadStatistiche();
+    });
+  });
+
+  /* ── TOKEN GITHUB ── */
+  function getToken() { return localStorage.getItem('lt_gh_token') || ''; }
+  function checkToken() {
+    const t = getToken();
+    document.getElementById('token-setup-box').classList.toggle('hidden', !!t);
+    document.getElementById('token-ok-box').classList.toggle('hidden', !t);
+  }
+  function saveToken() {
+    const v = document.getElementById('token-input').value.trim();
+    if (!v.startsWith('ghp_') && !v.startsWith('github_pat_')) { alert('Il token deve iniziare con ghp_ oppure github_pat_'); return; }
+    localStorage.setItem('lt_gh_token', v);
+    checkToken();
+  }
+  function removeToken() { localStorage.removeItem('lt_gh_token'); checkToken(); document.getElementById('token-input').value=''; }
+
+  /* ── GITHUB BASE PATH (auto-rilevato) ── */
+  function getBase() { return localStorage.getItem('lt_gh_base') ?? null; }
+  function setBase(v) { localStorage.setItem('lt_gh_base', v); }
+
+  async function ghGet(filePath, token) {
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`;
+    const res = await fetch(url, { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} });
+    return res;
+  }
+
+  async function resolveFilePath(file, token) {
+    localStorage.removeItem('lt_gh_base');
+    // Step 1: diagnose repo root
+    const rootRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`, {
+      headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    if (!rootRes.ok) {
+      const status = rootRes.status;
+      if (status===401) throw new Error('Token non valido o scaduto (401). Rimuovi il token e inseriscine uno nuovo.');
+      if (status===403) throw new Error('Accesso negato (403). Il token non ha i permessi "repo" sul repository.');
+      if (status===404) throw new Error(`Repository non trovato (404). Verifica che "${GITHUB_OWNER}/${GITHUB_REPO}" esista su GitHub e sia accessibile.`);
+      throw new Error(`Errore connessione repository: HTTP ${status}`);
+    }
+    const rootFiles = await rootRes.json();
+    // Find the file in root or one level deep
+    const rootNames = Array.isArray(rootFiles) ? rootFiles.map(f=>f.name) : [];
+    if (rootNames.includes(file)) {
+      setBase('');
+      const res = await ghGet(file, token);
+      return { res, path: file };
+    }
+    // Look for a subfolder containing HTML files
+    const dirs = Array.isArray(rootFiles) ? rootFiles.filter(f=>f.type==='dir') : [];
+    for (const dir of dirs) {
+      const subRes = await fetch(dir.url, {
+        headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+      });
+      if (!subRes.ok) continue;
+      const subFiles = await subRes.json();
+      if (Array.isArray(subFiles) && subFiles.some(f=>f.name===file)) {
+        const prefix = dir.name + '/';
+        setBase(prefix);
+        const res = await ghGet(prefix + file, token);
+        return { res, path: prefix + file };
+      }
+    }
+    // Not found — show what IS in the repo
+    const names = rootNames.length ? rootNames.join(', ') : '(cartella vuota)';
+    throw new Error(`"${file}" non trovato. File nella root del repo: ${names}`);
+  }
+
+  /* ── EDITOR: LOAD FILE ── */
+  async function loadFile() {
+    const file = document.getElementById('file-select').value;
+    if (!file) { alert('Seleziona prima una pagina.'); return; }
+    const token = getToken();
+    if (!token) { alert('Inserisci prima il token GitHub nel riquadro in alto.'); return; }
+
+    const info = document.getElementById('editor-file-info');
+    info.textContent = 'Ricerca file nel repository...';
+    document.getElementById('code-editor').value = '';
+    currentFileSha = null; currentFileName = null;
+
+    try {
+      const found = await resolveFilePath(file, token);
+      const data = await found.res.json();
+      const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+      document.getElementById('code-editor').value = content;
+      currentFileSha = data.sha;
+      currentFileName = found.path;
+      info.textContent = `✓ ${found.path} · ${(data.size/1024).toFixed(1)} KB · pronto per la modifica`;
+    } catch(e) {
+      info.textContent = '✗ ' + e.message;
+    }
+  }
+
+  /* ── EDITOR: SAVE FILE ── */
+  async function saveFile() {
+    if (!currentFileName) { alert('Carica prima un file.'); return; }
+    const token = getToken();
+    if (!token) { alert('Inserisci prima il token GitHub.'); return; }
+
+    const btn = document.getElementById('save-btn');
+    const status = document.getElementById('save-status');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div> Salvataggio...';
+    status.className=''; status.textContent='';
+
+    try {
+      const content = document.getElementById('code-editor').value;
+      const encoded = btoa(unescape(encodeURIComponent(content)));
+      const now = new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${currentFileName}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `Admin: aggiornamento ${currentFileName} (${now})`,
+          content: encoded,
+          sha: currentFileSha
+        })
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || `Errore ${res.status}`);
+      }
+      const data = await res.json();
+      currentFileSha = data.content.sha;
+      status.className='ok'; status.textContent='✓ Salvato! Il sito si aggiorna in ~30 secondi.';
+    } catch(e) {
+      status.className='err'; status.textContent='✗ Errore: '+e.message;
+    } finally {
+      btn.disabled=false;
+      btn.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Salva e Pubblica';
+    }
+  }
+
+  /* ── EDITOR: FIND & REPLACE ── */
+  function doFindReplace() {
+    const ta = document.getElementById('code-editor');
+    const find = document.getElementById('find-input').value;
+    const rep  = document.getElementById('replace-input').value;
+    if (!find) { alert('Inserisci il testo da cercare.'); return; }
+    const count = (ta.value.split(find).length - 1);
+    if (!count) { alert('Testo non trovato nel file.'); return; }
+    ta.value = ta.value.split(find).join(rep);
+    alert(`Sostituito ${count} occorrenza${count>1?'e':''}.`);
+  }
+  function doFind() {
+    const ta = document.getElementById('code-editor');
+    const find = document.getElementById('find-input').value;
+    if (!find) return;
+    const idx = ta.value.indexOf(find);
+    if (idx<0) { alert('Testo non trovato.'); return; }
+    ta.focus(); ta.setSelectionRange(idx, idx+find.length);
+  }
+
+  /* ── AGGIORNAMENTI RAPIDI ── */
+  const FILES_BY_TYPE = {
+    reviews: ['index.html','testimonianze.html','chat.html','admin.html'],
+    risks:   ['index.html','superserenita.html','chat.html'],
+    domain:  ['index.html','superserenita.html','team.html','storie.html','testimonianze.html','contatti.html','chat.html','admin.html']
+  };
+
+  async function updateAllFiles(type) {
+    const token = getToken();
+    if (!token) { alert('Inserisci prima il token GitHub nella scheda Editor.'); return; }
+
+    let oldVal, newVal, statusId;
+    if (type==='reviews') {
+      oldVal = document.getElementById('reviews-old').value.trim();
+      newVal = document.getElementById('reviews-new').value.trim();
+      statusId = 'reviews-status';
+    } else if (type==='risks') {
+      oldVal = document.getElementById('risks-old').value.trim();
+      newVal = document.getElementById('risks-new').value.trim();
+      statusId = 'risks-status';
+    } else {
+      oldVal = document.getElementById('domain-old').value.trim();
+      newVal = document.getElementById('domain-new').value.trim();
+      statusId = 'domain-status';
+    }
+
+    if (!newVal) { alert('Inserisci il nuovo valore.'); return; }
+    if (oldVal===newVal) { alert('Il valore è già uguale.'); return; }
+
+    const statusEl = document.getElementById(statusId);
+    statusEl.className=''; statusEl.textContent='Aggiornamento in corso...';
+
+    const files = FILES_BY_TYPE[type];
+    let updated=0, errors=[];
+
+    const BASE = getBase() ?? '';
+    for (const file of files) {
+      try {
+        const filePath = BASE + file;
+        // Get file
+        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,{
+          headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+        });
+        if (!getRes.ok) throw new Error(`${file}: ${getRes.status}`);
+        const fileData = await getRes.json();
+        let content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))));
+
+        if (!content.includes(oldVal)) { continue; } // skip if not found
+
+        content = content.split(oldVal).join(newVal);
+
+        // Save file
+        const putRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,{
+          method:'PUT',
+          headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
+          body:JSON.stringify({
+            message:`Admin: aggiornamento ${type} ${oldVal}→${newVal}`,
+            content: btoa(unescape(encodeURIComponent(content))),
+            sha: fileData.sha
+          })
+        });
+        if (!putRes.ok) { const e=await putRes.json(); throw new Error(e.message); }
+        updated++;
+      } catch(e) { errors.push(e.message); }
+    }
+
+    // Update displayed current value
+    if (type==='reviews') document.getElementById('reviews-old').value = newVal;
+    if (type==='risks')   document.getElementById('risks-old').value   = newVal;
+    if (type==='domain')  document.getElementById('domain-old').value  = newVal;
+
+    if (errors.length===0) {
+      statusEl.className='rapido-status ok';
+      statusEl.textContent=`✓ Aggiornato in ${updated} pagina${updated!==1?'e':''}. Il sito si aggiorna in ~30 secondi.`;
+    } else {
+      statusEl.className='rapido-status err';
+      statusEl.textContent=`Aggiornato ${updated} file. Errori: ${errors.join(', ')}`;
+    }
+  }
+
+  /* ── NUOVA PAGINA ── */
+  function autoSlug() {
+    const nome = document.getElementById('nuova-nome').value;
+    const slug = nome.toLowerCase()
+      .replace(/[àáâãäå]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
+      .replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u')
+      .replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+    document.getElementById('nuova-slug').value = slug;
+    document.getElementById('nuova-url-preview').textContent = slug ? `luniversotuo.it/${slug}` : 'luniversotuo.it/…';
+  }
+
+  async function createNewPage() {
+    const nome = document.getElementById('nuova-nome').value.trim();
+    const slug = document.getElementById('nuova-slug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'');
+    if (!nome) { alert('Inserisci il nome della pagina.'); return; }
+    if (!slug) { alert('Inserisci l\'URL (es. servizi).'); return; }
+
+    const token = getToken();
+    if (!token) { alert('Inserisci prima il token GitHub nell\'Editor Pagine.'); return; }
+
+    const btn = document.getElementById('nuova-btn');
+    const statusEl = document.getElementById('nuova-status');
+    btn.disabled = true;
+    statusEl.className = 'nuova-status';
+    statusEl.textContent = 'Creazione in corso…';
+
+    try {
+      const BASE = getBase() ?? '';
+
+      // 1. Carica template (contatti.html come base)
+      const tplRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${BASE}contatti.html`,{
+        headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+      });
+      if (!tplRes.ok) throw new Error('Impossibile caricare il template. Carica prima una pagina per rilevare il percorso corretto.');
+      const tplData = await tplRes.json();
+      let html = decodeURIComponent(escape(atob(tplData.content.replace(/\n/g,''))));
+
+      // 2. Personalizza per la nuova pagina
+      html = html.replace(/<title>[^<]*<\/title>/, `<title>${nome} — LuniversoTuo</title>`);
+      // Sostituisce la sezione <main>…</main> con contenuto base
+      html = html.replace(/<main[\s\S]*?<\/main>/,
+        `<main style="padding:100px 24px 80px;max-width:800px;margin:0 auto;min-height:60vh;">
+  <h1 style="font-size:clamp(28px,5vw,52px);font-weight:800;letter-spacing:-2px;color:#fff;margin-bottom:24px;">${nome}</h1>
+  <p style="font-size:17px;color:rgba(255,255,255,0.55);line-height:1.85;max-width:560px;">Questa è la nuova pagina <strong style="color:rgba(255,255,255,0.8);">${nome}</strong>. Modifica il testo qui sopra dall'Editor per personalizzarla come vuoi.</p>
+</main>`);
+
+      // 3. Crea il file su GitHub
+      const newPath = BASE + slug + '.html';
+      const createRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${newPath}`,{
+        method:'PUT',
+        headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
+        body: JSON.stringify({
+          message:`Admin: nuova pagina "${nome}" → ${slug}.html`,
+          content: btoa(unescape(encodeURIComponent(html)))
+        })
+      });
+      if (!createRes.ok){ const e=await createRes.json(); throw new Error(e.message||'Errore creazione file.'); }
+
+      // 4. Aggiorna vercel.json con il nuovo URL pulito
+      const vjPath = BASE + 'vercel.json';
+      const vjRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${vjPath}`,{
+        headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}
+      });
+      if (vjRes.ok){
+        const vjData = await vjRes.json();
+        const vj = JSON.parse(decodeURIComponent(escape(atob(vjData.content.replace(/\n/g,'')))));
+        if (!vj.rewrites) vj.rewrites = [];
+        if (!vj.rewrites.some(r=>r.source===`/${slug}`)){
+          vj.rewrites.push({ source:`/${slug}`, destination:`/${slug}.html` });
+          await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${vjPath}`,{
+            method:'PUT',
+            headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
+            body: JSON.stringify({
+              message:`Admin: URL /${slug} per "${nome}"`,
+              content: btoa(unescape(encodeURIComponent(JSON.stringify(vj,null,2)))),
+              sha: vjData.sha
+            })
+          });
+        }
+      }
+
+      // 5. Aggiungi al selettore e apri nell'editor
+      const select = document.getElementById('file-select');
+      const opt = document.createElement('option');
+      opt.value = slug + '.html';
+      opt.textContent = `${nome} (${slug}.html)`;
+      select.appendChild(opt);
+
+      document.getElementById('nuova-nome').value = '';
+      document.getElementById('nuova-slug').value = '';
+      document.getElementById('nuova-url-preview').textContent = 'luniversotuo.it/…';
+
+      statusEl.className = 'nuova-status ok';
+      statusEl.textContent = `✓ Pagina "${nome}" creata! Aperta nell'editor — personalizzala e premi Salva.`;
+      setTimeout(()=>{ openEditor(slug+'.html'); }, 600);
+
+    } catch(e){
+      statusEl.className = 'nuova-status err';
+      statusEl.textContent = '✗ ' + e.message;
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  /* ── CHAT LOG (Netlify Blobs) ── */
+  function getNetlifyToken() { return sessionStorage.getItem('lt_admin_pwd') || ''; }
+
+  async function loadChatLog() {
+    const btn = document.getElementById('chatlog-refresh-btn');
+    btn.textContent = 'Caricamento...';
+    btn.disabled = true;
+
+    try {
+      const token = getNetlifyToken();
+      if (!token) {
+        document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--gold);padding:12px 0;">⚠ Inserisci prima il token Netlify nel riquadro qui sopra.</div>';
+        return;
+      }
+
+      // Chiama la funzione serverless che legge da Netlify Blobs
+      const res = await fetch('/.netlify/functions/sessions', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (res.status === 401) {
+        throw new Error('Token Netlify non valido. Verifica il token nelle impostazioni.');
+      }
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `Errore ${res.status} dal server`);
+      }
+
+      const subs = await res.json();
+
+      if (!Array.isArray(subs) || subs.length === 0) {
+        document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:16px 0;text-align:center;">Nessuna conversazione registrata ancora. Le chat appariranno qui dopo che qualcuno usa Chiara.</div>';
+        ['chat-kpi-total','chat-kpi-week','chat-kpi-booked','chat-kpi-msgs'].forEach(id => document.getElementById(id).textContent = '0');
+        return;
+      }
+
+      // Calcola KPI
+      const now = Date.now();
+      const week = 7 * 24 * 60 * 60 * 1000;
+      const recentCount = subs.filter(s => (now - new Date(s.timestamp || s.logged_at)) < week).length;
+      const bookedCount = subs.filter(s => s.booked === 'si').length;
+      const totalMsgs = subs.reduce((acc, s) => acc + (parseInt(s.messages_count) || 0), 0);
+      const avgMsgs = subs.length ? Math.round(totalMsgs / subs.length) : 0;
+
+      document.getElementById('chat-kpi-total').textContent = subs.length;
+      document.getElementById('chat-kpi-week').textContent = recentCount;
+      document.getElementById('chat-kpi-booked').textContent = bookedCount;
+      document.getElementById('chat-kpi-msgs').textContent = avgMsgs;
+
+      // Render conversazioni (max 30)
+      const rows = subs.slice(0, 30).map(s => {
+        const d = new Date(s.timestamp || s.logged_at);
+        const dateStr = d.toLocaleDateString('it-IT', {day:'2-digit', month:'short', year:'numeric'});
+        const timeStr = d.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});
+        const firstQ = s.first_question || '—';
+        const allQ = s.user_questions || '';
+        const msgs = s.messages_count || '?';
+        const page = s.page || '';
+        const booked = s.booked === 'si';
+
+        const questions = allQ.split(' ||| ').filter(q => q.trim());
+
+        return `<div style="border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;background:var(--card2);">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.4;">"${firstQ.length > 90 ? firstQ.substring(0,90)+'\u2026' : firstQ}"</div>
+              <div style="font-size:10.5px;color:var(--t3);margin-top:3px;">${dateStr} \u00b7 ${timeStr} \u00b7 ${msgs} messaggi \u00b7 pagina: ${page || 'home'}</div>
+            </div>
+            <div style="flex-shrink:0;display:flex;gap:6px;align-items:center;">
+              ${booked ? '<span style="font-size:10px;font-weight:700;background:rgba(34,197,94,0.12);color:var(--green);border:0.5px solid rgba(34,197,94,0.25);border-radius:6px;padding:3px 8px;">PRENOTATO</span>' : ''}
+            </div>
+          </div>
+          ${questions.length > 1 ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${questions.map(q => `<span style="font-size:10.5px;background:var(--blue-dim);color:var(--blue-text);border:0.5px solid var(--blue-border);border-radius:6px;padding:3px 9px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${q}">${q.length > 45 ? q.substring(0,45)+'\u2026' : q}</span>`).join('')}</div>` : ''}
+        </div>`;
+      }).join('');
+
+      document.getElementById('chat-log-list').innerHTML = rows + (subs.length > 30 ? `<div style="font-size:11.5px;color:var(--t3);text-align:center;padding:10px 0;">Mostrate le ultime 30 su ${subs.length} sessioni totali</div>` : '');
+
+      // Nascondi setup token se tutto ok
+      const setup = document.getElementById('netlify-token-setup');
+      if (setup) setup.style.display = 'none';
+
+    } catch(e) {
+      document.getElementById('chat-log-list').innerHTML = `<div style="font-size:12.5px;color:var(--red);padding:12px 0;">✗ ${e.message}</div>`;
+    } finally {
+      btn.textContent = 'Carica dati chat';
+      btn.disabled = false;
+    }
+  }
+
+  /* ── STATISTICHE ── */
+  let statLoaded = false;
+
+  async function loadStatistiche() {
+    const btn = document.getElementById('stat-refresh-btn');
+    btn.innerHTML = '<div class="spinner" style="border-color:rgba(147,186,255,0.3);border-top-color:var(--blue-text);"></div> Caricamento...';
+    btn.disabled = true;
+    statLoaded = true;
+
+    // 1. Controllo stato sito
+    checkSiteStatus();
+
+    // 2. Dati GitHub (se token disponibile)
+    const token = getToken();
+    if (!token) {
+      const noToken = '<div style="font-size:12.5px;color:var(--gold);padding:14px 0;display:flex;align-items:center;gap:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Inserisci il token GitHub nella scheda "Editor Pagine"</div>';
+      document.getElementById('commit-list').innerHTML = noToken;
+      document.getElementById('files-list').innerHTML = noToken;
+      document.getElementById('kpi-pages').textContent = '—';
+      document.getElementById('kpi-commits').textContent = '—';
+      document.getElementById('kpi-lastcommit').textContent = 'Token mancante';
+    } else {
+      await Promise.all([loadCommits(token), loadFiles(token)]);
+    }
+
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Aggiorna';
+    btn.disabled = false;
+    const now = new Date();
+    document.getElementById('stat-updated-at').textContent = 'Aggiornato alle ' + now.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}) + ' del ' + now.toLocaleDateString('it-IT',{day:'2-digit',month:'short',year:'numeric'});
+  }
+
+  async function checkSiteStatus() {
+    const el = document.getElementById('kpi-status');
+    el.innerHTML = '<span style="color:var(--t3)">Verifica...</span>';
+    try {
+      await fetch('https://ornate-sherbet-511176.netlify.app/', { mode:'no-cors', signal: AbortSignal.timeout(7000) });
+      el.innerHTML = '<span style="color:var(--green)">● ONLINE</span>';
+    } catch(e) {
+      el.innerHTML = '<span style="color:var(--red)">● OFFLINE</span>';
+    }
+  }
+
+  async function loadCommits(token) {
+    try {
+      // Ultimi 10 commit per il log
+      const logRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?per_page=10`,
+        { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} }
+      );
+      if (!logRes.ok) throw new Error('API GitHub: ' + logRes.status);
+      const commits = await logRes.json();
+      if (!Array.isArray(commits)) throw new Error('Risposta non valida');
+
+      // Commit ultimi 30 giorni
+      const since = new Date(Date.now() - 30*24*60*60*1000).toISOString();
+      const cntRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?per_page=100&since=${since}`,
+        { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} }
+      );
+      const recentCommits = cntRes.ok ? await cntRes.json() : [];
+      document.getElementById('kpi-commits').textContent = Array.isArray(recentCommits) ? recentCommits.length : '?';
+
+      // Ultimo aggiornamento
+      if (commits.length > 0) {
+        const lastDate = new Date(commits[0].commit.author.date);
+        const daysAgo = Math.floor((Date.now() - lastDate) / (1000*60*60*24));
+        document.getElementById('kpi-lastcommit').textContent =
+          daysAgo === 0 ? 'Oggi' : daysAgo === 1 ? 'Ieri' : daysAgo + ' giorni fa';
+      }
+
+      // Render commit list
+      if (commits.length === 0) {
+        document.getElementById('commit-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:14px 0;">Nessun commit trovato.</div>';
+        return;
+      }
+      document.getElementById('commit-list').innerHTML = commits.map(c => {
+        const d = new Date(c.commit.author.date);
+        const dateStr = d.toLocaleDateString('it-IT',{day:'2-digit',month:'short'});
+        const timeStr = d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+        const msg = c.commit.message.split('\n')[0];
+        const shortMsg = msg.length > 62 ? msg.substring(0,62)+'…' : msg;
+        const sha = c.sha.substring(0,7);
+        return `<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--border);">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.4;">${shortMsg}</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:2px;">${dateStr} · ${timeStr} &nbsp;·&nbsp; <span style="font-family:monospace;">${sha}</span></div>
+          </div>
+        </div>`;
+      }).join('') + '<div style="padding-bottom:2px;"></div>';
+
+    } catch(e) {
+      document.getElementById('commit-list').innerHTML = `<div style="font-size:12.5px;color:var(--red);padding:12px 0;">✗ ${e.message}</div>`;
+      document.getElementById('kpi-commits').textContent = '!';
+      document.getElementById('kpi-lastcommit').textContent = 'Errore';
+    }
+  }
+
+  async function loadFiles(token) {
+    try {
+      const rootRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`,
+        { headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'} }
+      );
+      if (!rootRes.ok) throw new Error('Errore repo: ' + rootRes.status);
+      const rootFiles = await rootRes.json();
+      if (!Array.isArray(rootFiles)) throw new Error('Risposta non valida');
+
+      const htmlFiles = rootFiles.filter(f => f.type==='file' && f.name.endsWith('.html'));
+      const jsFiles   = rootFiles.filter(f => f.type==='file' && f.name.endsWith('.js'));
+      const cssRoot   = rootFiles.filter(f => f.type==='file' && f.name.endsWith('.css'));
+      const dirs      = rootFiles.filter(f => f.type==='dir');
+
+      // KPI pagine
+      document.getElementById('kpi-pages').textContent = htmlFiles.length;
+
+      // Conta CSS in /css/
+      let cssCount = cssRoot.length;
+      const cssDir = dirs.find(d => d.name === 'css');
+      if (cssDir) {
+        const cr = await fetch(cssDir.url, {headers:{'Authorization':`Bearer ${token}`}});
+        if (cr.ok) { const cf = await cr.json(); cssCount += Array.isArray(cf) ? cf.filter(f=>f.name.endsWith('.css')).length : 0; }
+      }
+
+      // Render file list
+      const rows = htmlFiles.map(f =>
+        `<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--border);">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:9px;font-weight:700;background:rgba(37,99,235,0.12);color:#93BFFF;border:0.5px solid rgba(37,99,235,0.25);border-radius:4px;padding:2px 6px;letter-spacing:0.2px;">HTML</span>
+            <span style="font-size:12.5px;font-weight:500;color:var(--t1);">${f.name}</span>
+          </div>
+          <span style="font-size:10.5px;color:var(--t3);">${(f.size/1024).toFixed(1)} KB</span>
+        </div>`
+      ).join('');
+
+      const summary = `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="background:rgba(139,92,246,0.1);border:0.5px solid rgba(139,92,246,0.25);border-radius:8px;padding:8px 14px;">
+          <div style="color:#a78bfa;font-weight:800;font-size:18px;letter-spacing:-0.5px;">${cssCount}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">File CSS</div>
+        </div>
+        <div style="background:rgba(52,211,153,0.1);border:0.5px solid rgba(52,211,153,0.25);border-radius:8px;padding:8px 14px;">
+          <div style="color:#34d399;font-weight:800;font-size:18px;letter-spacing:-0.5px;">${jsFiles.length}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">File JS</div>
+        </div>
+        <div style="background:rgba(245,158,11,0.1);border:0.5px solid rgba(245,158,11,0.25);border-radius:8px;padding:8px 14px;">
+          <div style="color:var(--gold);font-weight:800;font-size:18px;letter-spacing:-0.5px;">${dirs.length}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">Cartelle</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:0.5px solid var(--border);border-radius:8px;padding:8px 14px;">
+          <div style="color:var(--t1);font-weight:800;font-size:18px;letter-spacing:-0.5px;">${rootFiles.length}</div>
+          <div style="color:var(--t3);font-size:10.5px;margin-top:2px;">Tot. nella root</div>
+        </div>
+      </div>`;
+
+      document.getElementById('files-list').innerHTML = rows + summary;
+
+    } catch(e) {
+      document.getElementById('files-list').innerHTML = `<div style="font-size:12.5px;color:var(--red);padding:12px 0;">✗ ${e.message}</div>`;
+      document.getElementById('kpi-pages').textContent = '!';
+    }
+  }
+
+  /* ── OPEN EDITOR FROM DASHBOARD ── */
+  function openEditor(filename) {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelector('[data-tab="editor"]').classList.add('active');
+    document.getElementById('tab-editor').classList.add('active');
+    document.getElementById('file-select').value = filename;
+    loadFile();
+  }
+</script>
+
+</body>
+</html>
