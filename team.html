@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Il Team — Chi costruisce la tua SuperSerenità® | LuniversoTuo</title>
-  <meta name="description" content="4 professionisti dedicati, ognuno con un ruolo preciso nel tuo percorso verso la SuperSerenità®. Conosci il team di LuniversoTuo.">
+  <title>Chi Siamo: le persone della tua SuperSerenità® | LuniversoTuo</title>
+  <meta name="description" content="Non una persona sola: un team di professionisti, ognuno con un ruolo lungo tutto il tuo percorso. Oltre 30 anni di esperienza, 461 recensioni eccellenti. Conosci chi siamo.">
   <link rel="canonical" href="https://www.luniversotuo.it/team">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LuniversoTuo">
   <meta property="og:locale" content="it_IT">
-  <meta property="og:title" content="Il Team — Chi costruisce la tua SuperSerenità® | LuniversoTuo">
-  <meta property="og:description" content="4 professionisti dedicati, ognuno con un ruolo preciso nel tuo percorso verso la SuperSerenità®. Conosci il team di LuniversoTuo.">
+  <meta property="og:title" content="Chi Siamo: le persone della tua SuperSerenità® | LuniversoTuo">
+  <meta property="og:description" content="Non una persona sola: un team di professionisti, ognuno con un ruolo lungo tutto il tuo percorso. Oltre 30 anni di esperienza, 461 recensioni eccellenti.">
   <meta property="og:url" content="https://www.luniversotuo.it/team">
   <meta property="og:image" content="https://www.luniversotuo.it/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Il Team — Chi costruisce la tua SuperSerenità® | LuniversoTuo">
-  <meta name="twitter:description" content="4 professionisti dedicati, ognuno con un ruolo preciso nel tuo percorso verso la SuperSerenità®. Conosci il team di LuniversoTuo.">
+  <meta name="twitter:title" content="Chi Siamo: le persone della tua SuperSerenità® | LuniversoTuo">
+  <meta name="twitter:description" content="Non una persona sola: un team di professionisti, ognuno con un ruolo lungo tutto il tuo percorso. Oltre 30 anni di esperienza, 461 recensioni eccellenti.">
   <meta name="twitter:image" content="https://www.luniversotuo.it/img/og-image.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
@@ -29,12 +29,18 @@
     .page-hero { padding: 90px 0 70px; }
     .page-hero__inner { max-width: 760px; }
 
+    /* PERCHÉ UN TEAM */
+    .whyteam { padding: 80px 0; border-top: 0.5px solid rgba(255,255,255,0.06); }
+    .whyteam-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-top: 44px; }
+    .whyt { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 26px 28px; }
+    .whyt__t { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 9px; letter-spacing: -0.3px; }
+    .whyt__d { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.65; }
+
     .team-full { padding: 80px 0; }
     .member { display: grid; grid-template-columns: 380px 1fr; gap: 72px; align-items: start; margin-bottom: 80px; padding-bottom: 80px; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
     .member:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .member:nth-child(even) { direction: rtl; }
     .member:nth-child(even) > * { direction: ltr; }
-    .member__photo { border-radius: 18px; overflow: hidden; background: var(--bg-card); }
     .member__photo img { width: 100%; height: 420px; object-fit: cover; object-position: top; filter: grayscale(100%); display: block; }
     .member__photo-ph {
       width: 100%; height: 420px;
@@ -50,27 +56,60 @@
     .member__info { padding-top: 8px; }
     .member__role-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(37,99,235,0.1); border: 0.5px solid rgba(37,99,235,0.25); color: rgba(147,186,255,0.9); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 12px; border-radius: 100px; margin-bottom: 18px; }
     .member__name { font-size: 40px; font-weight: 800; color: #fff; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 8px; }
-    .member__title { font-size: 16px; color: #2563EB; font-weight: 500; margin-bottom: 22px; }
-    .member__desc { font-size: 15px; color: rgba(255,255,255,0.62); line-height: 1.75; margin-bottom: 24px; }
+    .member__title { font-size: 16px; color: #2563EB; font-weight: 500; margin-bottom: 22px; line-height: 1.4; }
+    .member__desc { font-size: 15px; color: rgba(255,255,255,0.62); line-height: 1.75; margin-bottom: 20px; }
     .member__focus { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px 22px; }
     .member__focus-title { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.48); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
     .member__focus-list { display: flex; flex-direction: column; gap: 8px; }
     .member__focus-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.55); }
     .member__focus-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #2563EB; flex-shrink: 0; }
+    .member__link { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; font-size: 13.5px; font-weight: 600; color: #2563EB; transition: color .15s; }
+    .member__link:hover { color: #5b8bff; }
+    .member__link svg { width: 15px; height: 15px; }
+
+    /* CTA intermedia */
+    .midcta { padding: 66px 0; text-align: center; border-top: 0.5px solid rgba(255,255,255,0.06); }
+
+    /* DOPO LA CONSULENZA */
+    .aftercare { background: var(--bg-alt); padding: 84px 0; }
+    .aftercare-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; margin-top: 36px; }
+    .aftercare__points { display: flex; flex-direction: column; gap: 14px; }
+    .aftercare__p { display: flex; gap: 14px; align-items: flex-start; }
+    .aftercare__dot { flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; background: rgba(37,99,235,0.12); border: 0.5px solid rgba(37,99,235,0.25); display: flex; align-items: center; justify-content: center; }
+    .aftercare__dot svg { width: 15px; height: 15px; stroke: #93baff; fill: none; stroke-width: 2; }
+    .aftercare__pt { font-size: 14.5px; color: rgba(255,255,255,0.72); line-height: 1.55; }
+    .aftercare__pt b { color: #fff; font-weight: 600; }
 
     /* VALORI */
-    .valori { background: var(--bg-alt); padding: 80px 0; }
+    .valori { padding: 84px 0; }
     .valori-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 48px; }
-    .valore { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 28px; }
-    .valore__num { font-size: 10px; font-weight: 700; color: rgba(37,99,235,0.6); letter-spacing: 2px; margin-bottom: 14px; }
-    .valore__title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .valore__desc { font-size: 13px; color: rgba(255,255,255,0.56); line-height: 1.65; }
+    .valore { background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 30px 28px; }
+    .valore__num { font-size: 34px; font-weight: 800; color: #2563EB; letter-spacing: -1.5px; line-height: 1; margin-bottom: 16px; }
+    .valore__title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .valore__desc { font-size: 13.5px; color: rgba(255,255,255,0.58); line-height: 1.65; }
+    .valore__ex { font-size: 12.5px; color: rgba(147,186,255,0.85); margin-top: 14px; padding-top: 13px; border-top: 0.5px solid rgba(255,255,255,0.08); line-height: 1.55; }
+
+    /* COSA NON FACCIAMO */
+    .nonfac { background: var(--bg-alt); padding: 84px 0; }
+    .nonfac-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-top: 40px; }
+    .nonfac__item { display: flex; gap: 14px; align-items: flex-start; background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px 22px; }
+    .nonfac__x { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: rgba(239,68,68,0.12); color: #f87171; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+    .nonfac__t { font-size: 14.5px; color: rgba(255,255,255,0.8); line-height: 1.55; }
+
+    /* PATTO */
+    .patto { padding: 84px 0; border-top: 0.5px solid rgba(255,255,255,0.06); }
+    .patto-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 42px; }
+    .patto__item { text-align: center; padding: 26px 18px; background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 14px; }
+    .patto__n { font-size: 22px; font-weight: 800; color: #2563EB; margin-bottom: 12px; letter-spacing: -1px; }
+    .patto__t { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.5; font-weight: 600; }
 
     @media(max-width:900px) {
-      .member { grid-template-columns: 1fr; }
+      .member { grid-template-columns: 1fr; gap: 28px; }
       .member:nth-child(even) { direction: ltr; }
       .member__photo img, .member__photo-ph { height: 300px; }
-      .valori-grid { grid-template-columns: 1fr; }
+      .whyteam-grid, .valori-grid, .nonfac-grid, .aftercare-grid { grid-template-columns: 1fr; }
+      .patto-grid { grid-template-columns: repeat(2,1fr); }
+      .aftercare-grid { gap: 32px; }
     }
   </style>
   <!-- Meta Pixel Code -->
@@ -99,7 +138,7 @@
       </ul>
     </li>
       <li><a href="storie.html">Le Storie</a></li>
-      <li><a href="team.html" class="active">Il Team</a></li>
+      <li><a href="team.html" class="active">Chi Siamo</a></li>
       <li><a href="testimonianze.html">Testimonianze</a></li>
       <li><a href="contatti.html">Contatti</a></li>
     </ul>
@@ -112,34 +151,69 @@
 
 <div class="page-body">
 
-  <section class="hero" style="padding: 90px 0 70px;">
+  <!-- HERO -->
+  <section class="hero" style="padding: 90px 0 64px;">
     <div class="container page-hero__inner">
-      <div class="tag" style="margin-bottom:24px"><div class="tag__dot"></div>Le persone</div>
-      <h1 style="font-size:54px;font-weight:800;color:#fff;letter-spacing:-2px;line-height:1.06;margin-bottom:20px;">
-        Non un consulente.<br>Un <span style="color:#2563EB">team</span> che ti accompagna.
+      <div class="tag" style="margin-bottom:24px"><div class="tag__dot"></div>Chi siamo</div>
+      <h1 style="font-size:54px;font-weight:800;color:#fff;letter-spacing:-2px;line-height:1.06;margin-bottom:22px;">
+        Dietro la tua serenità non c'è una persona.<br>C'è un <span style="color:#2563EB">team</span>.
       </h1>
-      <p style="font-size:18px;color:rgba(255,255,255,0.62);line-height:1.72;max-width:560px;">
-        4 professionisti. Ognuno con un ruolo preciso nel tuo percorso verso la SuperSerenità®.
-        Non stai scegliendo un agente assicurativo, stai scegliendo un team dedicato a te.
+      <p style="font-size:18px;color:rgba(255,255,255,0.64);line-height:1.72;max-width:600px;">
+        Una persona sola può ammalarsi, andare in ferie, cambiare lavoro. Un team no.
+        Da noi trovi ruoli diversi, ognuno specializzato in un momento preciso del tuo percorso:
+        dalla prima consulenza alle analisi più approfondite, fino alla cura negli anni.
+        Così non resti mai senza un punto di riferimento.
       </p>
     </div>
   </section>
 
+  <!-- FASCIA DI FIDUCIA -->
   <div class="strip">
-    <div class="strip__inner" style="grid-template-columns:repeat(3,1fr);">
-      <div class="strip__item"><div class="strip__num">4</div><div class="strip__lbl">Professionisti dedicati</div></div>
+    <div class="strip__inner">
+      <div class="strip__item"><div class="strip__num">30<em style="color:#2563EB">+</em></div><div class="strip__lbl">Anni di esperienza</div></div>
       <div class="strip__item"><div class="strip__num">461<em style="color:#2563EB">★</em></div><div class="strip__lbl">Recensioni ECCELLENTE</div></div>
-      <div class="strip__item"><div class="strip__num">15k+</div><div class="strip__lbl">Rischi analizzati</div></div>
+      <div class="strip__item"><div class="strip__num">4</div><div class="strip__lbl">Professionisti dedicati</div></div>
+      <div class="strip__item"><div class="strip__num">15k<em style="color:#2563EB">+</em></div><div class="strip__lbl">Rischi analizzati</div></div>
     </div>
   </div>
 
-  <!-- TEAM MEMBERS -->
-  <section class="team-full">
+  <!-- PERCHÉ UN TEAM -->
+  <section class="whyteam">
     <div class="container">
+      <div class="eyebrow">La differenza</div>
+      <h2 class="section-title">Perché un team,<br>e non una persona sola.</h2>
+      <p class="section-sub" style="margin-bottom:0;">Affidarsi a un singolo consulente significa dipendere da una sola persona. Un team cambia tutto: più competenze, più continuità, meno rischio di restare soli.</p>
+      <div class="whyteam-grid">
+        <div class="whyt">
+          <div class="whyt__t">Più competenze</div>
+          <div class="whyt__d">Famiglia, azienda, investimenti, sinistri. Nessuno è bravo in tutto da solo. Nel team trovi sempre la persona giusta per la tua esigenza specifica.</div>
+        </div>
+        <div class="whyt">
+          <div class="whyt__t">Continuità vera</div>
+          <div class="whyt__d">Le persone cambiano lavoro, vanno in ferie, a volte si fermano. Con un team il tuo percorso non si interrompe mai: c'è sempre qualcuno che sa di te.</div>
+        </div>
+        <div class="whyt">
+          <div class="whyt__t">Mai lasciato solo</div>
+          <div class="whyt__d">Quando capita un imprevisto, rispondi a una persona che ti conosce, non a un numero verde. Sai chi chiamare, e sai che ti aiuterà davvero.</div>
+        </div>
+        <div class="whyt">
+          <div class="whyt__t">Controllo nel tempo</div>
+          <div class="whyt__d">La tua vita cambia. Il team rivede e aggiorna la tua protezione anno dopo anno, così resta sempre giusta per la persona che sei diventato.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE PERSONE -->
+  <section class="team-full" style="border-top:0.5px solid rgba(255,255,255,0.06);">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:14px;">Le persone</div>
+      <h2 class="section-title" style="margin-bottom:14px;">Chi incontri, e quando.</h2>
+      <p class="section-sub" style="margin-bottom:60px;">Quattro persone vere, una famiglia prima ancora che un'agenzia. Ognuna entra nel tuo percorso nel momento in cui può aiutarti di più.</p>
 
       <!-- GIANCARLO -->
       <div class="member">
-        <div>
+        <div class="member__photo">
           <img src="img/foto-giancarlo-full.jpg" alt="Giancarlo Basile"
             style="width:100%;height:420px;object-fit:cover;object-position:top;filter:grayscale(100%);border-radius:18px;display:block;"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -149,33 +223,35 @@
           </div>
         </div>
         <div class="member__info">
-          <div class="member__role-tag">Fondatore</div>
+          <div class="member__role-tag">Fondatore e ideatore del metodo</div>
           <div class="member__name">Giancarlo Basile</div>
-          <div class="member__title">Ideatore del Metodo SuperSerenità®</div>
+          <div class="member__title">Costruzione della SuperSerenità® personale e aziendale, analisi approfondite e investimenti</div>
           <p class="member__desc">
-            Giancarlo ha fondato LuniversoTuo con una convinzione precisa: le persone non hanno bisogno
-            di polizze assicurative. Hanno bisogno di qualcuno che le aiuti a capire la propria realtà
-            e costruire la protezione giusta, senza paura, senza pressione, senza sorprese.
+            Giancarlo è nato in Svizzera ed è entrato giovanissimo nel mondo delle assicurazioni, raccogliendo
+            presto riconoscimenti importanti. In oltre 30 anni ha avuto una sola ossessione: trovare un modo per
+            rendere le persone davvero protette e serene. Anzi, SuperSerene. Da questa ricerca è nato il Metodo SuperSerenità®.
           </p>
           <p class="member__desc">
-            Da questa visione è nato il Metodo SuperSerenità®: un percorso in 4 movimenti che trasforma
-            la consulenza assicurativa in un atto di cura verso le persone.
+            Per te, in concreto, è la persona che entra quando la situazione si fa importante: è lui a condurre le
+            analisi più approfondite e a costruire la protezione su misura, sia per la famiglia sia per l'azienda,
+            investimenti compresi. Quando serve uno sguardo esperto sul quadro completo, c'è Giancarlo.
           </p>
           <div class="member__focus">
-            <div class="member__focus-title">Il suo ruolo nel tuo percorso</div>
+            <div class="member__focus-title">Quando e come ti aiuta</div>
             <div class="member__focus-list">
-              <div class="member__focus-item">Consulenza SuperSerenità® personalizzata</div>
-              <div class="member__focus-item">Analisi completa con strumento Epheso</div>
-              <div class="member__focus-item">Costruzione della soluzione su misura</div>
-              <div class="member__focus-item">Riferimento principale per famiglie e imprenditori</div>
+              <div class="member__focus-item">Guida del Metodo SuperSerenità® in ogni percorso</div>
+              <div class="member__focus-item">Analisi approfondite per famiglia e impresa</div>
+              <div class="member__focus-item">Strategie di protezione e investimenti</div>
+              <div class="member__focus-item">Riferimento per le situazioni più complesse</div>
             </div>
           </div>
+          <a href="superserenita.html" class="member__link">Scopri il Metodo SuperSerenità® <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
         </div>
       </div>
 
       <!-- FRANCESCO -->
       <div class="member">
-        <div>
+        <div class="member__photo">
           <img src="img/foto-francesco-full.jpg" alt="Francesco"
             style="width:100%;height:420px;object-fit:cover;object-position:top;filter:grayscale(100%);border-radius:18px;display:block;"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -185,59 +261,33 @@
           </div>
         </div>
         <div class="member__info">
-          <div class="member__role-tag">Consulente</div>
+          <div class="member__role-tag">La prima consulenza e l'ascolto</div>
           <div class="member__name">Francesco</div>
-          <div class="member__title">Consulente &amp; Sviluppo clienti</div>
+          <div class="member__title">Specializzato in famiglia, azienda e investimenti</div>
           <p class="member__desc">
-            Francesco porta nel team energia, competenza tecnica e una naturale predisposizione al
-            rapporto umano. Ogni cliente che incontra non è un'opportunità commerciale, è una persona
-            con una storia, dei bisogni e un futuro da proteggere.
+            Francesco è spesso il primo volto che incontri. È lui che ti ascolta senza fretta e ti aiuta a mettere a
+            fuoco cosa conta davvero per te. Gli studi in Banca e Finanza all'Università di Siena gli danno una marcia
+            in più quando si parla di numeri, futuro e scelte economiche: sa tradurre la complessità in qualcosa di chiaro.
+          </p>
+          <p class="member__desc">
+            Cresciuto in un'agenzia di famiglia, sente da sempre il bisogno di prendersi cura della serenità delle persone.
+            Per te è il punto di partenza: quello che trasforma una preoccupazione confusa in un quadro chiaro da cui muovere.
           </p>
           <div class="member__focus">
-            <div class="member__focus-title">Il suo ruolo nel tuo percorso</div>
+            <div class="member__focus-title">Quando e come ti aiuta</div>
             <div class="member__focus-list">
-              <div class="member__focus-item">Prima consulenza e ascolto</div>
-              <div class="member__focus-item">Sviluppo nuove relazioni con clienti</div>
-              <div class="member__focus-item">Specialista soluzioni rami e vita</div>
+              <div class="member__focus-item">Prima consulenza e ascolto della tua situazione</div>
+              <div class="member__focus-item">Analisi dei bisogni di famiglia e impresa</div>
+              <div class="member__focus-item">Orientamento su protezione e investimenti</div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- ELISABETTA -->
-      <div class="member">
-        <div>
-          <img src="img/foto-elisabetta-full.jpg" alt="Elisabetta"
-            style="width:100%;height:420px;object-fit:cover;object-position:top;filter:grayscale(100%);border-radius:18px;display:block;"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="member__photo-ph" style="display:none">
-            <svg width="80" height="100" viewBox="0 0 80 100"><ellipse cx="40" cy="30" rx="20" ry="23" fill="white"/><path d="M8 100Q8 64 40 58Q72 64 72 100Z" fill="white"/></svg>
-            <span>📸 Inserire foto B&amp;W<br>di Elisabetta</span>
-          </div>
-        </div>
-        <div class="member__info">
-          <div class="member__role-tag">Gestione clienti</div>
-          <div class="member__name">Elisabetta</div>
-          <div class="member__title">Continuità &amp; Cura del cliente</div>
-          <p class="member__desc">
-            Elisabetta è la persona che garantisce che la SuperSerenità® non finisca con la firma
-            di un documento. È lei che mantiene vivo il rapporto con i clienti, che segue l'evoluzione
-            delle loro situazioni e che si assicura che nessuno venga mai lasciato solo.
-          </p>
-          <div class="member__focus">
-            <div class="member__focus-title">Il suo ruolo nel tuo percorso</div>
-            <div class="member__focus-list">
-              <div class="member__focus-item">Gestione e cura del rapporto con i clienti</div>
-              <div class="member__focus-item">Supporto operativo e amministrativo</div>
-              <div class="member__focus-item">Continuità del percorso SuperSerenità®</div>
-            </div>
-          </div>
+          <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="member__link">Prenota la prima consulenza <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
         </div>
       </div>
 
       <!-- GABRIELE -->
       <div class="member">
-        <div>
+        <div class="member__photo">
           <img src="img/foto-gabriele-full.jpg" alt="Gabriele"
             style="width:100%;height:420px;object-fit:cover;object-position:top;filter:grayscale(100%);border-radius:18px;display:block;"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -247,58 +297,170 @@
           </div>
         </div>
         <div class="member__info">
-          <div class="member__role-tag">Consulente</div>
+          <div class="member__role-tag">La prima consulenza e l'ascolto</div>
           <div class="member__name">Gabriele</div>
-          <div class="member__title">Consulente &amp; Nuove soluzioni</div>
+          <div class="member__title">Specializzato in famiglia, gestione sinistri e soluzioni innovative</div>
           <p class="member__desc">
-            Gabriele porta nel team freschezza, curiosità e una visione orientata al futuro.
-            Si occupa di esplorare nuove soluzioni per rispondere ai bisogni in continua evoluzione
-            dei clienti, soprattutto tra i giovani imprenditori e le famiglie più giovani.
+            Anche Gabriele è tra i primi a incontrarti. Porta uno sguardo curioso e orientato al futuro, e gli studi
+            in Giurisprudenza all'Università di Firenze gli danno occhio per i dettagli e per la tutela: utilissimo quando
+            c'è da gestire un sinistro o capire davvero, parola per parola, cosa copre una soluzione.
+          </p>
+          <p class="member__desc">
+            Come gli altri, è cresciuto in un'agenzia di famiglia, e quel bisogno di occuparsi concretamente della protezione
+            delle persone ce l'ha da sempre. Per te è chi unisce ascolto e attenzione ai dettagli che fanno la differenza nel momento del bisogno.
           </p>
           <div class="member__focus">
-            <div class="member__focus-title">Il suo ruolo nel tuo percorso</div>
+            <div class="member__focus-title">Quando e come ti aiuta</div>
             <div class="member__focus-list">
-              <div class="member__focus-item">Consulenza per giovani professionisti e famiglie</div>
-              <div class="member__focus-item">Soluzioni innovative e prodotti emergenti</div>
-              <div class="member__focus-item">Sviluppo del portafoglio clienti</div>
+              <div class="member__focus-item">Prima consulenza e ascolto della tua situazione</div>
+              <div class="member__focus-item">Gestione e accompagnamento nei sinistri</div>
+              <div class="member__focus-item">Soluzioni innovative per famiglie e giovani imprenditori</div>
             </div>
           </div>
+          <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="member__link">Prenota la prima consulenza <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <!-- ELISABETTA -->
+      <div class="member">
+        <div class="member__photo">
+          <img src="img/foto-elisabetta-full.jpg" alt="Elisabetta"
+            style="width:100%;height:420px;object-fit:cover;object-position:top;filter:grayscale(100%);border-radius:18px;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="member__photo-ph" style="display:none">
+            <svg width="80" height="100" viewBox="0 0 80 100"><ellipse cx="40" cy="30" rx="20" ry="23" fill="white"/><path d="M8 100Q8 64 40 58Q72 64 72 100Z" fill="white"/></svg>
+            <span>📸 Inserire foto B&amp;W<br>di Elisabetta</span>
+          </div>
+        </div>
+        <div class="member__info">
+          <div class="member__role-tag">Dopo la firma, per sempre</div>
+          <div class="member__name">Elisabetta</div>
+          <div class="member__title">Gestione e cura del rapporto con i clienti</div>
+          <p class="member__desc">
+            Elisabetta è la persona che resta accanto a te quando, altrove, ti lascerebbero solo. È nel settore da
+            tantissimi anni, e chi si affida a noi apprezza soprattutto le sue doti di ascolto e comprensione: la sua
+            empatia fa sì che nessuno si senta mai abbandonato.
+          </p>
+          <p class="member__desc">
+            Per te è la continuità: si occupa della cura del rapporto nel tempo, del supporto operativo e amministrativo,
+            e ti accompagna nella gestione dei sinistri, quando conta davvero esserci. È la prova che da noi la SuperSerenità®
+            non finisce con una firma.
+          </p>
+          <div class="member__focus">
+            <div class="member__focus-title">Quando e come ti aiuta</div>
+            <div class="member__focus-list">
+              <div class="member__focus-item">Cura del rapporto con i clienti nel tempo</div>
+              <div class="member__focus-item">Supporto operativo e amministrativo</div>
+              <div class="member__focus-item">Gestione sinistri e assistenza concreta</div>
+            </div>
+          </div>
+          <a href="#dopo-consulenza" class="member__link">Scopri come ti seguiamo nel tempo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
         </div>
       </div>
 
     </div>
   </section>
 
+  <!-- CTA INTERMEDIA -->
+  <section class="midcta">
+    <div class="container">
+      <h2 class="section-title" style="font-size:32px;margin-bottom:12px;">Ti bastano 30 minuti per capire da dove partire.</h2>
+      <p class="section-sub" style="margin:0 auto 30px;">La prima consulenza è gratuita e senza impegno. Conosci di persona chi può accompagnarti.</p>
+      <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
+  </section>
+
+  <!-- DOPO LA CONSULENZA -->
+  <section class="aftercare" id="dopo-consulenza">
+    <div class="container">
+      <div class="eyebrow">La continuità</div>
+      <h2 class="section-title">E chi ti segue<br>dopo la consulenza?</h2>
+      <div class="aftercare-grid">
+        <p class="section-sub" style="margin:0;">
+          La paura più grande, con un'assicurazione, non è solo scegliere male. È essere seguiti male dopo, quando
+          serve davvero. Da noi il rapporto inizia con la firma, non finisce lì. C'è Elisabetta, e con lei tutto il team,
+          a fare in modo che la tua protezione resti viva, aggiornata e vicina, anno dopo anno.
+        </p>
+        <div class="aftercare__points">
+          <div class="aftercare__p">
+            <div class="aftercare__dot"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div class="aftercare__pt"><b>Un punto di riferimento umano.</b> Una persona che ti conosce e ti risponde, non un numero verde.</div>
+          </div>
+          <div class="aftercare__p">
+            <div class="aftercare__dot"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div class="aftercare__pt"><b>Revisione nel tempo.</b> La tua vita cambia, e la tua protezione viene aggiornata di conseguenza.</div>
+          </div>
+          <div class="aftercare__p">
+            <div class="aftercare__dot"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div class="aftercare__pt"><b>Vicinanza nei momenti difficili.</b> Ti accompagniamo nella gestione di un sinistro, passo dopo passo.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- I VALORI -->
-  <section class="valori">
+  <section class="valori" style="border-top:0.5px solid rgba(255,255,255,0.06);">
     <div class="container">
       <div class="eyebrow">I nostri valori</div>
       <h2 class="section-title">Cosa ci muove<br>ogni giorno</h2>
       <div class="valori-grid">
         <div class="valore">
-          <div class="valore__num">01</div>
+          <div class="valore__num">1</div>
           <div class="valore__title">Famiglia e Unicità</div>
           <div class="valore__desc">Ogni cliente è unico. Ogni situazione è diversa. Non esistono soluzioni standard, esistono soluzioni per te.</div>
+          <div class="valore__ex">In pratica: partiamo sempre dalla tua vita reale, mai da un prodotto da piazzare.</div>
         </div>
         <div class="valore">
-          <div class="valore__num">02</div>
+          <div class="valore__num">2</div>
           <div class="valore__title">Chiarezza e Fiducia</div>
-          <div class="valore__desc">Nessun tecnicismo inutile. Nessuna sorpresa nascosta. Con noi sai sempre cosa stai scegliendo e perché.</div>
+          <div class="valore__desc">Nessun tecnicismo inutile, nessuna sorpresa nascosta. Con noi sai sempre cosa stai scegliendo e perché.</div>
+          <div class="valore__ex">In pratica: ti spieghiamo ogni scelta con parole semplici e ti lasciamo decidere con calma.</div>
         </div>
         <div class="valore">
-          <div class="valore__num">03</div>
+          <div class="valore__num">3</div>
           <div class="valore__title">Consapevolezza e Conoscenza</div>
-          <div class="valore__desc">Non vendiamo protezione. Aiutiamo le persone a capire la propria realtà e poi scelgono liberamente.</div>
+          <div class="valore__desc">La protezione non è un costo, è una scelta consapevole. Prima ti aiutiamo a vedere chiaro nella tua situazione, poi sei tu a scegliere, in libertà.</div>
+          <div class="valore__ex">In pratica: prima l'analisi e i dati, poi le decisioni. Mai il contrario.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section style="background:var(--bg-alt);border-top:0.5px solid rgba(255,255,255,0.06);padding:80px 0;">
+  <!-- COSA NON FACCIAMO -->
+  <section class="nonfac">
+    <div class="container">
+      <div class="eyebrow">Per essere chiari</div>
+      <h2 class="section-title">Cosa non facciamo.</h2>
+      <p class="section-sub" style="margin-bottom:0;">A volte si capisce meglio chi sei da quello che ti rifiuti di fare.</p>
+      <div class="nonfac-grid">
+        <div class="nonfac__item"><div class="nonfac__x">✕</div><div class="nonfac__t">Non vendiamo polizze standard, uguali per tutti.</div></div>
+        <div class="nonfac__item"><div class="nonfac__x">✕</div><div class="nonfac__t">Non spingiamo soluzioni che non ti servono.</div></div>
+        <div class="nonfac__item"><div class="nonfac__x">✕</div><div class="nonfac__t">Non spariamo preventivi prima di aver capito la tua situazione.</div></div>
+        <div class="nonfac__item"><div class="nonfac__x">✕</div><div class="nonfac__t">Non spariamo dopo la firma. Restiamo, anno dopo anno.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IL PATTO -->
+  <section class="patto">
+    <div class="container">
+      <div class="eyebrow">Il nostro patto con te</div>
+      <h2 class="section-title">Come ci comportiamo,<br>sempre.</h2>
+      <div class="patto-grid">
+        <div class="patto__item"><div class="patto__n">01</div><div class="patto__t">Ti ascoltiamo prima di proporre.</div></div>
+        <div class="patto__item"><div class="patto__n">02</div><div class="patto__t">Ti parliamo chiaro, sempre.</div></div>
+        <div class="patto__item"><div class="patto__n">03</div><div class="patto__t">Non ti mettiamo fretta, mai.</div></div>
+        <div class="patto__item"><div class="patto__n">04</div><div class="patto__t">Restiamo al tuo fianco nel tempo.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINALE -->
+  <section style="background:var(--bg-alt);border-top:0.5px solid rgba(255,255,255,0.06);padding:84px 0;">
     <div class="container" style="text-align:center;">
-      <h2 class="section-title">Vieni a conoscerci</h2>
-      <p class="section-sub" style="margin:0 auto 36px;">Una consulenza gratuita per capire se siamo la scelta giusta per te. Nessun obbligo.</p>
+      <h2 class="section-title">Vieni a conoscerci.</h2>
+      <p class="section-sub" style="margin:0 auto 36px;">In una consulenza gratuita capiamo insieme i tuoi rischi, le tue priorità e il tuo piano personale. Circa 30 minuti, online o in agenzia a Pescia. Senza impegno.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <a href="https://link.delera.co/widget/booking/69aAGsNLdFAAqFk5lbjp" target="_blank" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
         <a href="https://wa.me/39057247139" target="_blank" class="btn-outline">Scrivici su WhatsApp</a>
@@ -323,7 +485,7 @@
       </ul>
     </li>
       <li><a href="storie.html">Le Storie</a></li>
-      <li><a href="team.html">Il Team</a></li>
+      <li><a href="team.html">Chi Siamo</a></li>
       <li><a href="testimonianze.html">Testimonianze</a></li>
       <li><a href="contatti.html">Contatti</a></li>
     </ul></div>
@@ -332,8 +494,8 @@
       <li><a href="mailto:info@luniversotuo.it">info@luniversotuo.it</a></li>
     </ul></div>
     <div class="footer__col"><h4>Orari</h4><ul>
-      <li><a>Lun–Ven: 9–13 / 16–19</a></li>
-      <li><a>Sab–Dom: chiuso</a></li>
+      <li><a>Lun&ndash;Ven: 9&ndash;13 / 16&ndash;19</a></li>
+      <li><a>Sab&ndash;Dom: chiuso</a></li>
     </ul></div>
   </div>
     <div class="footer__bottom">
