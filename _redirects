@@ -1,0 +1,63 @@
+# ============================================================
+#  Reindirizzamenti dal vecchio sito WordPress al nuovo sito
+#  Le righe specifiche vengono prima dei jolly (vince la prima)
+# ============================================================
+
+# --- STORIE: vecchi permalink WordPress -> pagine nuove ---
+/2023/05/15/la-storia-di-superserenita-di-barbara/    /storia-barbara     301
+/2023/03/06/la-storia-di-superserenita-di-fabrizio/   /storia-fabrizio    301
+/2023/10/30/la-storia-di-superserenita-di-giada/      /storia-giada       301
+/2023/11/28/la-storia-di-superserenita-di-luisa/      /storia-luisa       301
+/2024/02/12/la-storia-di-superserenita-di-paolo/      /storia-paolo       301
+/2024/04/23/la-storia-di-superserenita-di-stefania/   /storia-stefania    301
+/2024/07/01/la-storia-di-superserenita-di-matteo/     /storia-matteo      301
+/2024/09/02/la-storia-di-superserenita-di-marco/      /storia-marco       301
+/2024/10/25/la-storia-di-superserenita-di-alessia/    /storia-alessia     301
+/2024/12/07/la-storia-di-superserenita-di-camilla/    /storia-camilla     301
+/2025/02/02/la-storia-di-superserenita-di-luigi/      /storia-luigi       301
+/2025/03/03/la-storia-di-superserenita-di-alberto/    /storia-alberto     301
+/2025/03/31/la-storia-di-superserenita-di-emma/       /storia-emma        301
+/2025/04/29/la-storia-di-superserenita-di-francesco/  /storia-francesco   301
+/2025/05/26/la-storia-di-superserenita-di-carla/      /storia-carla       301
+/2025/06/24/la-storia-di-superserenita-di-giovanni/   /storia-giovanni    301
+/2025/07/22/la-storia-di-superserenita-di-valentina/  /storia-valentina   301
+/2025/09/17/la-storia-di-superserenita-di-paolo-2/    /storia-paolo-2     301
+/2025/10/14/la-storia-di-superserenita-di-cristina/   /storia-cristina    301
+/2025/11/12/la-storia-di-superserenita-di-anna/       /storia-anna        301
+/2025/12/10/la-storia-di-superserenita-di-giacomo/    /storia-giacomo     301
+/2026/01/28/la-storia-di-superserenita-di-martina/    /storia-martina     301
+/2026/03/04/la-storia-di-superserenita-di-riccardo/   /storia-riccardo    301
+/2026/04/10/la-storia-di-superserenita-di-lavini/     /storia-lavinia     301
+/2026/05/27/la-storia-di-superserenita-di-mattia/     /storia-mattia      301
+# storia senza pagina dedicata sul nuovo sito
+/2023/07/24/la-storia-di-superserenita-di-filippo/    /storie             301
+
+# --- PAGINE WordPress -> nuove pagine ---
+/la-superserenita/                 /superserenita        301
+/contatti/                         /contatti             301
+/testimonianze/                    /testimonianze        301
+/giancarlo-basile/                 /team                 301
+/francesco-basile/                 /team                 301
+/cookie-policy/                    /cookie-policy        301
+/informativa-sito-web-e-cookie/    /informativa-privacy  301
+/risorse-per-te/                   /storie               301
+/archivio/                         /storie               301
+
+# --- Vecchie landing/campagne -> home ---
+/campagna-rcauto/*                 /                     301
+/vuoi-proteggere-la-casa/          /                     301
+/presentazione-non-autosufficienza/ /                   301
+/pacco-pronto/                     /                     301
+/video-chiusura-giugno/            /                     301
+
+# --- Tutto il resto del vecchio blog (per anno) -> home ---
+/2017/*    /    301
+/2018/*    /    301
+/2019/*    /    301
+/2020/*    /    301
+/2021/*    /    301
+/2022/*    /    301
+/2023/*    /    301
+/2024/*    /    301
+/2025/*    /    301
+/2026/*    /    301
