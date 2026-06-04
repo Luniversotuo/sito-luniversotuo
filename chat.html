@@ -507,6 +507,21 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     function escHtml(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
     }
+    // Pulisce le risposte di Chiara: niente asterischi, niente trattini lunghi, niente markdown
+    function cleanReply(s) {
+      return String(s)
+        .replace(/\*+/g, '')                  // via asterischi (grassetto/corsivo)
+        .replace(/_{1,3}([^_]+)_{1,3}/g, '$1')// via underscore markdown
+        .replace(/`+/g, '')                   // via backtick
+        .replace(/^\s{0,3}#{1,6}\s+/gm, '')   // via header markdown
+        .replace(/^\s*[-•·]\s+/gm, '')        // via elenchi puntati a inizio riga
+        .replace(/\s*[—–]\s*/g, ', ')         // trattino lungo/medio -> virgola
+        .replace(/ ?,\s*,/g, ',')             // doppie virgole
+        .replace(/,\s*([.!?])/g, '$1')        // virgola attaccata a fine frase
+        .replace(/\s+([.,;:!?])/g, '$1')      // spazio prima della punteggiatura
+        .replace(/[ \t]{2,}/g, ' ')           // spazi multipli
+        .trim();
+    }
     function scrollBot() {
       const el = document.getElementById('chat-messages');
       if (el) el.scrollTop = el.scrollHeight;
@@ -520,7 +535,8 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       if (role === 'assistant') {
         header = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Chiara</div></div>`;
       }
-      w.innerHTML = `${header}<div class="cbubble">${escHtml(text)}</div><div class="cmsg-time">${now()}</div>`;
+      const body = role === 'assistant' ? cleanReply(text) : text;
+      w.innerHTML = `${header}<div class="cbubble">${escHtml(body)}</div><div class="cmsg-time">${now()}</div>`;
       el.appendChild(w);
       scrollBot();
     }

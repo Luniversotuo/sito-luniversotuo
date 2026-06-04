@@ -363,6 +363,22 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       .replace(/\n/g, '<br>');
   }
 
+  // Pulisce le risposte di Chiara: niente asterischi, niente trattini lunghi, niente markdown
+  function cleanReply(s) {
+    return String(s)
+      .replace(/\*+/g, '')
+      .replace(/_{1,3}([^_]+)_{1,3}/g, '$1')
+      .replace(/`+/g, '')
+      .replace(/^\s{0,3}#{1,6}\s+/gm, '')
+      .replace(/^\s*[-•·]\s+/gm, '')
+      .replace(/\s*[—–]\s*/g, ', ')
+      .replace(/ ?,\s*,/g, ',')
+      .replace(/,\s*([.!?])/g, '$1')
+      .replace(/\s+([.,;:!?])/g, '$1')
+      .replace(/[ \t]{2,}/g, ' ')
+      .trim();
+  }
+
   /* ─────────────────────────────────────────────
    *  INIEZIONE DOM
    * ───────────────────────────────────────────── */
@@ -432,7 +448,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     wrap.className = `ss-msg ${role === 'assistant' ? 'ai' : 'user'}`;
     const bubble = document.createElement('div');
     bubble.className = 'ss-bubble';
-    bubble.innerHTML = escapeHtml(text);
+    bubble.innerHTML = escapeHtml(role === 'assistant' ? cleanReply(text) : text);
     wrap.appendChild(bubble);
     const time = document.createElement('div');
     time.className = 'ss-msg-time';
