@@ -1,0 +1,4 @@
+# Pianificazione funzione email giornaliera (digest).
+# "0 7 * * *" = ogni giorno alle 07:00 UTC (circa 08:00 in inverno / 09:00 in estate, ora italiana).
+[functions."digest"]
+  schedule = "0 7 * * *"

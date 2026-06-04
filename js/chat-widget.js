@@ -18,6 +18,7 @@
   let sessionLogged = false;
   let bookedCTA = false;
   let userLog = [];
+  let transcript = [];
   let msgCount = 0;
 
   function logSession() {
@@ -34,6 +35,7 @@
           messages_count: msgCount,
           first_question: userLog[0] || '',
           user_questions: userLog.join(' ||| '),
+          transcript:     transcript,
           booked:         bookedCTA ? 'si' : 'no'
         })
       }).catch(() => { /* silenzioso */ });
@@ -443,6 +445,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
   function addMessage(role, text) {
     msgCount++;
     if (role === 'user') userLog.push(text);
+    transcript.push({ role: role === 'assistant' ? 'assistant' : 'user', text: role === 'assistant' ? cleanReply(text) : text });
     const el = getMessagesEl();
     const wrap = document.createElement('div');
     wrap.className = `ss-msg ${role === 'assistant' ? 'ai' : 'user'}`;

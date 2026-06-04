@@ -53,16 +53,11 @@ exports.handler = async (event) => {
   const siteID = process.env.NETLIFY_SITE_ID;
   const apiToken = process.env.NETLIFY_API_TOKEN;
 
-  if (!siteID || !apiToken) {
-    return {
-      statusCode: 500,
-      headers: { ...CORS, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'Env vars NETLIFY_SITE_ID e NETLIFY_API_TOKEN non configurate sul server.' })
-    };
-  }
-
   try {
-    const store = getStore({ name: 'chat-sessions', siteID, token: apiToken });
+    // Se le env var sono presenti le uso, altrimenti config automatica del runtime
+    const store = (siteID && apiToken)
+      ? getStore({ name: 'chat-sessions', siteID, token: apiToken })
+      : getStore('chat-sessions');
     const { blobs } = await store.list();
 
     if (!blobs || blobs.length === 0) {

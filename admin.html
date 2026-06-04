@@ -1149,6 +1149,40 @@
   /* ── CHAT LOG (Netlify Blobs) ── */
   function getNetlifyToken() { return sessionStorage.getItem('lt_admin_pwd') || ''; }
 
+  /* ── DETTAGLIO CONVERSAZIONE COMPLETA ── */
+  function escConv(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function openConversation(sessionId) {
+    const list = window.LT_SESSIONS || [];
+    const s = list.find(x => x && x.session_id === sessionId);
+    const modal = document.getElementById('conv-modal');
+    const head = document.getElementById('conv-modal-head');
+    const body = document.getElementById('conv-modal-body');
+    if (!s) { body.innerHTML = 'Conversazione non trovata.'; modal.style.display = 'flex'; return; }
+    const d = new Date(s.timestamp || s.logged_at);
+    const when = d.toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'}) + ' alle ' + d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+    head.innerHTML = `<div style="font-size:14px;font-weight:700;color:var(--t1);">Conversazione con Chiara</div>
+      <div style="font-size:11px;color:var(--t3);margin-top:3px;">${when} · pagina: ${escConv(s.page || 'home')} · ${s.booked === 'si' ? '<span style="color:var(--green);font-weight:700;">PRENOTATO</span>' : 'non prenotato'}</div>`;
+    const t = Array.isArray(s.transcript) ? s.transcript : [];
+    if (!t.length) {
+      body.innerHTML = `<div style="color:var(--t3);font-size:12.5px;padding:16px;text-align:center;line-height:1.6;">Per questa conversazione non è disponibile il testo completo (registrata prima dell'aggiornamento).<br><br><b style="color:var(--t2);">Domande utente:</b><br>${escConv(s.user_questions || '—')}</div>`;
+    } else {
+      body.innerHTML = t.map(m => {
+        const isUser = m.role === 'user';
+        const align = isUser ? 'flex-end' : 'flex-start';
+        const bg = isUser ? 'var(--blue)' : 'var(--card2)';
+        const col = isUser ? '#fff' : 'var(--t1)';
+        const who = isUser ? 'Utente' : 'Chiara';
+        return `<div style="display:flex;flex-direction:column;align-items:${align};margin-bottom:12px;">
+          <div style="font-size:9.5px;color:var(--t3);margin:0 5px 3px;text-transform:uppercase;letter-spacing:0.5px;">${who}</div>
+          <div style="max-width:80%;background:${bg};color:${col};border:0.5px solid var(--border);border-radius:14px;padding:10px 14px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word;">${escConv(m.text)}</div>
+        </div>`;
+      }).join('');
+    }
+    modal.style.display = 'flex';
+    body.scrollTop = 0;
+  }
+  function closeConversation() { const m = document.getElementById('conv-modal'); if (m) m.style.display = 'none'; }
+
   async function loadChatLog() {
     const btn = document.getElementById('chatlog-refresh-btn');
     btn.textContent = 'Caricamento...';
@@ -1175,6 +1209,7 @@
       }
 
       const subs = await res.json();
+      window.LT_SESSIONS = subs;
 
       if (!Array.isArray(subs) || subs.length === 0) {
         document.getElementById('chat-log-list').innerHTML = '<div style="font-size:12.5px;color:var(--t3);padding:16px 0;text-align:center;">Nessuna conversazione registrata ancora. Le chat appariranno qui dopo che qualcuno usa Chiara.</div>';
@@ -1208,7 +1243,7 @@
 
         const questions = allQ.split(' ||| ').filter(q => q.trim());
 
-        return `<div style="border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;background:var(--card2);">
+        return `<div onclick="openConversation('${s.session_id}')" onmouseover="this.style.borderColor='var(--blue-border)'" onmouseout="this.style.borderColor='var(--border)'" style="border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;background:var(--card2);cursor:pointer;transition:border-color .15s;">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
             <div>
               <div style="font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.4;">"${firstQ.length > 90 ? firstQ.substring(0,90)+'\u2026' : firstQ}"</div>
@@ -1219,6 +1254,7 @@
             </div>
           </div>
           ${questions.length > 1 ? `<div style="display:flex;flex-wrap:wrap;gap:5px;">${questions.map(q => `<span style="font-size:10.5px;background:var(--blue-dim);color:var(--blue-text);border:0.5px solid var(--blue-border);border-radius:6px;padding:3px 9px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${q}">${q.length > 45 ? q.substring(0,45)+'\u2026' : q}</span>`).join('')}</div>` : ''}
+          <div style="font-size:10px;color:var(--blue-text);margin-top:9px;font-weight:600;">Apri la conversazione completa \u2192</div>
         </div>`;
       }).join('');
 
@@ -1408,6 +1444,17 @@
     loadFile();
   }
 </script>
+
+<!-- Modale dettaglio conversazione -->
+<div id="conv-modal" onclick="if(event.target===this)closeConversation()" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.62);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--card);border:0.5px solid var(--border);border-radius:16px;max-width:620px;width:100%;max-height:84vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,0.6);">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 20px;border-bottom:0.5px solid var(--border);">
+      <div id="conv-modal-head"></div>
+      <button onclick="closeConversation()" style="flex-shrink:0;background:var(--card2);border:0.5px solid var(--border);color:var(--t2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:15px;line-height:1;">✕</button>
+    </div>
+    <div id="conv-modal-body" style="padding:20px;overflow-y:auto;"></div>
+  </div>
+</div>
 
 </body>
 </html>
