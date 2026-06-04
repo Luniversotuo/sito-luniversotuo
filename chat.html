@@ -272,6 +272,7 @@
     <div class="chat-hero__inner">
       <div class="chat-hero__avatar">
         ✦
+        <img src="img/chiara-avatar.png" alt="Chiara" onerror="this.remove()" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;">
         <div class="chat-hero__status"></div>
       </div>
       <div class="chat-hero__name">Chiara</div>
@@ -566,7 +567,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       w.className = `cmsg ${role === 'assistant' ? 'ai' : 'user'}`;
       let header = '';
       if (role === 'assistant') {
-        header = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Chiara</div></div>`;
+        header = `<div class="cmsg-header"><div class="cmsg-avatar"><img src="img/chiara-avatar.png" alt="Chiara" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="cmsg-name">Chiara</div></div>`;
       }
       const body = role === 'assistant' ? cleanReply(text) : text;
       w.innerHTML = `${header}<div class="cbubble">${escHtml(body)}</div><div class="cmsg-time">${now()}</div>`;
@@ -578,7 +579,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       const el = document.getElementById('chat-messages');
       const w = document.createElement('div');
       w.className = 'cmsg ai'; w.id = 'chat-typing';
-      w.innerHTML = `<div class="cmsg-header"><div class="cmsg-avatar">✦</div><div class="cmsg-name">Chiara</div></div><div class="ctyping"><div class="cdot"></div><div class="cdot"></div><div class="cdot"></div></div>`;
+      w.innerHTML = `<div class="cmsg-header"><div class="cmsg-avatar"><img src="img/chiara-avatar.png" alt="Chiara" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><div class="cmsg-name">Chiara</div></div><div class="ctyping"><div class="cdot"></div><div class="cdot"></div><div class="cdot"></div></div>`;
       el.appendChild(w); scrollBot();
     }
     function hideTyping() { const t = document.getElementById('chat-typing'); if (t) t.remove(); }
