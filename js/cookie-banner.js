@@ -12,11 +12,23 @@
         if (!isOpen) parent.classList.add('open');
       });
     });
+    // Hamburger menu (mobile)
+    var nav = document.querySelector('.nav');
+    var burger = document.querySelector('.nav__burger');
+    if (nav && burger) {
+      burger.addEventListener('click', function(e){ e.stopPropagation(); nav.classList.toggle('is-open'); });
+      nav.querySelectorAll('.nav__menu a').forEach(function(a){
+        a.addEventListener('click', function(){
+          if (!a.classList.contains('nav__dropdown-toggle')) nav.classList.remove('is-open');
+        });
+      });
+    }
     // chiudi cliccando fuori
     document.addEventListener('click', function(e){
       if (!e.target.closest('.nav__dropdown')) {
         document.querySelectorAll('.nav__dropdown').forEach(function(d){ d.classList.remove('open'); });
       }
+      if (nav && !e.target.closest('.nav')) { nav.classList.remove('is-open'); }
     });
   });
 })();
