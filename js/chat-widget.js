@@ -523,7 +523,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: CONFIG.model,
-        max_tokens: 350,
+        max_tokens: 1024,
         system: CONFIG.systemPrompt,
         messages: messages
       })

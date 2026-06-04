@@ -584,7 +584,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
       const res = await fetch('/.netlify/functions/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: CONFIG.model, max_tokens: 350, system: CONFIG.systemPrompt, messages })
+        body: JSON.stringify({ model: CONFIG.model, max_tokens: 1024, system: CONFIG.systemPrompt, messages })
       });
       const data = await res.json();
       // Nessuna API key configurata → demo
