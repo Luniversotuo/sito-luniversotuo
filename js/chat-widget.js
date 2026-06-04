@@ -394,7 +394,7 @@ Inizia sempre con calore. La prima risposta deve far sentire il visitatore capit
     const wrap = document.createElement('div');
     wrap.id = 'ss-chat-widget';
     wrap.innerHTML = `
-      <button id="ss-chat-btn" aria-label="Parla con Chiara — Consulente SuperSerenità®">
+      <button id="ss-chat-btn" aria-label="Chat con Chiara — Consulente SuperSerenità®">
         <div id="ss-chat-badge">1</div>
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </button>
