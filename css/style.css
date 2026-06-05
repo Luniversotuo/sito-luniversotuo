@@ -181,6 +181,12 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: 0 16px 40px rgba(0,0,0,0.5);
   z-index: 200;
 }
+/* ponte invisibile: copre lo spazio tra la voce e la tendina così l'hover non si perde */
+.nav__dropdown-menu::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: -16px; height: 18px;
+}
 .nav__dropdown:hover .nav__dropdown-menu,
 .nav__dropdown.open .nav__dropdown-menu {
   opacity: 1;
