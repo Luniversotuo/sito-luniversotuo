@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prenotazione confermata | LuniversoTuo</title>
+  <meta name="description" content="La tua consulenza gratuita SuperSerenità® è confermata.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://www.luniversotuo.it/grazie-prenotazione">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+  <meta name="theme-color" content="#07080e">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .thanks-hero { padding: 110px 0 70px; text-align: center; }
+    .thanks-check { width: 72px; height: 72px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; }
+    .thanks-check svg { width: 34px; height: 34px; stroke: #22c55e; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .thanks-hero h1 { font-size: 46px; font-weight: 800; color: #fff; letter-spacing: -1.8px; line-height: 1.1; margin-bottom: 18px; }
+    .thanks-hero h1 em { font-style: normal; color: #2563EB; }
+    .thanks-hero p { font-size: 17px; color: rgba(255,255,255,0.64); line-height: 1.7; max-width: 540px; margin: 0 auto; }
+    .next-steps { max-width: 680px; margin: 48px auto 0; display: grid; gap: 14px; text-align: left; }
+    .next-step { display: flex; gap: 16px; align-items: flex-start; background: var(--bg-card); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 20px 22px; }
+    .next-step__num { width: 30px; height: 30px; border-radius: 50%; background: rgba(37,99,235,0.14); border: 0.5px solid rgba(37,99,235,0.3); color: #5b8cf0; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .next-step b { color: #fff; font-weight: 600; }
+    .next-step div { font-size: 14.5px; color: rgba(255,255,255,0.62); line-height: 1.65; }
+    .thanks-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 40px; }
+    .thanks-note { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 26px; }
+    .thanks-note a { color: rgba(255,255,255,0.7); }
+    @media(max-width:600px){ .thanks-hero h1 { font-size: 32px; letter-spacing: -1px; } .thanks-hero { padding: 90px 0 50px; } }
+  </style>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','390681561312731');
+  fbq('track','PageView');
+  // Evento Schedule = prenotazione completata (con guardia anti-doppio conteggio per sessione)
+  try {
+    if (!sessionStorage.getItem('lt_schedule_fired')) {
+      fbq('track','Schedule');
+      sessionStorage.setItem('lt_schedule_fired','1');
+    }
+  } catch(e) { fbq('track','Schedule'); }
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=390681561312731&ev=Schedule&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+<body>
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#2563EB;display:inline-block;flex-shrink:0;"></span>
+      <span style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.5px;line-height:1;">LuniversoTuo</span>
+    </a>
+    <div class="nav__actions">
+      <a href="https://wa.me/39057247139" target="_blank" class="nav__link-ghost">WhatsApp</a>
+    </div>
+  </div>
+</nav>
+<div class="page-body">
+  <section class="thanks-hero">
+    <div class="container">
+      <div class="thanks-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h1>Prenotazione confermata.<br>Il tuo equilibrio <em>inizia qui.</em></h1>
+      <p>Riceverai a breve una email con tutti i dettagli dell'appuntamento. Nel frattempo, ecco cosa succede ora.</p>
+      <div class="next-steps">
+        <div class="next-step"><div class="next-step__num">1</div><div><b>Controlla la tua email.</b> Trovi la conferma con data, ora e il link per partecipare online o le indicazioni per venire in agenzia a Pescia.</div></div>
+        <div class="next-step"><div class="next-step__num">2</div><div><b>Non devi preparare nulla.</b> Niente documenti, niente questionari: ci racconti la tua situazione con calma, al resto pensiamo noi.</div></div>
+        <div class="next-step"><div class="next-step__num">3</div><div><b>30 minuti, e esci con chiarezza.</b> La mappa dei tuoi rischi, le priorità vere e una direzione. Senza alcun obbligo.</div></div>
+      </div>
+      <div class="thanks-actions">
+        <a href="storie.html" class="btn-primary">Leggi le storie di chi l'ha già fatto</a>
+        <a href="team.html" class="btn-outline">Scopri chi incontrerai</a>
+      </div>
+      <p class="thanks-note">Imprevisti? Puoi spostare l'appuntamento <a href="https://wa.me/39057247139" target="_blank">su WhatsApp</a> o chiamando lo <a href="tel:057247139">0572 47139</a>.</p>
+    </div>
+  </section>
+</div>
+<footer class="footer">
+  <div class="footer__bottom" style="border-top:none;">
+    <div class="footer__legal">&copy; 2026 LuniversoTuo sas &middot; P.IVA 01563410479 &middot; Iscritta sezione A Registro Intermediari n. A000073879<br>
+      <a href="informativa-privacy.html" style="color:inherit">Privacy</a>&nbsp;&middot;&nbsp;<a href="cookie-policy.html" style="color:inherit">Cookie Policy</a>&nbsp;&middot;&nbsp;In collaborazione con APP BROKER SRL &middot; Mandataria Allianz
+    </div>
+  </div>
+</footer>
+<script src="js/cookie-banner.js"></script>
+</body>
+</html>
