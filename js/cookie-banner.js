@@ -91,7 +91,7 @@
   }
 
   // Google Analytics 4 — inserire l'ID misurazione (es. 'G-AB12CD34EF') qui sotto
-  const GA4_ID = '';
+  const GA4_ID = 'G-R126YPD0J0';
   function loadGA4() {
     if (!GA4_ID || window._ltGa4Loaded) return;
     window._ltGa4Loaded = true;
