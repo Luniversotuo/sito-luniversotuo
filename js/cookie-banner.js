@@ -41,8 +41,14 @@
 
   function setConsent(val) {
     localStorage.setItem(KEY, val);
-    if (val === 'all') loadFacebookPixel();
+    if (val === 'all') loadTrackingScripts();
     hideBanner();
+  }
+
+  function loadTrackingScripts() {
+    loadFacebookPixel();
+    loadClarity();
+    loadGA4();
   }
 
   function hideBanner() {
@@ -62,6 +68,41 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init','390681561312731');
     fbq('track','PageView');
+    // Evento Schedule = prenotazione completata (pagina di ringraziamento)
+    if (location.pathname.indexOf('grazie-prenotazione') !== -1) {
+      try {
+        if (!sessionStorage.getItem('lt_schedule_fired')) {
+          fbq('track','Schedule');
+          sessionStorage.setItem('lt_schedule_fired','1');
+        }
+      } catch(e) { fbq('track','Schedule'); }
+    }
+  }
+
+  // Microsoft Clarity — heatmap e registrazioni sessioni
+  function loadClarity() {
+    if (window._ltClarityLoaded) return;
+    window._ltClarityLoaded = true;
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x5ys57o520");
+  }
+
+  // Google Analytics 4 — inserire l'ID misurazione (es. 'G-AB12CD34EF') qui sotto
+  const GA4_ID = '';
+  function loadGA4() {
+    if (!GA4_ID || window._ltGa4Loaded) return;
+    window._ltGa4Loaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA4_ID, { 'anonymize_ip': true });
   }
 
   // Resetta le preferenze (per il pulsante in cookie-policy.html)
@@ -72,7 +113,7 @@
 
   // Se già deciso, applica la scelta
   const saved = getConsent();
-  if (saved === 'all') { loadFacebookPixel(); return; }
+  if (saved === 'all') { loadTrackingScripts(); return; }
   if (saved === 'essential') { return; }
 
   // Nessuna scelta → mostra il banner
@@ -113,7 +154,7 @@
   banner.id = 'lt-cookie-banner';
   banner.innerHTML = `
     <p>
-      Usiamo <strong>cookie tecnici</strong> necessari al funzionamento del sito e, con il tuo consenso, <strong>cookie di marketing</strong> (Facebook Pixel) per misurare le campagne.
+      Usiamo <strong>cookie tecnici</strong> necessari al funzionamento del sito e, con il tuo consenso, <strong>cookie statistici e di marketing</strong> (Facebook Pixel, Microsoft Clarity, Google Analytics) per misurare visite e campagne.
       Leggi la nostra <a href="cookie-policy.html">Cookie Policy</a>.
     </p>
     <div class="lt-cb-btns">
