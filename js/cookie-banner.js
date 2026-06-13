@@ -111,6 +111,10 @@
     location.reload();
   };
 
+  // Pixel Meta: caricato SEMPRE, su ogni pagina, a prescindere dal consenso
+  // (scelta esplicita richiesta dal titolare — soluzione temporanea da rivedere)
+  loadFacebookPixel();
+
   // Se già deciso, applica la scelta
   const saved = getConsent();
   if (saved === 'all') { loadTrackingScripts(); return; }
