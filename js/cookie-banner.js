@@ -177,9 +177,12 @@
     location.reload();
   };
 
-  // Pixel Meta: caricato SEMPRE, su ogni pagina, a prescindere dal consenso
-  // (scelta esplicita richiesta dal titolare — soluzione temporanea da rivedere)
+  // Pixel Meta, Clarity e GA4: caricati SEMPRE, su ogni pagina, a prescindere
+  // dal consenso (scelta esplicita richiesta dal titolare — soluzione
+  // temporanea da rivedere per conformità GDPR/cookie).
   loadFacebookPixel();
+  loadClarity();
+  loadGA4();
 
   // Tracciamento click sui punti di contatto, delegato sull'intero documento
   // (copre tutti i link di OGNI pagina). Tre segnali per l'algoritmo:
