@@ -151,18 +151,36 @@
   // (scelta esplicita richiesta dal titolare — soluzione temporanea da rivedere)
   loadFacebookPixel();
 
-  // Evento InitiateCheckout = click su un pulsante "Prenota" (inizio prenotazione su Delera).
-  // È l'evento intermedio fra PageView (visita) e Schedule (prenotazione completata):
-  // intento alto, ma più frequente di Schedule → adatto all'ottimizzazione delle campagne.
-  // Delegato sull'intero documento: copre TUTTI i pulsanti/link di prenotazione di OGNI pagina.
-  (function trackPrenotaClicks(){
+  // Tracciamento click sui punti di contatto, delegato sull'intero documento
+  // (copre tutti i link di OGNI pagina). Tre segnali per l'algoritmo:
+  //  - InitiateCheckout = click su "Prenota" (inizio prenotazione su Delera)
+  //  - Contact (whatsapp) = click su un link WhatsApp
+  //  - Contact (phone)    = click su un numero di telefono (tel:)
+  // WhatsApp e telefono sono canali di contatto reali oggi invisibili a Meta:
+  // tracciarli dà molto più segnale di conversione (aiuta a uscire dall'apprendimento).
+  (function trackContactClicks(){
     if (window._ltPrenotaTracked) return;
     window._ltPrenotaTracked = true;
     document.addEventListener('click', function(e){
-      var link = e.target.closest && e.target.closest('a[href*="link.delera.co/widget/booking"]');
-      if (!link) return;
-      try { ltTrack('InitiateCheckout'); } catch(err) {}
-      try { if (window.gtag) gtag('event','click_prenota'); } catch(err) {}
+      if (!e.target.closest) return;
+      var book = e.target.closest('a[href*="link.delera.co/widget/booking"]');
+      if (book) {
+        try { ltTrack('InitiateCheckout'); } catch(err) {}
+        try { if (window.gtag) gtag('event','click_prenota'); } catch(err) {}
+        return;
+      }
+      var wa = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="//whatsapp.com"]');
+      if (wa) {
+        try { ltTrack('Contact', { contact_method: 'whatsapp' }); } catch(err) {}
+        try { if (window.gtag) gtag('event','click_whatsapp'); } catch(err) {}
+        return;
+      }
+      var tel = e.target.closest('a[href^="tel:"]');
+      if (tel) {
+        try { ltTrack('Contact', { contact_method: 'phone' }); } catch(err) {}
+        try { if (window.gtag) gtag('event','click_telefono'); } catch(err) {}
+        return;
+      }
     }, true);
   })();
 
