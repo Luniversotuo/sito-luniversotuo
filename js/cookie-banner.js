@@ -115,6 +115,21 @@
   // (scelta esplicita richiesta dal titolare — soluzione temporanea da rivedere)
   loadFacebookPixel();
 
+  // Evento InitiateCheckout = click su un pulsante "Prenota" (inizio prenotazione su Delera).
+  // È l'evento intermedio fra PageView (visita) e Schedule (prenotazione completata):
+  // intento alto, ma più frequente di Schedule → adatto all'ottimizzazione delle campagne.
+  // Delegato sull'intero documento: copre TUTTI i pulsanti/link di prenotazione di OGNI pagina.
+  (function trackPrenotaClicks(){
+    if (window._ltPrenotaTracked) return;
+    window._ltPrenotaTracked = true;
+    document.addEventListener('click', function(e){
+      var link = e.target.closest && e.target.closest('a[href*="link.delera.co/widget/booking"]');
+      if (!link) return;
+      try { if (window.fbq) fbq('track','InitiateCheckout'); } catch(err) {}
+      try { if (window.gtag) gtag('event','click_prenota'); } catch(err) {}
+    }, true);
+  })();
+
   // Se già deciso, applica la scelta
   const saved = getConsent();
   if (saved === 'all') { loadTrackingScripts(); return; }
