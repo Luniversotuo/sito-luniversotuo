@@ -67,28 +67,38 @@
   function ltEventId() {
     return 'lt-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
   }
-  function ltSendCapi(name, eventId, customData) {
+  function ltSendCapi(name, eventId, customData, userData) {
     try {
+      var payload = {
+        event_name: name,
+        event_id: eventId,
+        event_source_url: location.href,
+        fbp: ltCookie('_fbp'),
+        fbc: ltCookie('_fbc'),
+        custom_data: customData || undefined
+      };
+      // Dati cliente per l'Event Match Quality (es. da Delera sulla pagina di
+      // ringraziamento). Inviati grezzi al nostro server, che li hasha (SHA-256)
+      // prima di mandarli a Meta. Mai inviati a terzi in chiaro.
+      if (userData) {
+        if (userData.email) payload.email = userData.email;
+        if (userData.phone) payload.phone = userData.phone;
+        if (userData.fn) payload.fn = userData.fn;
+        if (userData.ln) payload.ln = userData.ln;
+      }
       fetch('/.netlify/functions/capi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         keepalive: true,
-        body: JSON.stringify({
-          event_name: name,
-          event_id: eventId,
-          event_source_url: location.href,
-          fbp: ltCookie('_fbp'),
-          fbc: ltCookie('_fbc'),
-          custom_data: customData || undefined
-        })
+        body: JSON.stringify(payload)
       }).catch(function () {});
     } catch (e) {}
   }
   // Traccia un evento su browser + server con event_id condiviso (deduplica).
-  function ltTrack(name, customData) {
+  function ltTrack(name, customData, userData) {
     var id = ltEventId();
     try { if (window.fbq) fbq('track', name, customData || {}, { eventID: id }); } catch (e) {}
-    ltSendCapi(name, id, customData);
+    ltSendCapi(name, id, customData, userData);
   }
   window.ltTrack = ltTrack;
 
@@ -104,14 +114,33 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init','390681561312731');
     ltTrack('PageView');
-    // Evento Schedule = prenotazione completata (pagina di ringraziamento)
-    if (location.pathname.indexOf('grazie-prenotazione') !== -1) {
+
+    var path = location.pathname;
+
+    // ViewContent = visita di una pagina "chiave" (offerta SuperSerenità o una storia).
+    // Segnale di metà funnel, utile per retargeting e per dare più dati all'algoritmo.
+    if (/superserenita/i.test(path) || /\/storia-/i.test(path) || /storie/i.test(path) || /testimonianze/i.test(path)) {
+      ltTrack('ViewContent');
+    }
+
+    // Evento Schedule = prenotazione completata (pagina di ringraziamento).
+    // Se Delera passa i dati nell'URL (email/telefono/nome) li inoltriamo per
+    // migliorare l'Event Match Quality (vengono hashati dal nostro server).
+    if (path.indexOf('grazie-prenotazione') !== -1) {
+      var ud = {};
+      try {
+        var qs = new URLSearchParams(location.search);
+        ud.email = (qs.get('email') || qs.get('em') || '').trim();
+        ud.phone = (qs.get('phone') || qs.get('tel') || qs.get('telefono') || '').trim();
+        ud.fn    = (qs.get('fn') || qs.get('first_name') || qs.get('nome') || '').trim();
+        ud.ln    = (qs.get('ln') || qs.get('last_name') || qs.get('cognome') || '').trim();
+      } catch(e) {}
       try {
         if (!sessionStorage.getItem('lt_schedule_fired')) {
-          ltTrack('Schedule');
+          ltTrack('Schedule', undefined, ud);
           sessionStorage.setItem('lt_schedule_fired','1');
         }
-      } catch(e) { ltTrack('Schedule'); }
+      } catch(e) { ltTrack('Schedule', undefined, ud); }
     }
   }
 

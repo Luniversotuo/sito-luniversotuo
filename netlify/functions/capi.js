@@ -71,6 +71,8 @@ exports.handler = async (event) => {
   if (ip) user_data.client_ip_address = ip;
   if (data.email) user_data.em = [sha256(data.email)];
   if (data.phone) user_data.ph = [sha256(String(data.phone).replace(/[^0-9]/g, ''))];
+  if (data.fn) user_data.fn = [sha256(data.fn)];
+  if (data.ln) user_data.ln = [sha256(data.ln)];
 
   const ev = {
     event_name: eventName,
