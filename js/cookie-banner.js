@@ -56,6 +56,42 @@
     if (b) { b.style.opacity='0'; b.style.transform='translateY(20px)'; setTimeout(()=>b.remove(),400); }
   }
 
+  // --- Conversions API (server-side) ---------------------------------------
+  // Ogni evento viene inviato sia dal browser (pixel) sia dal server (funzione
+  // Netlify /.netlify/functions/capi) con lo STESSO event_id: Meta deduplica e
+  // recupera le conversioni perse per blocco cookie/iOS/scheda chiusa.
+  function ltCookie(name) {
+    var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : '';
+  }
+  function ltEventId() {
+    return 'lt-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+  }
+  function ltSendCapi(name, eventId, customData) {
+    try {
+      fetch('/.netlify/functions/capi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({
+          event_name: name,
+          event_id: eventId,
+          event_source_url: location.href,
+          fbp: ltCookie('_fbp'),
+          fbc: ltCookie('_fbc'),
+          custom_data: customData || undefined
+        })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  // Traccia un evento su browser + server con event_id condiviso (deduplica).
+  function ltTrack(name, customData) {
+    var id = ltEventId();
+    try { if (window.fbq) fbq('track', name, customData || {}, { eventID: id }); } catch (e) {}
+    ltSendCapi(name, id, customData);
+  }
+  window.ltTrack = ltTrack;
+
   function loadFacebookPixel() {
     if (window._ltFbLoaded) return;
     window._ltFbLoaded = true;
@@ -67,15 +103,15 @@
     s.parentNode.insertBefore(t,s)}(window,document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init','390681561312731');
-    fbq('track','PageView');
+    ltTrack('PageView');
     // Evento Schedule = prenotazione completata (pagina di ringraziamento)
     if (location.pathname.indexOf('grazie-prenotazione') !== -1) {
       try {
         if (!sessionStorage.getItem('lt_schedule_fired')) {
-          fbq('track','Schedule');
+          ltTrack('Schedule');
           sessionStorage.setItem('lt_schedule_fired','1');
         }
-      } catch(e) { fbq('track','Schedule'); }
+      } catch(e) { ltTrack('Schedule'); }
     }
   }
 
@@ -125,7 +161,7 @@
     document.addEventListener('click', function(e){
       var link = e.target.closest && e.target.closest('a[href*="link.delera.co/widget/booking"]');
       if (!link) return;
-      try { if (window.fbq) fbq('track','InitiateCheckout'); } catch(err) {}
+      try { ltTrack('InitiateCheckout'); } catch(err) {}
       try { if (window.gtag) gtag('event','click_prenota'); } catch(err) {}
     }, true);
   })();
