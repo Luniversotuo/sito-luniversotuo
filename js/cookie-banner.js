@@ -138,9 +138,10 @@
       try {
         if (!sessionStorage.getItem('lt_schedule_fired')) {
           ltTrack('Schedule', undefined, ud);
+          ltTrack('Lead', { lead_source: 'appuntamento' }, ud);
           sessionStorage.setItem('lt_schedule_fired','1');
         }
-      } catch(e) { ltTrack('Schedule', undefined, ud); }
+      } catch(e) { ltTrack('Schedule', undefined, ud); ltTrack('Lead', { lead_source: 'appuntamento' }, ud); }
     }
   }
 
@@ -195,18 +196,21 @@
       var book = e.target.closest('a[href*="link.delera.co/widget/booking"]');
       if (book) {
         try { ltTrack('InitiateCheckout'); } catch(err) {}
+        try { ltTrack('Lead', { lead_source: 'prenota' }); } catch(err) {}
         try { if (window.gtag) gtag('event','click_prenota'); } catch(err) {}
         return;
       }
       var wa = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="//whatsapp.com"]');
       if (wa) {
         try { ltTrack('Contact', { contact_method: 'whatsapp' }); } catch(err) {}
+        try { ltTrack('Lead', { lead_source: 'whatsapp' }); } catch(err) {}
         try { if (window.gtag) gtag('event','click_whatsapp'); } catch(err) {}
         return;
       }
       var tel = e.target.closest('a[href^="tel:"]');
       if (tel) {
         try { ltTrack('Contact', { contact_method: 'phone' }); } catch(err) {}
+        try { ltTrack('Lead', { lead_source: 'phone' }); } catch(err) {}
         try { if (window.gtag) gtag('event','click_telefono'); } catch(err) {}
         return;
       }
