@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Calcolatore Rischi Casa — Valore di ricostruzione ed esposizione ai rischi</title>
+<style>
+  :root{
+    --blu:#0b3d5c; --blu2:#14618c; --azzurro:#e8f1f7; --grigio:#5b6b76;
+    --bordo:#d6dee4; --bg:#f4f7f9; --bianco:#fff;
+    --verde:#2e9e5b; --giallo:#e0a800; --arancio:#e8651e; --rosso:#cf2e2e;
+    --ombra:0 2px 12px rgba(11,61,92,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#1c2b33;background:var(--bg);line-height:1.45}
+  header.app{background:linear-gradient(135deg,var(--blu),var(--blu2));color:#fff;padding:22px 28px}
+  header.app h1{margin:0;font-size:22px;font-weight:700}
+  header.app p{margin:4px 0 0;opacity:.9;font-size:14px}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1.05fr .95fr;gap:24px}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  .card{background:var(--bianco);border:1px solid var(--bordo);border-radius:14px;box-shadow:var(--ombra);padding:22px;margin-bottom:20px}
+  h2{font-size:16px;color:var(--blu);margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid var(--azzurro);text-transform:uppercase;letter-spacing:.4px}
+  h3{font-size:13px;color:var(--grigio);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px}
+  label{display:block;font-size:13px;font-weight:600;margin:12px 0 5px;color:#33444f}
+  .hint{font-weight:400;color:var(--grigio);font-size:12px}
+  input,select{width:100%;padding:10px 11px;border:1px solid var(--bordo);border-radius:8px;font-size:14px;background:#fff;color:#1c2b33}
+  input:focus,select:focus{outline:none;border-color:var(--blu2);box-shadow:0 0 0 3px rgba(20,97,140,.12)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .row3{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+  .chk{display:flex;align-items:center;gap:9px;margin:9px 0;font-size:13.5px;font-weight:500}
+  .chk input{width:auto;margin:0}
+  button.calc{margin-top:18px;width:100%;background:var(--blu);color:#fff;border:0;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s}
+  button.calc:hover{background:var(--blu2)}
+  button.calc:disabled{opacity:.6;cursor:wait}
+  button.pdf{background:#fff;color:var(--blu);border:1.5px solid var(--blu);margin-top:10px}
+  button.pdf:hover{background:var(--azzurro)}
+  button.sec{background:#fff;color:var(--blu);border:1.5px solid var(--blu);padding:11px;font-size:14px;margin:0}
+  button.sec:hover{background:var(--azzurro)}
+
+  .vr-box{background:linear-gradient(135deg,var(--blu),var(--blu2));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-bottom:8px}
+  .vr-box .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.6px;opacity:.85}
+  .vr-box .val{font-size:34px;font-weight:800;margin:6px 0 2px}
+  .vr-box .sub{font-size:13px;opacity:.9}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+  .mini div{background:var(--azzurro);border-radius:9px;padding:12px;text-align:center}
+  .mini .m-v{font-size:18px;font-weight:700;color:var(--blu)}
+  .mini .m-l{font-size:11px;color:var(--grigio);text-transform:uppercase;letter-spacing:.4px}
+
+  .peril{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #eef2f5}
+  .peril:last-child{border-bottom:0}
+  .peril .nome{flex:1;font-weight:600;font-size:14px}
+  .peril .nome small{display:block;font-weight:400;color:var(--grigio);font-size:12px}
+  .bar{flex:1.4;height:9px;background:#eef2f5;border-radius:6px;overflow:hidden;max-width:160px}
+  .bar i{display:block;height:100%;border-radius:6px}
+  .badge{font-size:11px;font-weight:700;color:#fff;padding:4px 9px;border-radius:20px;min-width:92px;text-align:center;text-transform:uppercase;letter-spacing:.3px}
+  .b-basso{background:var(--verde)} .b-medio{background:var(--giallo)}
+  .b-alto{background:var(--arancio)} .b-molto{background:var(--rosso)}
+
+  .indice{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--bordo);border-radius:12px;padding:16px;margin-bottom:16px}
+  .gauge{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:800;flex-shrink:0}
+  .reco{font-size:13.5px;margin:8px 0;padding-left:14px;border-left:3px solid var(--blu2)}
+  .placeholder{color:var(--grigio);text-align:center;padding:50px 20px;font-size:14px}
+  .disc{font-size:11.5px;color:var(--grigio);margin-top:14px;line-height:1.5}
+
+  /* Stampa / PDF */
+  #report{display:none}
+  @media print{
+    @page{size:A4;margin:14mm}
+    body{background:#fff}
+    header.app,.wrap{display:none!important}
+    #report{display:block!important}
+    .no-print{display:none!important}
+  }
+  #report{font-size:12px;color:#1c2b33;max-width:760px;margin:0 auto;padding:20px}
+  #report .rhead{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--blu);padding-bottom:12px;margin-bottom:18px}
+  #report .rhead .ag{font-size:18px;font-weight:800;color:var(--blu)}
+  #report .rhead .ag small{display:block;font-weight:400;color:var(--grigio);font-size:11px;margin-top:3px}
+  #report h2{border:0;background:var(--azzurro);padding:7px 10px;border-radius:6px;margin:18px 0 10px}
+  #report table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px}
+  #report th,#report td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--bordo)}
+  #report th{background:#f0f5f8;color:var(--blu);font-size:11px;text-transform:uppercase}
+  #report .rfoot{margin-top:22px;font-size:10px;color:var(--grigio);border-top:1px solid var(--bordo);padding-top:10px}
+  #report .rbadge{font-size:10px;font-weight:700;color:#fff;padding:2px 7px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<header class="app">
+  <a href="/consulenti/" style="display:inline-block;color:#fff;opacity:.85;text-decoration:none;font-size:13px;margin-bottom:8px">← Area Consulenti</a>
+  <h1>Calcolatore Rischi — Abitazione</h1>
+  <p>Valore di ricostruzione ed esposizione ai rischi · dati ufficiali ISPRA all'indirizzo · tutta Italia</p>
+</header>
+
+<div class="wrap">
+  <div>
+    <div class="card">
+      <h2>1 · Dati immobile</h2>
+      <label>Tipologia
+        <select id="tipologia">
+          <option value="appartamento">Appartamento</option>
+          <option value="attico">Attico / Appartamento di pregio</option>
+          <option value="schiera">Villetta a schiera</option>
+          <option value="villa">Villa singola / Bifamiliare</option>
+          <option value="rustico">Rustico / Casale</option>
+        </select>
+      </label>
+      <div class="row">
+        <label>Superficie commerciale (m²)
+          <input type="number" id="superficie" value="120" min="10" step="1">
+        </label>
+        <label>Altezza soffitto (m) <span class="hint">incide sul volume</span>
+          <input type="number" id="altezza" value="2.70" min="2" max="6" step="0.05">
+        </label>
+      </div>
+      <label>Qualità costruttiva / finiture
+        <select id="qualita">
+          <option value="economica">Economica</option>
+          <option value="standard" selected>Standard</option>
+          <option value="pregio">Di pregio</option>
+          <option value="lusso">Lusso</option>
+        </select>
+      </label>
+      <div class="row">
+        <label>Anno di costruzione
+          <input type="number" id="anno" value="1990" min="1800" max="2026" step="1">
+        </label>
+        <label>Piano dell'unità
+          <select id="piano">
+            <option value="seminterrato">Seminterrato / Piano terra</option>
+            <option value="intermedio" selected>Piano intermedio</option>
+            <option value="alto">Piano alto / Attico</option>
+            <option value="indipendente">Edificio indipendente</option>
+          </select>
+        </label>
+      </div>
+      <div class="chk"><input type="checkbox" id="antisismico"><label style="margin:0;font-weight:500">Costruito/adeguato con criteri antisismici</label></div>
+      <div class="chk"><input type="checkbox" id="montagna"><label style="margin:0;font-weight:500">Località montana / oltre 1.000 m s.l.m.</label></div>
+    </div>
+
+    <div class="card">
+      <h2>2 · Indirizzo e rischio territoriale</h2>
+
+      <div class="row">
+        <label>Regione <span class="hint" id="stato-comuni">· caricamento…</span>
+          <select id="regione"><option value="">— seleziona —</option></select>
+        </label>
+        <label>Comune
+          <input list="dl-comuni" id="comune" placeholder="Prima scegli la regione" autocomplete="off" disabled>
+          <datalist id="dl-comuni"></datalist>
+        </label>
+      </div>
+
+      <div class="row3">
+        <label>Via / indirizzo
+          <input type="text" id="via" placeholder="Es. Via Roma">
+        </label>
+        <label>Civico
+          <input type="text" id="civico" placeholder="Es. 10">
+        </label>
+      </div>
+
+      <label>Zona sismica <span class="hint" id="sismica-auto">(dal Comune)</span>
+        <select id="sismica" onchange="window.SISMA_RAW=null">
+          <option value="1">Zona 1 — pericolosità alta</option>
+          <option value="2">Zona 2 — pericolosità medio-alta</option>
+          <option value="3" selected>Zona 3 — pericolosità bassa</option>
+          <option value="4">Zona 4 — pericolosità molto bassa</option>
+        </select>
+      </label>
+
+      <div style="background:var(--azzurro);border-radius:10px;padding:13px;margin:16px 0">
+        <div style="font-weight:700;font-size:13.5px;color:var(--blu);margin-bottom:5px">Alluvione e frana all'indirizzo esatto (ISPRA)</div>
+        <p class="hint" style="margin:0 0 11px" id="idro-auto">Inserisci regione, comune, via e civico e premi «Calcola»: il sistema interroga le mappe ufficiali ISPRA nel punto esatto e compila alluvione e frana.</p>
+        <button type="button" class="calc sec" onclick="apriISPRA()">🗺️ Apri la mappa ISPRA per verifica visiva</button>
+      </div>
+
+      <div class="row">
+        <label>Pericolosità alluvione <span class="hint">(auto / modificabile)</span>
+          <select id="alluvione" onchange="window.ALLU_AUTO=null">
+            <option value="0">Non in mappa / Non nota</option>
+            <option value="20">P1 — bassa</option>
+            <option value="45" selected>P2 — media</option>
+            <option value="70">P3 — elevata</option>
+          </select>
+        </label>
+        <label>Pericolosità da frana <span class="hint">(auto / modificabile)</span>
+          <select id="frana" onchange="window.FRANA_AUTO=null">
+            <option value="0" selected>Nessuna / Non a rischio</option>
+            <option value="15">Area di attenzione</option>
+            <option value="20">P1 — moderata</option>
+            <option value="45">P2 — media</option>
+            <option value="70">P3 — elevata</option>
+            <option value="90">P4 — molto elevata</option>
+          </select>
+        </label>
+      </div>
+      <div class="chk"><input type="checkbox" id="corso_acqua"><label style="margin:0;font-weight:500">Vicinanza a corso d'acqua / costa (&lt; 200 m)</label></div>
+    </div>
+
+    <div class="card">
+      <h2>3 · Impianti, sicurezza e protezioni</h2>
+      <div class="row">
+        <label>Impianto elettrico
+          <select id="elettrico">
+            <option value="norma">A norma / recente</option>
+            <option value="datato" selected>Datato (&gt; 15 anni)</option>
+            <option value="vecchio">Vecchio / non certificato</option>
+          </select>
+        </label>
+        <label>Riscaldamento
+          <select id="riscaldamento">
+            <option value="centralizzato" selected>Centralizzato / autonomo a gas</option>
+            <option value="pompa">Pompa di calore / elettrico</option>
+            <option value="legna">Camino / stufa a legna o pellet</option>
+          </select>
+        </label>
+      </div>
+      <h3>Protezioni antifurto presenti</h3>
+      <div class="row">
+        <div>
+          <div class="chk"><input type="checkbox" id="allarme"><label style="margin:0;font-weight:500">Allarme / antifurto</label></div>
+          <div class="chk"><input type="checkbox" id="blindata"><label style="margin:0;font-weight:500">Porta blindata</label></div>
+        </div>
+        <div>
+          <div class="chk"><input type="checkbox" id="inferriate"><label style="margin:0;font-weight:500">Inferriate / vetri antisfondamento</label></div>
+          <div class="chk"><input type="checkbox" id="video"><label style="margin:0;font-weight:500">Videosorveglianza</label></div>
+        </div>
+      </div>
+      <div class="chk"><input type="checkbox" id="fumo"><label style="margin:0;font-weight:500">Rilevatori di fumo / impianto antincendio</label></div>
+    </div>
+
+    <div class="card no-print">
+      <h2>4 · Dati per il documento cliente <span class="hint">(facoltativi)</span></h2>
+      <div class="row">
+        <label>Nome cliente<input type="text" id="cliente" placeholder="Es. Mario Rossi"></label>
+        <label>Intestazione agenzia<input type="text" id="ag_nome" value="L'Universo Tuo"></label>
+      </div>
+      <label>Contatti agenzia<input type="text" id="ag_contatti" value="info@luniversotuo.it"></label>
+
+      <button class="calc" id="btn-calcola" onclick="calcola()">Calcola esposizione e valore</button>
+      <button class="calc pdf" onclick="stampaPDF()">Genera PDF per il cliente</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>Valore di ricostruzione</h2>
+      <div id="out-vr"><div class="placeholder">Compila i dati e premi <b>«Calcola»</b> per la stima.</div></div>
+    </div>
+    <div class="card" id="card-rischi" style="display:none">
+      <h2>Esposizione ai rischi</h2>
+      <div id="out-indice"></div>
+      <div id="out-rischi"></div>
+    </div>
+    <div class="card" id="card-reco" style="display:none">
+      <h2>Coperture da valutare</h2>
+      <div id="out-reco"></div>
+      <p class="disc" id="disclaimer"></p>
+    </div>
+  </div>
+</div>
+
+<div id="report"></div>
+
+<script>
+const COSTO_BASE = {appartamento:1400, attico:1750, schiera:1600, villa:2000, rustico:1550};
+const K_QUALITA  = {economica:0.85, standard:1.00, pregio:1.25, lusso:1.55};
+const FURTO_REGIONE = {
+  "Emilia-Romagna":75,"Lombardia":72,"Toscana":68,"Veneto":68,"Liguria":66,"Lazio":66,
+  "Piemonte":63,"Umbria":58,"Marche":55,"Friuli-Venezia Giulia":52,"Trentino-Alto Adige":42,
+  "Abruzzo":48,"Campania":50,"Sardegna":42,"Puglia":45,"Sicilia":42,"Valle d'Aosta":38,
+  "Calabria":35,"Molise":30,"Basilicata":28
+};
+const CSV_URL = "https://cdn.jsdelivr.net/gh/ferdi2005/zonasismica@master/classificazione2024.csv";
+const FUNZIONE_URL = "/.netlify/functions/rischio-idro";
+
+const fmt = n => "€ " + Math.round(n).toLocaleString("it-IT");
+window.SISMA_RAW = null; window.ALLU_AUTO = null; window.FRANA_AUTO = null;
+let ULTIMO = null;
+const COMUNI = {};            // "comune (prov)" -> {regione, zona, istat}
+const REGIONI = {};           // regione -> [ "Comune (PROV)", ... ]
+
+function normReg(r){
+  r = r.split("/")[0].trim();
+  const map = {"Friuli Venezia Giulia":"Friuli-Venezia Giulia","Trentino Alto Adige":"Trentino-Alto Adige",
+               "Valle Aosta":"Valle d'Aosta","Emilia Romagna":"Emilia-Romagna"};
+  return map[r] || r;
+}
+
+/* Caricamento elenco nazionale Comuni + zona sismica (Protezione Civile via CDN) */
+(function caricaComuni(){
+  fetch(CSV_URL).then(r=>{ if(!r.ok) throw 0; return r.text(); }).then(txt=>{
+    const righe = txt.split(/\r?\n/);
+    for(let i=1;i<righe.length;i++){
+      const c = righe[i].split(";"); if(c.length<6) continue;
+      const regione = normReg(c[0]), sigla=(c[2]||"").trim(), comune=(c[3]||"").trim(),
+            istat=(c[4]||"").trim(), zona=(c[5]||"").trim();
+      if(!comune) continue;
+      const key = comune + " (" + sigla + ")";
+      COMUNI[key.toLowerCase()] = {regione, zona, istat, label:key};
+      (REGIONI[regione] = REGIONI[regione] || []).push(key);
+    }
+    const selR = document.getElementById("regione");
+    Object.keys(REGIONI).sort((a,b)=>a.localeCompare(b,'it')).forEach(r=>{
+      const o=document.createElement("option"); o.value=r; o.textContent=r; selR.appendChild(o);
+    });
+    document.getElementById("stato-comuni").textContent = "· " + Object.keys(COMUNI).length.toLocaleString("it-IT") + " comuni";
+  }).catch(()=>{
+    document.getElementById("stato-comuni").textContent = "· elenco non disponibile, compila a mano";
+  });
+})();
+
+/* Regione -> popola i Comuni di quella regione */
+document.getElementById("regione").addEventListener("change", function(){
+  const reg = this.value;
+  const inp = document.getElementById("comune");
+  const dl = document.getElementById("dl-comuni");
+  dl.innerHTML = ""; inp.value = ""; window.SISMA_RAW=null;
+  if(!reg || !REGIONI[reg]){ inp.disabled = true; inp.placeholder="Prima scegli la regione"; return; }
+  const frag = document.createDocumentFragment();
+  REGIONI[reg].slice().sort((a,b)=>a.localeCompare(b,'it')).forEach(k=>{
+    const o=document.createElement("option"); o.value=k; frag.appendChild(o);
+  });
+  dl.appendChild(frag);
+  inp.disabled = false; inp.placeholder = "Scrivi il Comune (" + REGIONI[reg].length + ")";
+});
+
+/* Comune -> imposta zona sismica */
+document.getElementById("comune").addEventListener("change", function(){
+  const rec = COMUNI[this.value.trim().toLowerCase()];
+  const note = document.getElementById("sismica-auto");
+  if(!rec){ note.textContent="(dal Comune)"; note.style.color="var(--grigio)"; window.SISMA_RAW=null; return; }
+  window.SISMA_RAW = rec.zona;
+  const base = rec.zona.charAt(0);
+  const ss = document.getElementById("sismica");
+  if([..."1234"].includes(base)) ss.value = base;
+  note.textContent = "✓ Zona " + rec.zona + " (ufficiale)"; note.style.color="var(--verde)";
+});
+
+/* Interroga ISPRA all'indirizzo (via Netlify Function) */
+async function verificaIndirizzo(){
+  const comune = (document.getElementById("comune").value||"").replace(/\s*\(.*\)\s*$/,"").trim();
+  const via = document.getElementById("via").value.trim();
+  const civico = document.getElementById("civico").value.trim();
+  const note = document.getElementById("idro-auto");
+  if(!comune || !via){ return false; }
+  note.textContent = "Interrogazione mappe ISPRA in corso…"; note.style.color="var(--grigio)";
+  try{
+    const u = FUNZIONE_URL + "?comune=" + encodeURIComponent(comune) + "&via=" + encodeURIComponent(via) + "&civico=" + encodeURIComponent(civico);
+    const r = await fetch(u); const j = await r.json();
+    if(!j.ok){ note.textContent = "⚠ " + (j.reason||"indirizzo non verificabile") + " — usa la mappa o i menù."; note.style.color="var(--arancio)"; return false; }
+    window.ALLU_AUTO = j.alluvione_score; window.FRANA_AUTO = j.frana_score;
+    setSel("alluvione", j.alluvione_score, "flood");
+    setSel("frana", j.frana_score, "frana");
+    note.innerHTML = "✓ Dati ISPRA al punto: <b>alluvione " + j.alluvione + "</b>, <b>frana " + j.frana + "</b>.";
+    note.style.color = "var(--verde)";
+    return true;
+  }catch(e){
+    note.textContent = "⚠ Verifica automatica non disponibile (online sul sito). Usa la mappa o i menù.";
+    note.style.color = "var(--arancio)"; return false;
+  }
+}
+function setSel(id, score, type){
+  const el = document.getElementById(id);
+  el.value = (type==="flood")
+    ? (score>=70?"70": score>=45?"45": score>=20?"20":"0")
+    : (score>=90?"90": score>=70?"70": score>=45?"45": score>=20?"20": score>=15?"15":"0");
+}
+
+function apriISPRA(){
+  const comune = (document.getElementById("comune").value||"").replace(/\s*\(.*\)\s*$/,"").trim();
+  const via = document.getElementById("via").value.trim();
+  const civico = document.getElementById("civico").value.trim();
+  const q = [ (via+" "+civico).trim(), comune ].filter(Boolean).join(", ");
+  if(q && navigator.clipboard){ navigator.clipboard.writeText(q).catch(()=>{}); }
+  window.open("https://idrogeo.isprambiente.it/app/", "_blank", "noopener");
+  if(q) setTimeout(()=>alert('Indirizzo copiato:\n\n"'+q+'"\n\nIncollalo nella ricerca della mappa ISPRA per la verifica visiva del punto.'),300);
+}
+
+function banda(s){
+  if(s<30) return {cls:"b-basso", txt:"Basso",     col:"var(--verde)"};
+  if(s<55) return {cls:"b-medio", txt:"Medio",     col:"var(--giallo)"};
+  if(s<75) return {cls:"b-alto",  txt:"Alto",      col:"var(--arancio)"};
+  return         {cls:"b-molto", txt:"Molto alto", col:"var(--rosso)"};
+}
+const clamp = s => Math.max(0, Math.min(100, Math.round(s)));
+
+async function calcola(){
+  const btn = document.getElementById("btn-calcola");
+  btn.disabled = true; const lbl = btn.textContent; btn.textContent = "Calcolo in corso…";
+  try{
+    // se c'è un indirizzo e non è già stato verificato, interroga ISPRA
+    if(document.getElementById("via").value.trim() && window.ALLU_AUTO==null && window.FRANA_AUTO==null){
+      await verificaIndirizzo();
+    }
+    eseguiCalcolo();
+  } finally { btn.disabled=false; btn.textContent=lbl; }
+}
+
+function eseguiCalcolo(){
+  const v = id => document.getElementById(id).value;
+  const c = id => document.getElementById(id).checked;
+
+  const sup = Math.max(0, parseFloat(v("superficie"))||0);
+  const tip = v("tipologia"), qual = v("qualita");
+  const h = Math.max(2, Math.min(6, parseFloat(v("altezza"))||2.70));
+  // correzione volumetrica: riferimento 2,70 m; ~70% del costo dipende dal volume (pareti/finiture),
+  // ~30% è fisso (fondazioni, tetto, impianti) e non scala con l'altezza
+  const kAltezza = 0.30 + 0.70*(h/2.70);
+  let costoMq = COSTO_BASE[tip] * K_QUALITA[qual] * kAltezza;
+  if(c("montagna")) costoMq *= 1.10;
+  const reg = v("regione") || "—";
+  const nord = ["Lombardia","Piemonte","Veneto","Liguria","Emilia-Romagna","Friuli-Venezia Giulia","Trentino-Alto Adige","Valle d'Aosta"];
+  const sud  = ["Campania","Puglia","Calabria","Sicilia","Sardegna","Basilicata","Molise","Abruzzo"];
+  if(nord.includes(reg)) costoMq *= 1.04; else if(sud.includes(reg)) costoMq *= 0.93;
+  const vr = sup * costoMq, massimale = vr*1.10, rngMin = vr*0.92, rngMax = vr*1.08;
+
+  // sisma
+  const RAWMAP = {"1":90,"2":70,"2A":70,"2B":62,"3":40,"3S":52,"4":15};
+  const baseSisma = (window.SISMA_RAW!=null && RAWMAP[window.SISMA_RAW]!=null)
+      ? RAWMAP[window.SISMA_RAW] : {"1":90,"2":65,"3":40,"4":15}[v("sismica")];
+  const anno = parseInt(v("anno"))||2000;
+  let sisma = baseSisma;
+  if(c("antisismico")) sisma -= 20; else if(anno<1974) sisma += 12; else if(anno>=2009) sisma -= 10;
+  sisma = clamp(sisma);
+
+  // alluvione (ISPRA al punto se disponibile)
+  let allu = (window.ALLU_AUTO!=null) ? window.ALLU_AUTO : parseInt(v("alluvione"));
+  if(v("piano")==="seminterrato") allu += 18; else if(v("piano")==="alto") allu -= 12;
+  if(c("corso_acqua")) allu += 12; allu = clamp(allu);
+
+  // frana (ISPRA al punto se disponibile)
+  let frana = clamp((window.FRANA_AUTO!=null) ? window.FRANA_AUTO : parseInt(v("frana")));
+
+  // incendio
+  let inc = 22;
+  inc += {norma:0, datato:18, vecchio:32}[v("elettrico")];
+  inc += {centralizzato:0, pompa:-3, legna:16}[v("riscaldamento")];
+  if(anno<1980) inc += 8; if(c("fumo")) inc -= 16; inc = clamp(inc);
+
+  // furto
+  let furto = FURTO_REGIONE[reg] != null ? FURTO_REGIONE[reg] : 50;
+  if(v("piano")==="seminterrato") furto += 12;
+  if(["villa","schiera","rustico"].includes(tip)) furto += 8;
+  if(v("piano")==="alto") furto -= 10;
+  if(c("allarme")) furto -= 20; if(c("blindata")) furto -= 10;
+  if(c("inferriate")) furto -= 8; if(c("video")) furto -= 10;
+  if(!c("allarme") && !c("blindata") && !c("inferriate") && !c("video")) furto += 10;
+  furto = clamp(furto);
+
+  const rischi = [
+    {key:"sisma",  nome:"Sisma",             desc:"Terremoto e danni strutturali",            s:sisma},
+    {key:"allu",   nome:"Alluvione / Acqua", desc:"Esondazioni, allagamenti, acqua condotta", s:allu},
+    {key:"frana",  nome:"Frana / Dissesto",  desc:"Movimenti franosi del terreno",            s:frana},
+    {key:"inc",    nome:"Incendio",          desc:"Incendio, scoppio, impianti",              s:inc},
+    {key:"furto",  nome:"Furto",             desc:"Furto, rapina, atti vandalici",            s:furto}
+  ];
+  const indice = clamp(rischi.reduce((a,r)=>a+r.s,0)/rischi.length);
+  ULTIMO = {sup,h,tip,qual,anno,reg,costoMq,vr,massimale,rngMin,rngMax,rischi,indice};
+  render(ULTIMO);
+}
+
+function render(d){
+  document.getElementById("out-vr").innerHTML = `
+    <div class="vr-box">
+      <div class="lbl">Valore di ricostruzione a nuovo</div>
+      <div class="val">${fmt(d.vr)}</div>
+      <div class="sub">stima tecnica · range ${fmt(d.rngMin)} – ${fmt(d.rngMax)}</div>
+    </div>
+    <div class="mini">
+      <div><div class="m-v">${fmt(d.costoMq)}/m²</div><div class="m-l">Costo ricostruzione</div></div>
+      <div><div class="m-v">${fmt(d.massimale)}</div><div class="m-l">Massimale consigliato (+10%)</div></div>
+    </div>
+    <p class="disc">Il valore di ricostruzione è il costo tecnico per ricostruire a nuovo il fabbricato escluso il valore dell'area; è diverso dal valore di mercato. Il massimale include il 10% per spese di demolizione e sgombero. Assicurare a un valore inferiore espone alla <b>regola proporzionale</b>.</p>`;
+
+  const bi = banda(d.indice);
+  document.getElementById("out-indice").innerHTML = `
+    <div class="indice">
+      <div class="gauge" style="background:${bi.col}">${d.indice}</div>
+      <div><div style="font-weight:700;font-size:15px">Indice di esposizione complessivo: ${bi.txt}</div>
+      <div style="font-size:13px;color:var(--grigio)">Media dei singoli rischi (0 = minimo, 100 = massimo)</div></div>
+    </div>`;
+  document.getElementById("out-rischi").innerHTML = d.rischi.map(r=>{
+    const b=banda(r.s);
+    return `<div class="peril"><div class="nome">${r.nome}<small>${r.desc}</small></div>
+      <div class="bar"><i style="width:${r.s}%;background:${b.col}"></i></div>
+      <div class="badge ${b.cls}">${b.txt}</div></div>`;
+  }).join("");
+  document.getElementById("card-rischi").style.display="block";
+
+  const reco = d.rischi.filter(r=>r.s>=30).sort((a,b)=>b.s-a.s);
+  const MAP = {
+    sisma:"Garanzia <b>Eventi sismici</b>: priorità in zona 1-2. Valutare l'agevolazione fiscale sulle polizze catastrofali.",
+    allu:"Garanzia <b>Acqua condotta + Alluvione/Eventi atmosferici</b>. Per piani bassi valutare franchigie e sottolimiti.",
+    frana:"Estensione <b>Eventi catastrofali / Frana</b> e verifica esclusioni territoriali.",
+    inc:"<b>Incendio e scoppio</b> sul valore di ricostruzione + RC da incendio. Adeguare l'impianto elettrico riduce il rischio.",
+    furto:"Garanzia <b>Furto e rapina</b> adeguata al contenuto; sconti con allarme e porta blindata."
+  };
+  let html = reco.length
+    ? reco.map(r=>`<div class="reco"><b>${r.nome}</b> (${banda(r.s).txt}) — ${MAP[r.key]}</div>`).join("")
+    : `<div class="reco">Profilo di rischio contenuto. Resta consigliata una copertura base Incendio + Furto + RC.</div>`;
+  html += `<div class="reco"><b>RC capofamiglia</b> — sempre raccomandata.</div>`;
+  document.getElementById("out-reco").innerHTML = html;
+  document.getElementById("disclaimer").innerHTML =
+    "Stima orientativa a fini consulenziali. Sisma per Comune (classificazione ufficiale); alluvione e frana rilevate all'indirizzo dalle mappe ISPRA (mosaicatura nazionale PAI). Non è un preventivo né una perizia; verificare con sopralluogo.";
+  document.getElementById("card-reco").style.display="block";
+  document.getElementById("out-vr").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+function stampaPDF(){
+  if(!ULTIMO){ eseguiCalcolo(); }
+  if(!ULTIMO) return;
+  const d=ULTIMO, g=id=>document.getElementById(id).value;
+  const oggi=new Date().toLocaleDateString("it-IT",{day:"2-digit",month:"long",year:"numeric"});
+  const tipLabel={appartamento:"Appartamento",attico:"Attico/pregio",schiera:"Villetta a schiera",villa:"Villa singola",rustico:"Rustico/casale"}[d.tip];
+  const indirizzo = [ (g("via")+" "+g("civico")).trim(), (g("comune")||"").replace(/\s*\(.*\)\s*$/,"") ].filter(Boolean).join(", ");
+  const righe=d.rischi.map(r=>{ const b=banda(r.s);
+    return `<tr><td>${r.nome}</td><td><span class="rbadge" style="background:${b.col}">${b.txt}</span></td><td>${r.s}/100</td></tr>`;}).join("");
+  const bi=banda(d.indice);
+  document.getElementById("report").innerHTML = `
+    <div class="rhead">
+      <div class="ag">${g("ag_nome")||"&nbsp;"}<small>${g("ag_contatti")||""}</small></div>
+      <div style="text-align:right;font-size:11px;color:var(--grigio)">Analisi rischi abitazione<br>${oggi}</div>
+    </div>
+    <div style="font-size:13px;margin-bottom:10px"><b>Cliente:</b> ${g("cliente")||"—"} &nbsp;·&nbsp; <b>Immobile:</b> ${indirizzo||"—"}</div>
+    <h2>Valore di ricostruzione</h2>
+    <table>
+      <tr><th>Voce</th><th>Valore</th></tr>
+      <tr><td>Tipologia / superficie</td><td>${tipLabel} · ${d.sup} m² · h ${(d.h||2.7).toLocaleString("it-IT")} m</td></tr>
+      <tr><td>Costo di ricostruzione a nuovo</td><td>${fmt(d.costoMq)} / m²</td></tr>
+      <tr><td><b>Valore di ricostruzione stimato</b></td><td><b>${fmt(d.vr)}</b> <span style="color:#5b6b76">(${fmt(d.rngMin)}–${fmt(d.rngMax)})</span></td></tr>
+      <tr><td>Massimale consigliato (incl. +10%)</td><td><b>${fmt(d.massimale)}</b></td></tr>
+    </table>
+    <h2>Esposizione ai rischi — Indice ${d.indice}/100 (${bi.txt})</h2>
+    <table><tr><th>Rischio</th><th>Livello</th><th>Punteggio</th></tr>${righe}</table>
+    <h2>Coperture da valutare</h2>
+    <div style="font-size:12px">${document.getElementById("out-reco").innerHTML.replace(/class="reco"/g,'style="margin:6px 0;padding-left:10px;border-left:2px solid #14618c"')}</div>
+    <div class="rfoot">Documento informativo a fini consulenziali, redatto il ${oggi}. Sisma: classificazione ufficiale del Comune. Alluvione e frana: mappe ISPRA (mosaicatura nazionale PAI) rilevate all'indirizzo indicato. Non costituisce preventivo, perizia o offerta. — ${g("ag_nome")}</div>`;
+  window.print();
+}
+</script>
+</body>
+</html>

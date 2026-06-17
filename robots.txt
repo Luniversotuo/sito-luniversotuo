@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /consulenti/
 
 Sitemap: https://www.luniversotuo.it/sitemap.xml

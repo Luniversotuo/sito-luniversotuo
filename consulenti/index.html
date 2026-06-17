@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Area Consulenti — LuniversoTuo</title>
+  <link rel="icon" href="/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0b0d14;--card:#13151f;--card2:#1a1d2e;
+      --blue:#2563EB;--blue-dim:rgba(37,99,235,.12);--blue-border:rgba(37,99,235,.3);
+      --white:#fff;--t1:rgba(255,255,255,.92);--t2:rgba(255,255,255,.66);--t3:rgba(255,255,255,.44);
+      --border:rgba(255,255,255,.12);--green:#22c55e;--gold:#F59E0B;--r:14px;--r2:20px;
+    }
+    body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;
+      background-image:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(37,99,235,.12) 0%,transparent 70%)}
+    .wrap{max-width:960px;margin:0 auto;padding:48px 24px 80px}
+    .top{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+    .logo-icon{width:44px;height:44px;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+    .logo-icon svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .logo-text{font-size:16px;font-weight:700;color:var(--white)}
+    .logo-sub{font-size:10px;color:var(--t3);letter-spacing:.6px;margin-top:1px}
+    h1{font-size:30px;font-weight:800;letter-spacing:-.9px;color:var(--white);margin-bottom:8px}
+    .lead{font-size:15px;color:var(--t2);line-height:1.55;max-width:620px;margin-bottom:36px}
+    .sec-label{font-size:12px;font-weight:600;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin:0 0 16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+    .tool{display:block;text-decoration:none;background:var(--card);border:.5px solid var(--border);border-radius:var(--r2);
+      padding:24px;transition:border-color .15s,transform .15s;position:relative}
+    .tool:hover{border-color:var(--blue-border);transform:translateY(-2px)}
+    .tool.soon{opacity:.55;pointer-events:none}
+    .tool-icon{width:42px;height:42px;border-radius:11px;background:var(--blue-dim);border:.5px solid var(--blue-border);
+      display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+    .tool-icon svg{width:22px;height:22px;fill:none;stroke:#93baff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .tool h3{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px}
+    .tool p{font-size:13px;color:var(--t2);line-height:1.5}
+    .badge{position:absolute;top:18px;right:18px;font-size:10px;font-weight:600;letter-spacing:.5px;
+      padding:4px 9px;border-radius:20px}
+    .badge.live{background:rgba(34,197,94,.14);color:#7ee2a6;border:.5px solid rgba(34,197,94,.3)}
+    .badge.soon{background:rgba(245,158,11,.14);color:#fbd38d;border:.5px solid rgba(245,158,11,.3)}
+    .foot{margin-top:48px;font-size:12px;color:var(--t3);line-height:1.6;border-top:.5px solid var(--border);padding-top:20px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">LuniversoTuo</div>
+        <div class="logo-sub">AREA RISERVATA CONSULENTI</div>
+      </div>
+    </div>
+
+    <h1>Strumenti per i consulenti</h1>
+    <p class="lead">Benvenuto nell'area riservata. Qui trovi i software e gli strumenti operativi
+      a supporto della consulenza. L'accesso è protetto: condividi le credenziali solo con i consulenti autorizzati.</p>
+
+    <p class="sec-label">Strumenti disponibili</p>
+    <div class="grid">
+
+      <a class="tool" href="/consulenti/calcolatore-casa">
+        <span class="badge live">ATTIVO</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+        </div>
+        <h3>Calcolatore Rischi Casa</h3>
+        <p>Valore di ricostruzione ed esposizione ai rischi (sisma, alluvione, frana) con dati ufficiali ISPRA all'indirizzo esatto. Tutta Italia.</p>
+      </a>
+
+      <div class="tool soon">
+        <span class="badge soon">IN ARRIVO</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Prossimo strumento</h3>
+        <p>Qui aggiungeremo i prossimi software per i consulenti, man mano che li costruiamo.</p>
+      </div>
+
+    </div>
+
+    <div class="foot">
+      Area riservata LuniversoTuo · accesso con utente e password.<br>
+      Problemi di accesso? Contatta Giancarlo.
+    </div>
+  </div>
+</body>
+</html>
