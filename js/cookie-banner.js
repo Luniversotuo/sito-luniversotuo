@@ -67,32 +67,45 @@
   function ltEventId() {
     return 'lt-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
   }
+  // Il cookie _fbp viene scritto da fbevents.js (caricato in async), quindi
+  // sui primi eventi (PageView/ViewContent) potrebbe non esistere ancora.
+  // Aspettiamo che ci sia prima di inviare la CAPI, altrimenti il match
+  // quality crolla (fbp/fbc mancanti). Max ~2s, poi inviamo comunque.
+  // _fbc esiste solo col fbclid (click da ad): non lo aspettiamo.
+  function ltWaitFbp(cb, tries) {
+    tries = tries || 0;
+    var fbp = ltCookie('_fbp');
+    if (fbp || tries >= 10) { cb(fbp, ltCookie('_fbc')); return; }
+    setTimeout(function () { ltWaitFbp(cb, tries + 1); }, 200);
+  }
   function ltSendCapi(name, eventId, customData, userData) {
-    try {
-      var payload = {
-        event_name: name,
-        event_id: eventId,
-        event_source_url: location.href,
-        fbp: ltCookie('_fbp'),
-        fbc: ltCookie('_fbc'),
-        custom_data: customData || undefined
-      };
-      // Dati cliente per l'Event Match Quality (es. da Delera sulla pagina di
-      // ringraziamento). Inviati grezzi al nostro server, che li hasha (SHA-256)
-      // prima di mandarli a Meta. Mai inviati a terzi in chiaro.
-      if (userData) {
-        if (userData.email) payload.email = userData.email;
-        if (userData.phone) payload.phone = userData.phone;
-        if (userData.fn) payload.fn = userData.fn;
-        if (userData.ln) payload.ln = userData.ln;
-      }
-      fetch('/.netlify/functions/capi', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        keepalive: true,
-        body: JSON.stringify(payload)
-      }).catch(function () {});
-    } catch (e) {}
+    ltWaitFbp(function (fbp, fbc) {
+      try {
+        var payload = {
+          event_name: name,
+          event_id: eventId,
+          event_source_url: location.href,
+          fbp: fbp,
+          fbc: fbc,
+          custom_data: customData || undefined
+        };
+        // Dati cliente per l'Event Match Quality (es. da Delera sulla pagina di
+        // ringraziamento). Inviati grezzi al nostro server, che li hasha (SHA-256)
+        // prima di mandarli a Meta. Mai inviati a terzi in chiaro.
+        if (userData) {
+          if (userData.email) payload.email = userData.email;
+          if (userData.phone) payload.phone = userData.phone;
+          if (userData.fn) payload.fn = userData.fn;
+          if (userData.ln) payload.ln = userData.ln;
+        }
+        fetch('/.netlify/functions/capi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: JSON.stringify(payload)
+        }).catch(function () {});
+      } catch (e) {}
+    });
   }
   // Traccia un evento su browser + server con event_id condiviso (deduplica).
   function ltTrack(name, customData, userData) {
@@ -196,24 +209,24 @@
     window._ltPrenotaTracked = true;
     document.addEventListener('click', function(e){
       if (!e.target.closest) return;
+      // NB: il "Lead" NON scatta più su questi click (gonfiava i numeri con
+      // conversioni false e senza email/telefono). Lead scatta SOLO sulla
+      // pagina grazie-prenotazione, cioè su una prenotazione realmente conclusa.
       var book = e.target.closest('a[href*="link.delera.co/widget/booking"]');
       if (book) {
         try { ltTrack('InitiateCheckout'); } catch(err) {}
-        try { ltTrack('Lead', { lead_source: 'prenota' }); } catch(err) {}
         try { if (window.gtag) gtag('event','click_prenota'); } catch(err) {}
         return;
       }
       var wa = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="//whatsapp.com"]');
       if (wa) {
         try { ltTrack('Contact', { contact_method: 'whatsapp' }); } catch(err) {}
-        try { ltTrack('Lead', { lead_source: 'whatsapp' }); } catch(err) {}
         try { if (window.gtag) gtag('event','click_whatsapp'); } catch(err) {}
         return;
       }
       var tel = e.target.closest('a[href^="tel:"]');
       if (tel) {
         try { ltTrack('Contact', { contact_method: 'phone' }); } catch(err) {}
-        try { ltTrack('Lead', { lead_source: 'phone' }); } catch(err) {}
         try { if (window.gtag) gtag('event','click_telefono'); } catch(err) {}
         return;
       }

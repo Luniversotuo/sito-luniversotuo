@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Analisi Rischi Azienda 360° — Valore, territorio, settore, continuità</title>
+<style>
+  :root{
+    --blu:#0b3d5c; --blu2:#14618c; --azzurro:#e8f1f7; --grigio:#5b6b76;
+    --bordo:#d6dee4; --bg:#f4f7f9; --bianco:#fff;
+    --verde:#2e9e5b; --giallo:#e0a800; --arancio:#e8651e; --rosso:#cf2e2e;
+    --ombra:0 2px 12px rgba(11,61,92,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#1c2b33;background:var(--bg);line-height:1.45}
+  header.app{background:linear-gradient(135deg,var(--blu),var(--blu2));color:#fff;padding:22px 28px}
+  header.app a.back{display:inline-block;color:#fff;opacity:.85;text-decoration:none;font-size:13px;margin-bottom:8px}
+  header.app h1{margin:0;font-size:22px;font-weight:700}
+  header.app p{margin:4px 0 0;opacity:.9;font-size:14px}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1.05fr .95fr;gap:24px}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  .card{background:var(--bianco);border:1px solid var(--bordo);border-radius:14px;box-shadow:var(--ombra);padding:22px;margin-bottom:20px}
+  h2{font-size:15px;color:var(--blu);margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid var(--azzurro);text-transform:uppercase;letter-spacing:.4px}
+  h2 .step{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:var(--blu);color:#fff;border-radius:50%;font-size:12px;margin-right:8px}
+  h3{font-size:12.5px;color:var(--grigio);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px}
+  label{display:block;font-size:13px;font-weight:600;margin:12px 0 5px;color:#33444f}
+  .hint{font-weight:400;color:var(--grigio);font-size:12px}
+  input,select{width:100%;padding:10px 11px;border:1px solid var(--bordo);border-radius:8px;font-size:14px;background:#fff;color:#1c2b33}
+  input:focus,select:focus{outline:none;border-color:var(--blu2);box-shadow:0 0 0 3px rgba(20,97,140,.12)}
+  input[readonly]{background:#f1f5f8;color:#33444f}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .chk{display:flex;align-items:flex-start;gap:9px;margin:9px 0;font-size:13.5px;font-weight:500}
+  .chk input{width:auto;margin:2px 0 0}
+  .chk small{display:block;font-weight:400;color:var(--grigio);font-size:11.5px}
+  button.calc{margin-top:18px;width:100%;background:var(--blu);color:#fff;border:0;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s}
+  button.calc:hover{background:var(--blu2)}
+  button.calc:disabled{opacity:.6;cursor:wait}
+  button.sec{background:#fff;color:var(--blu);border:1.5px solid var(--blu);padding:10px;font-size:13.5px;margin-top:6px;width:100%;border-radius:8px;font-weight:600;cursor:pointer}
+  button.sec:hover{background:var(--azzurro)}
+  button.pdf{background:#fff;color:var(--blu);border:1.5px solid var(--blu);margin-top:10px}
+  .piva-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+  .piva-row button{margin:0;white-space:nowrap;padding:10px 18px}
+  .msg{font-size:13px;margin-top:10px;padding:10px 12px;border-radius:8px;display:none}
+  .msg.info{background:#eef5fb;color:var(--blu2);border:1px solid #cfe2f2;display:block}
+  .msg.warn{background:#fff6e6;color:#9a6b00;border:1px solid #f0d99a;display:block}
+  .msg.err{background:#fdecec;color:var(--rosso);border:1px solid #f3c0c0;display:block}
+  .modeswitch{display:flex;gap:8px;margin:6px 0 4px}
+  .modeswitch button{flex:1;background:#fff;border:1.5px solid var(--bordo);color:var(--grigio);border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer}
+  .modeswitch button.on{border-color:var(--blu2);background:var(--azzurro);color:var(--blu)}
+  .auto-note{font-size:12px;margin-top:6px;color:var(--grigio)}
+  /* output */
+  .vr-box{background:linear-gradient(135deg,var(--blu),var(--blu2));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-bottom:10px}
+  .vr-box .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.6px;opacity:.85}
+  .vr-box .val{font-size:30px;font-weight:800;margin:6px 0 2px}
+  .vr-box .sub{font-size:12px;opacity:.85}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+  .mini>div{border:1px solid var(--bordo);border-radius:10px;padding:12px;text-align:center}
+  .mini .m-v{font-weight:800;color:var(--blu);font-size:18px}
+  .mini .m-l{font-size:11px;color:var(--grigio);text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+  .indice{display:flex;align-items:center;gap:14px;margin:6px 0 14px}
+  .indice .gauge{width:62px;height:62px;border-radius:50%;color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .peril{display:grid;grid-template-columns:1.4fr 2fr auto;align-items:center;gap:10px;margin:9px 0}
+  .peril .nome{font-size:13.5px;font-weight:600}
+  .peril .nome small{display:block;font-weight:400;color:var(--grigio);font-size:11px}
+  .peril .bar{height:9px;background:#eef2f5;border-radius:6px;overflow:hidden}
+  .peril .bar i{display:block;height:100%}
+  .peril .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;color:#fff;text-align:center;white-space:nowrap}
+  .b-basso{background:var(--verde)}.b-medio{background:var(--giallo)}.b-alto{background:var(--arancio)}.b-molto{background:var(--rosso)}
+  .reco{font-size:13px;margin:7px 0;padding:9px 12px;border-left:3px solid var(--blu2);background:var(--azzurro);border-radius:0 8px 8px 0}
+  .disc{font-size:11px;color:var(--grigio);margin-top:12px;line-height:1.5}
+  .placeholder{color:var(--grigio);font-size:14px;text-align:center;padding:30px 10px}
+  .kpi2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}
+  .kpi2 .box{border:1px solid var(--bordo);border-radius:10px;padding:12px;text-align:center}
+  .kpi2 .box .lab{font-size:11px;color:var(--grigio);text-transform:uppercase}
+  .kpi2 .box .num{font-size:20px;font-weight:800;color:var(--blu);margin-top:3px}
+  /* report stampa */
+  #report{display:none}
+  @media print{
+    body{background:#fff}
+    header.app a.back,.piva-row,.modeswitch,button,.col-input,#col-input{display:none!important}
+    .wrap{display:block;padding:0}
+    #report{display:block;padding:24px;font-size:12px;color:#1c2b33}
+    #report h2{border:0;color:var(--blu);font-size:15px;margin:16px 0 6px;text-transform:none}
+    #report table{width:100%;border-collapse:collapse;margin:6px 0}
+    #report th,#report td{border:1px solid #d6dee4;padding:6px 8px;text-align:left;font-size:11.5px}
+    #report th{background:#eef5fb}
+    .rbadge{color:#fff;padding:2px 8px;border-radius:10px;font-size:10.5px}
+    .rhead{display:flex;justify-content:space-between;border-bottom:2px solid var(--blu);padding-bottom:8px;margin-bottom:10px}
+    .rfoot{margin-top:16px;font-size:10px;color:#5b6b76;border-top:1px solid #d6dee4;padding-top:8px}
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <a class="back" href="/consulenti/">← Area Consulenti</a>
+  <h1>Analisi Rischi Azienda · 360°</h1>
+  <p>Valore di ricostruzione · rischi territoriali (ISPRA) · rischi di settore (ATECO) · continuità · report cliente</p>
+</header>
+
+<div class="wrap">
+
+  <!-- ════════ COLONNA INPUT ════════ -->
+  <div id="col-input" class="col-input">
+
+    <!-- 1 · IDENTIFICAZIONE -->
+    <div class="card">
+      <h2><span class="step">1</span>Identifica l'azienda</h2>
+      <label for="piva">Partita IVA / Codice Fiscale <span class="hint">(11 cifre)</span></label>
+      <div class="piva-row">
+        <input id="piva" inputmode="numeric" maxlength="16" placeholder="es. 12485671007" autocomplete="off">
+        <button class="calc" style="margin:0" id="btn-lookup" onclick="lookup()">Recupera dati</button>
+      </div>
+      <div id="lookup-msg" class="msg"></div>
+      <div id="anagrafica" style="display:none">
+        <div class="row"><div><label>Denominazione</label><input id="nome" readonly></div>
+        <div><label>Forma giuridica</label><input id="forma" readonly></div></div>
+      </div>
+    </div>
+
+    <!-- 2 · IMMOBILE / CAPANNONE -->
+    <div class="card">
+      <h2><span class="step">2</span>Immobile / capannone</h2>
+      <div class="row3">
+        <div><label>Superficie (m²)</label><input id="superficie" inputmode="numeric" placeholder="es. 1200"></div>
+        <div><label>Altezza media (m)</label><input id="altezza" inputmode="numeric" placeholder="6"></div>
+        <div><label>Anno costruz.</label><input id="anno" inputmode="numeric" placeholder="2005"></div>
+      </div>
+      <div class="row">
+        <div><label>Tipologia costruttiva</label>
+          <select id="tipologia">
+            <option value="logistica">Magazzino/logistica (struttura leggera)</option>
+            <option value="prefabbricato" selected>Prefabbricato in cemento</option>
+            <option value="acciaio">Struttura in acciaio / pannelli</option>
+            <option value="muratura">Muratura tradizionale</option>
+            <option value="commerciale">Commerciale / showroom</option>
+            <option value="misto">Capannone + uffici rifiniti</option>
+          </select></div>
+        <div><label>Livello finiture / impianti</label>
+          <select id="qualita">
+            <option value="economica">Essenziale</option>
+            <option value="standard" selected>Standard</option>
+            <option value="buona">Buono</option>
+            <option value="alta">Alto (impianti avanzati)</option>
+          </select></div>
+      </div>
+      <h3>Contenuto da assicurare (€) <span class="hint">— opzionale</span></h3>
+      <div class="row3">
+        <div><label>Impianti fissi</label><input class="num-eur" id="val_impianti" inputmode="numeric"></div>
+        <div><label>Macchinari</label><input class="num-eur" id="val_macchinari" inputmode="numeric"></div>
+        <div><label>Merci / scorte</label><input class="num-eur" id="val_merci" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <!-- 3 · INDIRIZZO / RISCHI TERRITORIALI -->
+    <div class="card">
+      <h2><span class="step">3</span>Indirizzo e rischi territoriali</h2>
+      <div class="row">
+        <div><label>Regione</label><select id="regione"><option value="">— scegli —</option></select>
+          <span class="hint" id="stato-comuni"></span></div>
+        <div><label>Comune <span class="hint" id="sismica-auto">(per zona sismica)</span></label>
+          <input id="comune" list="dl-comuni" disabled placeholder="Prima scegli la regione">
+          <datalist id="dl-comuni"></datalist></div>
+      </div>
+      <div class="row">
+        <div><label>Via / indirizzo</label><input id="via" placeholder="es. Via Roma"></div>
+        <div><label>Civico</label><input id="civico" placeholder="10"></div>
+      </div>
+      <button class="sec" onclick="verificaIndirizzo()">Verifica alluvione e frana all'indirizzo (ISPRA)</button>
+      <div class="auto-note" id="idro-auto"></div>
+      <h3>Override manuale (se serve)</h3>
+      <div class="row3">
+        <div><label>Zona sismica</label><select id="sismica"><option value="4">4 (bassa)</option><option value="3" selected>3</option><option value="2">2</option><option value="1">1 (alta)</option></select></div>
+        <div><label>Alluvione</label><select id="alluvione"><option value="0">Nessuna</option><option value="20">Bassa</option><option value="45" selected>Media</option><option value="70">Elevata</option></select></div>
+        <div><label>Frana</label><select id="frana"><option value="0">Nessuna</option><option value="20">Moderata</option><option value="45">Media</option><option value="70">Elevata</option><option value="90">Molto elevata</option></select></div>
+      </div>
+      <div class="chk" style="margin-top:10px"><input type="checkbox" id="antisismico"><label style="margin:0">Edificio antisismico / adeguato</label></div>
+    </div>
+
+    <!-- 4 · ATTIVITÀ / SETTORE -->
+    <div class="card">
+      <h2><span class="step">4</span>Attività e settore</h2>
+      <div class="row">
+        <div><label>Codice ATECO <span class="hint">(auto da P.IVA)</span></label><input id="ateco" placeholder="es. 25.62" inputmode="numeric"></div>
+        <div><label>oppure macro-settore</label>
+          <select id="settore">
+            <option value="">— da ATECO —</option>
+            <option value="01">Agricoltura</option>
+            <option value="10">Alimentare / bevande</option>
+            <option value="13">Tessile / abbigliamento</option>
+            <option value="16">Legno / carta / stampa</option>
+            <option value="20">Chimica / farma</option>
+            <option value="22">Gomma / plastica</option>
+            <option value="24">Metallurgia / metalli</option>
+            <option value="26">Elettronica</option>
+            <option value="28">Macchinari / mezzi</option>
+            <option value="31">Mobili / altre manifatture</option>
+            <option value="35">Energia / acqua / rifiuti</option>
+            <option value="41">Costruzioni / edilizia</option>
+            <option value="45">Commercio</option>
+            <option value="49">Trasporti / logistica</option>
+            <option value="55">Alloggio / ristorazione</option>
+            <option value="58">ICT / informatica</option>
+            <option value="64">Finanza / assicurazioni</option>
+            <option value="68">Immobiliare</option>
+            <option value="69">Servizi professionali</option>
+            <option value="77">Servizi alle imprese</option>
+            <option value="85">Istruzione</option>
+            <option value="86">Sanità / assistenza</option>
+            <option value="90">Arte / intrattenimento</option>
+            <option value="95">Altri servizi</option>
+          </select></div>
+      </div>
+      <div class="auto-note" id="settore-auto"></div>
+      <div class="row" style="margin-top:6px">
+        <div><label>N. dipendenti</label><input id="dipendenti" inputmode="numeric"></div>
+        <div><label>Fatturato annuo (€)</label><input class="num-eur" id="fatturato" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <!-- 5 · FATTORI ASSICURATIVI -->
+    <div class="card">
+      <h2><span class="step">5</span>Fattori di rischio specifici</h2>
+      <h3>Protezioni presenti (riducono il rischio)</h3>
+      <div class="chk"><input type="checkbox" id="sprinkler"><label style="margin:0">Impianto antincendio / sprinkler <small>riduce incendio e interruzione</small></label></div>
+      <div class="chk"><input type="checkbox" id="estintori"><label style="margin:0">Estintori e rilevatori fumo a norma</label></div>
+      <div class="chk"><input type="checkbox" id="allarme"><label style="margin:0">Allarme antintrusione</label></div>
+      <div class="chk"><input type="checkbox" id="video"><label style="margin:0">Videosorveglianza</label></div>
+      <div class="chk"><input type="checkbox" id="vigilanza"><label style="margin:0">Vigilanza / guardiania</label></div>
+      <div class="chk"><input type="checkbox" id="cert_sic"><label style="margin:0">Certificazioni sicurezza/ambiente <small>ISO 45001 / 14001</small></label></div>
+      <h3>Aggravanti (aumentano il rischio)</h3>
+      <div class="chk"><input type="checkbox" id="sostanze"><label style="margin:0">Sostanze infiammabili / pericolose stoccate <small>incendio + inquinamento</small></label></div>
+      <div class="chk"><input type="checkbox" id="caldo"><label style="margin:0">Lavorazioni a caldo / saldatura</label></div>
+      <div class="chk"><input type="checkbox" id="magazzino"><label style="margin:0">Magazzino / merci di valore</label></div>
+      <div class="chk"><input type="checkbox" id="dati"><label style="margin:0">Tratta dati clienti / e-commerce <small>aumenta il cyber risk</small></label></div>
+      <div class="chk"><input type="checkbox" id="export"><label style="margin:0">Vende all'estero / mercati esteri <small>RC prodotti</small></label></div>
+      <div class="chk"><input type="checkbox" id="flotta"><label style="margin:0">Flotta / mezzi aziendali</label></div>
+      <div class="chk"><input type="checkbox" id="dipendenza"><label style="margin:0">Forte dipendenza da un cliente/fornitore unico <small>interruzione attività</small></label></div>
+    </div>
+
+    <!-- 6 · CONTINUITÀ FINANZIARIA -->
+    <div class="card">
+      <h2><span class="step">6</span>Continuità finanziaria <span class="hint">(opzionale)</span></h2>
+      <div class="modeswitch">
+        <button id="mode-bilancio" class="on" onclick="setMode('bilancio')">Con bilancio</button>
+        <button id="mode-stima" onclick="setMode('stima')">Senza bilancio</button>
+      </div>
+      <div id="box-bilancio-api" style="display:none;margin-bottom:10px">
+        <button class="sec" id="btn-bilancio" onclick="recuperaBilancio()">Recupera bilancio dall'API (≈ €0,30)</button>
+        <div id="bilancio-msg" class="msg"></div>
+      </div>
+      <div id="form-bilancio">
+        <div class="row"><div><label>EBITDA (€)</label><input class="num-eur" id="ebitda" inputmode="numeric"></div>
+        <div><label>Costo personale (€)</label><input class="num-eur" id="costo_personale" inputmode="numeric"></div></div>
+        <div class="row"><div><label>Costo servizi (€)</label><input class="num-eur" id="costo_servizi" inputmode="numeric"></div>
+        <div><label>Godimento beni (€)</label><input class="num-eur" id="costo_godimento" inputmode="numeric"></div></div>
+        <div class="row"><div><label>Oneri diversi (€)</label><input class="num-eur" id="oneri_diversi" inputmode="numeric"></div>
+        <div><label>Fondo TFR (€)</label><input class="num-eur" id="tfr" inputmode="numeric"></div></div>
+        <label>Patrimonio netto (€)</label><input class="num-eur" id="patrimonio" inputmode="numeric">
+      </div>
+      <div id="form-stima" style="display:none">
+        <p class="hint">Società di persone / ditte individuali: inserisci i dati noti.</p>
+        <div class="row"><div><label>Costo personale annuo (€)</label><input class="num-eur" id="s_personale" inputmode="numeric"></div>
+        <div><label>Altri costi gestione (€)</label><input class="num-eur" id="s_gestione" inputmode="numeric"></div></div>
+        <label>Patrimonio / liquidità (€)</label><input class="num-eur" id="s_patrimonio" inputmode="numeric">
+      </div>
+    </div>
+
+    <!-- DATI REPORT -->
+    <div class="card">
+      <h2>Dati per il report</h2>
+      <div class="row"><div><label>Cliente / referente</label><input id="cliente"></div>
+      <div><label>Consulente</label><input id="ag_nome" placeholder="Nome e contatti"></div></div>
+      <button class="calc" id="btn-calcola" onclick="calcola()">Genera analisi del rischio</button>
+    </div>
+  </div>
+
+  <!-- ════════ COLONNA RISULTATI ════════ -->
+  <div>
+    <div class="card">
+      <h2>Esito analisi</h2>
+      <div id="placeholder" class="placeholder">Compila i dati (anche solo una parte) e premi <b>Genera analisi del rischio</b>.</div>
+      <div id="risultati" style="display:none">
+        <div id="out-vr"></div>
+        <div class="kpi2">
+          <div class="box"><div class="lab">Somma assicurabile totale</div><div class="num" id="out-somma">—</div></div>
+          <div class="box"><div class="lab">Giorni di autonomia</div><div class="num" id="out-giorni">—</div></div>
+        </div>
+        <h3 style="margin-top:18px">Esposizione ai rischi</h3>
+        <div id="out-indice"></div>
+        <div id="out-rischi"></div>
+        <h3 style="margin-top:18px">Coperture da valutare</h3>
+        <div id="out-reco"></div>
+        <button class="calc pdf" onclick="stampaPDF()">Stampa / Salva report PDF</button>
+        <p class="disc" id="disclaimer"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="report"></div>
+
+<script>
+/* ===========================================================================
+   ANALISI RISCHI AZIENDA 360° — LuniversoTuo / Area Consulenti
+   Moduli: valore ricostruzione · rischi territoriali (ISPRA) ·
+           rischi di settore (ATECO) · fattori specifici · continuità finanziaria
+   =========================================================================== */
+
+const FUNZIONE_AZIENDA = "/.netlify/functions/rischio-azienda";
+const FUNZIONE_IDRO    = "/.netlify/functions/rischio-idro";
+const CSV_URL = "https://cdn.jsdelivr.net/gh/ferdi2005/zonasismica@master/classificazione2024.csv";
+const GG_LAVORATIVI = 240;
+
+/* costi ricostruzione a nuovo €/m² (capannoni/immobili produttivi) */
+const COSTO_BASE = {logistica:450, prefabbricato:560, acciaio:600, muratura:700, commerciale:850, misto:950};
+const K_QUALITA  = {economica:0.85, standard:1.00, buona:1.15, alta:1.35};
+const ALT_RIF = 6; // altezza di riferimento (m) per i capannoni
+
+/* furto per regione (indice territoriale) */
+const FURTO_REGIONE = {
+  "Emilia-Romagna":75,"Lombardia":72,"Toscana":68,"Veneto":68,"Liguria":66,"Lazio":66,
+  "Piemonte":63,"Umbria":58,"Marche":55,"Friuli-Venezia Giulia":52,"Trentino-Alto Adige":42,
+  "Abruzzo":48,"Campania":50,"Sardegna":42,"Puglia":45,"Sicilia":42,"Valle d'Aosta":38,
+  "Calabria":35,"Molise":30,"Basilicata":28};
+
+/* ---- profilo rischi per macro-settore (divisione ATECO a 2 cifre) ----
+   aree: incendio, rc, prodotti, infortuni, interruzione, inquinamento, cyber, furto (0-100) */
+const SETTORI = {
+  agricoltura:{nome:"Agricoltura",      r:{incendio:55,rc:50,prodotti:55,infortuni:70,interruzione:50,inquinamento:65,cyber:20,furto:45}},
+  estrazione: {nome:"Estrazione",       r:{incendio:70,rc:60,prodotti:30,infortuni:85,interruzione:60,inquinamento:85,cyber:25,furto:40}},
+  alimentare: {nome:"Alimentare/bevande",r:{incendio:70,rc:55,prodotti:85,infortuni:70,interruzione:70,inquinamento:55,cyber:35,furto:45}},
+  tessile:    {nome:"Tessile/abbigliam.",r:{incendio:75,rc:45,prodotti:55,infortuni:60,interruzione:60,inquinamento:55,cyber:30,furto:55}},
+  legno:      {nome:"Legno/carta/stampa",r:{incendio:85,rc:45,prodotti:45,infortuni:65,interruzione:60,inquinamento:50,cyber:30,furto:40}},
+  chimica:    {nome:"Chimica/farma",    r:{incendio:90,rc:65,prodotti:80,infortuni:70,interruzione:75,inquinamento:90,cyber:45,furto:45}},
+  plastica:   {nome:"Gomma/plastica",   r:{incendio:80,rc:55,prodotti:65,infortuni:70,interruzione:65,inquinamento:70,cyber:30,furto:40}},
+  metalli:    {nome:"Metallurgia/metalli",r:{incendio:80,rc:55,prodotti:60,infortuni:80,interruzione:65,inquinamento:65,cyber:30,furto:50}},
+  elettronica:{nome:"Elettronica",      r:{incendio:65,rc:50,prodotti:70,infortuni:55,interruzione:65,inquinamento:45,cyber:50,furto:65}},
+  macchinari: {nome:"Macchinari/mezzi", r:{incendio:70,rc:60,prodotti:75,infortuni:75,interruzione:70,inquinamento:55,cyber:40,furto:55}},
+  mobili:     {nome:"Mobili/manifatture",r:{incendio:75,rc:50,prodotti:60,infortuni:65,interruzione:55,inquinamento:50,cyber:30,furto:45}},
+  energia:    {nome:"Energia/rifiuti",  r:{incendio:75,rc:65,prodotti:35,infortuni:75,interruzione:70,inquinamento:90,cyber:45,furto:40}},
+  costruzioni:{nome:"Costruzioni/edilizia",r:{incendio:55,rc:80,prodotti:50,infortuni:90,interruzione:50,inquinamento:55,cyber:25,furto:60}},
+  commercio:  {nome:"Commercio",        r:{incendio:55,rc:55,prodotti:60,infortuni:45,interruzione:60,inquinamento:30,cyber:50,furto:75}},
+  trasporti:  {nome:"Trasporti/logistica",r:{incendio:50,rc:70,prodotti:40,infortuni:70,interruzione:65,inquinamento:55,cyber:45,furto:70}},
+  ristorazione:{nome:"Alloggio/ristoraz.",r:{incendio:70,rc:70,prodotti:70,infortuni:60,interruzione:65,inquinamento:35,cyber:45,furto:60}},
+  ict:        {nome:"ICT/informatica",  r:{incendio:35,rc:50,prodotti:45,infortuni:30,interruzione:70,inquinamento:20,cyber:90,furto:50}},
+  finanza:    {nome:"Finanza/assicuraz.",r:{incendio:30,rc:65,prodotti:30,infortuni:25,interruzione:70,inquinamento:15,cyber:90,furto:45}},
+  immobiliare:{nome:"Immobiliare",      r:{incendio:50,rc:60,prodotti:25,infortuni:30,interruzione:45,inquinamento:30,cyber:35,furto:40}},
+  professionali:{nome:"Servizi professionali",r:{incendio:35,rc:75,prodotti:35,infortuni:30,interruzione:55,inquinamento:25,cyber:70,furto:45}},
+  servizi_imprese:{nome:"Servizi alle imprese",r:{incendio:45,rc:65,prodotti:40,infortuni:60,interruzione:50,inquinamento:35,cyber:50,furto:55}},
+  istruzione: {nome:"Istruzione",       r:{incendio:45,rc:65,prodotti:30,infortuni:45,interruzione:45,inquinamento:25,cyber:55,furto:45}},
+  sanita:     {nome:"Sanità/assistenza",r:{incendio:50,rc:85,prodotti:55,infortuni:60,interruzione:60,inquinamento:45,cyber:75,furto:50}},
+  arte:       {nome:"Arte/intrattenim.",r:{incendio:55,rc:70,prodotti:40,infortuni:55,interruzione:50,inquinamento:30,cyber:40,furto:55}},
+  altri:      {nome:"Altri servizi",    r:{incendio:50,rc:60,prodotti:45,infortuni:50,interruzione:45,inquinamento:35,cyber:35,furto:50}},
+  generico:   {nome:"Generico",         r:{incendio:50,rc:55,prodotti:45,infortuni:50,interruzione:50,inquinamento:40,cyber:45,furto:50}}
+};
+/* divisione ATECO (2 cifre) -> chiave settore */
+function divToSettore(d){
+  d=parseInt(d,10);
+  if(d>=1&&d<=3)return"agricoltura"; if(d>=5&&d<=9)return"estrazione";
+  if(d>=10&&d<=12)return"alimentare"; if(d>=13&&d<=15)return"tessile";
+  if(d>=16&&d<=18)return"legno"; if(d>=19&&d<=21)return"chimica";
+  if(d>=22&&d<=23)return"plastica"; if(d>=24&&d<=25)return"metalli";
+  if(d>=26&&d<=27)return"elettronica"; if(d>=28&&d<=30)return"macchinari";
+  if(d>=31&&d<=33)return"mobili"; if(d>=35&&d<=39)return"energia";
+  if(d>=41&&d<=43)return"costruzioni"; if(d>=45&&d<=47)return"commercio";
+  if(d>=49&&d<=53)return"trasporti"; if(d>=55&&d<=56)return"ristorazione";
+  if(d>=58&&d<=63)return"ict"; if(d>=64&&d<=66)return"finanza";
+  if(d===68)return"immobiliare"; if(d>=69&&d<=75)return"professionali";
+  if(d>=77&&d<=82)return"servizi_imprese"; if(d===85)return"istruzione";
+  if(d>=86&&d<=88)return"sanita"; if(d>=90&&d<=93)return"arte";
+  if(d>=94&&d<=96)return"altri"; return"generico";
+}
+function settoreCorrente(){
+  const at=(document.getElementById("ateco").value||"").replace(/[^\d]/g,"");
+  if(at.length>=2) return divToSettore(at.slice(0,2));
+  const sel=document.getElementById("settore").value;
+  if(sel) return divToSettore(sel);
+  return "generico";
+}
+
+/* ---------- helper ---------- */
+const fmt = n => "€ " + Math.round(n).toLocaleString("it-IT");
+const clamp = s => Math.max(0, Math.min(100, Math.round(s)));
+function v(id){return document.getElementById(id).value;}
+function c(id){return document.getElementById(id).checked;}
+function parseEur(id){const el=document.getElementById(id);if(!el)return 0;
+  const s=(el.value||"").replace(/[^\d,-]/g,"").replace(/\./g,"").replace(",",".");const n=parseFloat(s);return isFinite(n)?n:0;}
+function setEur(id,n){const el=document.getElementById(id);if(el)el.value=(n||n===0)?Math.round(n).toLocaleString("it-IT"):"";}
+document.addEventListener("input",e=>{
+  if(e.target.classList&&e.target.classList.contains("num-eur")){
+    const raw=e.target.value.replace(/\./g,"").replace(/[^\d]/g,"");
+    e.target.value=raw?parseInt(raw,10).toLocaleString("it-IT"):"";}
+});
+function banda(s){
+  if(s<30)return{cls:"b-basso",txt:"Basso",col:"var(--verde)"};
+  if(s<55)return{cls:"b-medio",txt:"Medio",col:"var(--giallo)"};
+  if(s<75)return{cls:"b-alto",txt:"Alto",col:"var(--arancio)"};
+  return{cls:"b-molto",txt:"Molto alto",col:"var(--rosso)"};
+}
+
+/* ---------- elenco comuni + zona sismica ---------- */
+const COMUNI={}, REGIONI={}; window.SISMA_RAW=null; window.ALLU_AUTO=null; window.FRANA_AUTO=null;
+function normReg(r){r=r.split("/")[0].trim();
+  const m={"Friuli Venezia Giulia":"Friuli-Venezia Giulia","Trentino Alto Adige":"Trentino-Alto Adige","Valle Aosta":"Valle d'Aosta","Emilia Romagna":"Emilia-Romagna"};
+  return m[r]||r;}
+(function caricaComuni(){
+  fetch(CSV_URL).then(r=>{if(!r.ok)throw 0;return r.text();}).then(txt=>{
+    const righe=txt.split(/\r?\n/);
+    for(let i=1;i<righe.length;i++){const a=righe[i].split(";");if(a.length<6)continue;
+      const regione=normReg(a[0]),sigla=(a[2]||"").trim(),comune=(a[3]||"").trim(),zona=(a[5]||"").trim();
+      if(!comune)continue;const key=comune+" ("+sigla+")";
+      COMUNI[key.toLowerCase()]={regione,zona,label:key};
+      (REGIONI[regione]=REGIONI[regione]||[]).push(key);}
+    const selR=document.getElementById("regione");
+    Object.keys(REGIONI).sort((a,b)=>a.localeCompare(b,'it')).forEach(r=>{
+      const o=document.createElement("option");o.value=r;o.textContent=r;selR.appendChild(o);});
+    document.getElementById("stato-comuni").textContent="· "+Object.keys(COMUNI).length.toLocaleString("it-IT")+" comuni";
+  }).catch(()=>{document.getElementById("stato-comuni").textContent="· elenco non disponibile, usa l'override";});
+})();
+document.getElementById("regione").addEventListener("change",function(){
+  const reg=this.value,inp=document.getElementById("comune"),dl=document.getElementById("dl-comuni");
+  dl.innerHTML="";inp.value="";window.SISMA_RAW=null;
+  if(!reg||!REGIONI[reg]){inp.disabled=true;inp.placeholder="Prima scegli la regione";return;}
+  const frag=document.createDocumentFragment();
+  REGIONI[reg].slice().sort((a,b)=>a.localeCompare(b,'it')).forEach(k=>{const o=document.createElement("option");o.value=k;frag.appendChild(o);});
+  dl.appendChild(frag);inp.disabled=false;inp.placeholder="Scrivi il Comune ("+REGIONI[reg].length+")";
+});
+document.getElementById("comune").addEventListener("change",function(){
+  const rec=COMUNI[this.value.trim().toLowerCase()];const note=document.getElementById("sismica-auto");
+  if(!rec){note.textContent="(per zona sismica)";note.style.color="var(--grigio)";window.SISMA_RAW=null;return;}
+  window.SISMA_RAW=rec.zona;const base=rec.zona.charAt(0);const ss=document.getElementById("sismica");
+  if([..."1234"].includes(base))ss.value=base;
+  note.textContent="✓ Zona "+rec.zona;note.style.color="var(--verde)";
+});
+
+/* ---------- ISPRA alluvione/frana ---------- */
+async function verificaIndirizzo(){
+  const comune=(v("comune")||"").replace(/\s*\(.*\)\s*$/,"").trim();
+  const via=v("via").trim(),civico=v("civico").trim();const note=document.getElementById("idro-auto");
+  if(!comune||!via){note.textContent="Inserisci comune e via per la verifica ISPRA.";note.style.color="var(--arancio)";return false;}
+  note.textContent="Interrogazione mappe ISPRA in corso…";note.style.color="var(--grigio)";
+  try{
+    const u=FUNZIONE_IDRO+"?comune="+encodeURIComponent(comune)+"&via="+encodeURIComponent(via)+"&civico="+encodeURIComponent(civico);
+    const r=await fetch(u);const j=await r.json();
+    if(!j.ok){note.textContent="⚠ "+(j.reason||"indirizzo non verificabile")+" — usa l'override.";note.style.color="var(--arancio)";return false;}
+    window.ALLU_AUTO=j.alluvione_score;window.FRANA_AUTO=j.frana_score;
+    document.getElementById("alluvione").value=(j.alluvione_score>=70?"70":j.alluvione_score>=45?"45":j.alluvione_score>=20?"20":"0");
+    document.getElementById("frana").value=(j.frana_score>=70?"70":j.frana_score>=45?"45":j.frana_score>=20?"20":"0");
+    note.innerHTML="✓ ISPRA al punto: <b>alluvione "+j.alluvione+"</b>, <b>frana "+j.frana+"</b>.";note.style.color="var(--verde)";
+    return true;
+  }catch(e){note.textContent="⚠ Verifica automatica non disponibile (funziona online sul sito). Usa l'override.";note.style.color="var(--arancio)";return false;}
+}
+
+/* ---------- continuità: switch ---------- */
+let MODE="bilancio";
+function setMode(m){MODE=m;
+  document.getElementById("mode-bilancio").classList.toggle("on",m==="bilancio");
+  document.getElementById("mode-stima").classList.toggle("on",m==="stima");
+  document.getElementById("form-bilancio").style.display=m==="bilancio"?"block":"none";
+  document.getElementById("form-stima").style.display=m==="stima"?"block":"none";
+}
+
+/* ---------- lookup P.IVA ---------- */
+let FONTE="inserimento manuale";
+async function lookup(){
+  const piva=(v("piva")||"").replace(/\s/g,"");const msg=document.getElementById("lookup-msg");
+  if(piva.length<11){msg.className="msg err";msg.textContent="P.IVA/C.F. non valido (min 11 cifre).";return;}
+  const btn=document.getElementById("btn-lookup");btn.disabled=true;btn.textContent="Recupero…";
+  msg.className="msg info";msg.textContent="Recupero dati ufficiali dal Registro Imprese…";
+  try{
+    const r=await fetch(FUNZIONE_AZIENDA+"?piva="+encodeURIComponent(piva));const j=await r.json();
+    if(!j.ok)throw new Error(j.reason||"Dati non disponibili");
+    document.getElementById("anagrafica").style.display="block";
+    document.getElementById("nome").value=j.nome||"";document.getElementById("forma").value=j.forma||"";
+    if(j.ateco){document.getElementById("ateco").value=j.ateco;aggiornaSettore();}
+    prefillSede(j);
+    FONTE=j.fonte||"Registro Imprese · ReportAziende";
+    if(j.deposita_bilancio===false){setMode("stima");
+      document.getElementById("box-bilancio-api").style.display="none";
+      msg.className="msg warn";msg.textContent="Anagrafica caricata (1 credito · €0,15). Forma senza bilancio depositato: usa la continuità «Senza bilancio».";
+    }else{setMode("bilancio");
+      document.getElementById("box-bilancio-api").style.display="block";
+      msg.className="msg info";msg.textContent="Anagrafica caricata (1 credito · €0,15). Per il calcolo finanziario premi «Recupera bilancio».";
+    }
+  }catch(e){msg.className="msg warn";msg.textContent="Recupero automatico non disponibile ("+e.message+"). Inserisci i dati a mano.";}
+  finally{btn.disabled=false;btn.textContent="Recupera dati";}
+}
+async function recuperaBilancio(){
+  const piva=(v("piva")||"").replace(/\s/g,"");const msg=document.getElementById("bilancio-msg");
+  if(piva.length<11){msg.className="msg err";msg.textContent="Inserisci prima la P.IVA in alto.";return;}
+  const btn=document.getElementById("btn-bilancio");btn.disabled=true;const lbl=btn.textContent;btn.textContent="Recupero…";
+  msg.className="msg info";msg.textContent="Recupero conto economico e patrimonio…";
+  try{
+    const r=await fetch(FUNZIONE_AZIENDA+"?action=bilancio&piva="+encodeURIComponent(piva));const j=await r.json();
+    if(!j.ok)throw new Error(j.reason||"Bilancio non disponibile");
+    setMode("bilancio");const b=j.bilancio||{};
+    setEur("ebitda",b.ebitda);setEur("costo_personale",b.costo_personale);setEur("costo_servizi",b.costo_servizi);
+    setEur("costo_godimento",b.costo_godimento);setEur("oneri_diversi",b.oneri_diversi);setEur("tfr",b.tfr);setEur("patrimonio",b.patrimonio);
+    if(j.fatturato)setEur("fatturato",j.fatturato);
+    msg.className="msg info";msg.textContent="Bilancio "+(b.anno||"")+" caricato (2 crediti · €0,30). Verifica i valori.";
+  }catch(e){msg.className="msg warn";msg.textContent="Bilancio non recuperato ("+e.message+"). Inserisci a mano.";}
+  finally{btn.disabled=false;btn.textContent=lbl;}
+}
+function prefillSede(j){
+  if(j.regione){
+    const selR=document.getElementById("regione");
+    const opt=[...selR.options].find(o=>o.value.toLowerCase()===String(j.regione).toLowerCase());
+    if(opt){selR.value=opt.value;selR.dispatchEvent(new Event("change"));}
+  }
+  if(j.comune){
+    const inp=document.getElementById("comune");const prov=(j.provincia||"").toUpperCase();
+    const base=String(j.comune).trim().toLowerCase();let target=null;
+    for(const k in COMUNI){const lbl=COMUNI[k].label;
+      if(lbl.toLowerCase().startsWith(base+" (")){
+        if(!prov||lbl.toUpperCase().includes("("+prov+")")){target=lbl;break;}
+        if(!target)target=lbl;
+      }
+    }
+    inp.value=target||(prov?j.comune+" ("+prov+")":j.comune);
+    inp.dispatchEvent(new Event("change"));
+  }
+}
+function aggiornaSettore(){
+  const k=settoreCorrente();const note=document.getElementById("settore-auto");
+  note.textContent="Profilo settore: "+SETTORI[k].nome;note.style.color="var(--blu2)";
+}
+document.getElementById("ateco").addEventListener("input",aggiornaSettore);
+document.getElementById("settore").addEventListener("change",aggiornaSettore);
+
+/* ====================== CALCOLO ====================== */
+let ULTIMO=null;
+async function calcola(){
+  const btn=document.getElementById("btn-calcola");btn.disabled=true;const lbl=btn.textContent;btn.textContent="Calcolo in corso…";
+  try{
+    if(v("via").trim()&&window.ALLU_AUTO==null&&window.FRANA_AUTO==null){await verificaIndirizzo();}
+    eseguiCalcolo();
+  }finally{btn.disabled=false;btn.textContent=lbl;}
+}
+function eseguiCalcolo(){
+  /* --- valore ricostruzione --- */
+  const sup=Math.max(0,parseFloat(v("superficie"))||0);
+  const h=Math.max(3,Math.min(14,parseFloat(v("altezza"))||ALT_RIF));
+  const kAlt=0.35+0.65*(h/ALT_RIF);
+  let costoMq=COSTO_BASE[v("tipologia")]*K_QUALITA[v("qualita")]*kAlt;
+  const reg=v("regione")||"—";
+  const nord=["Lombardia","Piemonte","Veneto","Liguria","Emilia-Romagna","Friuli-Venezia Giulia","Trentino-Alto Adige","Valle d'Aosta"];
+  const sud=["Campania","Puglia","Calabria","Sicilia","Sardegna","Basilicata","Molise","Abruzzo"];
+  if(nord.includes(reg))costoMq*=1.04;else if(sud.includes(reg))costoMq*=0.93;
+  const vrFab=sup*costoMq;
+  const contenuto=parseEur("val_impianti")+parseEur("val_macchinari")+parseEur("val_merci");
+  const sommaTot=vrFab+contenuto;const massimale=vrFab*1.10;
+
+  /* --- rischi territoriali --- */
+  const anno=parseInt(v("anno"))||2000;
+  const RAWMAP={"1":90,"2":70,"2A":70,"2B":62,"3":40,"3S":52,"4":15};
+  let sisma=(window.SISMA_RAW!=null&&RAWMAP[window.SISMA_RAW]!=null)?RAWMAP[window.SISMA_RAW]:{"1":90,"2":65,"3":40,"4":15}[v("sismica")];
+  if(c("antisismico"))sisma-=22;else if(anno<1984)sisma+=10;else if(anno>=2009)sisma-=8;sisma=clamp(sisma);
+  let allu=clamp((window.ALLU_AUTO!=null)?window.ALLU_AUTO:parseInt(v("alluvione")));
+  let frana=clamp((window.FRANA_AUTO!=null)?window.FRANA_AUTO:parseInt(v("frana")));
+
+  /* --- rischi di settore (ATECO) --- */
+  const SK=settoreCorrente();const base=Object.assign({},SETTORI[SK].r);
+  let {incendio,rc,prodotti,infortuni,interruzione,inquinamento,cyber,furto}=base;
+  /* territorio sul furto */
+  if(FURTO_REGIONE[reg]!=null)furto=Math.round((furto+FURTO_REGIONE[reg])/2);
+  /* fattori mitiganti */
+  if(c("sprinkler")){incendio-=22;interruzione-=8;}
+  if(c("estintori"))incendio-=10;
+  if(c("allarme"))furto-=18; if(c("video"))furto-=10; if(c("vigilanza"))furto-=12;
+  if(c("cert_sic")){infortuni-=14;inquinamento-=14;}
+  /* fattori aggravanti */
+  if(c("sostanze")){incendio+=20;inquinamento+=18;}
+  if(c("caldo")){incendio+=12;infortuni+=8;}
+  if(c("magazzino")){furto+=12;incendio+=6;}
+  if(c("dati"))cyber+=20;
+  if(c("export"))prodotti+=12;
+  if(c("dipendenza"))interruzione+=18;
+  /* dimensione: più dipendenti = più esposizione infortuni */
+  const dip=parseInt((v("dipendenti")||"").replace(/\D/g,""))||0;
+  if(dip>=50)infortuni+=8;else if(dip>=10)infortuni+=4;
+  [incendio,rc,prodotti,infortuni,interruzione,inquinamento,cyber,furto]=
+    [incendio,rc,prodotti,infortuni,interruzione,inquinamento,cyber,furto].map(clamp);
+
+  /* flotta come rischio extra */
+  const haFlotta=c("flotta");
+
+  /* --- continuità finanziaria --- */
+  let costi_interni=0,patrimonio=0;
+  if(MODE==="bilancio"){
+    costi_interni=parseEur("ebitda")+parseEur("costo_personale")+parseEur("costo_servizi")+parseEur("costo_godimento")+parseEur("oneri_diversi")+parseEur("tfr");
+    patrimonio=parseEur("patrimonio");
+  }else{costi_interni=parseEur("s_personale")+parseEur("s_gestione");patrimonio=parseEur("s_patrimonio");}
+  const perdita=costi_interni>0?costi_interni/GG_LAVORATIVI:0;
+  const giorni=(perdita>0&&patrimonio>0)?Math.ceil(patrimonio/perdita):0;
+
+  /* --- elenco rischi --- */
+  const rischi=[
+    {key:"sisma",nome:"Sisma",desc:"Terremoto, danni strutturali",s:sisma},
+    {key:"allu",nome:"Alluvione / Acqua",desc:"Esondazioni, allagamenti",s:allu},
+    {key:"frana",nome:"Frana / Dissesto",desc:"Movimenti del terreno",s:frana},
+    {key:"incendio",nome:"Incendio",desc:"Incendio, scoppio, impianti",s:incendio},
+    {key:"furto",nome:"Furto / Danni ai beni",desc:"Furto, rapina, vandalismo",s:furto},
+    {key:"rc",nome:"RC verso terzi",desc:"Danni a terzi dall'attività",s:rc},
+    {key:"prodotti",nome:"RC prodotti",desc:"Danni dai prodotti/servizi",s:prodotti},
+    {key:"infortuni",nome:"Infortuni / dipendenti",desc:"Sicurezza sul lavoro",s:infortuni},
+    {key:"interruzione",nome:"Interruzione attività",desc:"Fermo e perdita di reddito",s:interruzione},
+    {key:"inquinamento",nome:"Inquinamento",desc:"Danno ambientale",s:inquinamento},
+    {key:"cyber",nome:"Cyber",desc:"Dati, sistemi, ransomware",s:cyber}
+  ];
+  if(haFlotta)rischi.push({key:"flotta",nome:"Flotta / RC auto",desc:"Mezzi aziendali",s:60});
+  const indice=clamp(rischi.reduce((a,r)=>a+r.s,0)/rischi.length);
+
+  ULTIMO={sup,h,reg,costoMq,vrFab,contenuto,sommaTot,massimale,rischi,indice,
+          settore:SETTORI[SK].nome,perdita,giorni,patrimonio,costi_interni};
+  render(ULTIMO);
+}
+
+const COPERTURE={
+  sisma:"<b>Eventi sismici / catastrofali</b> — priorità in zona 1-2; valutare l'agevolazione fiscale sulle polizze cat.",
+  allu:"<b>Alluvione + Acqua condotta</b> — attenzione a piani interrati/scorte a terra; valutare franchigie.",
+  frana:"<b>Eventi catastrofali / frana</b> — verificare esclusioni territoriali.",
+  incendio:"<b>Incendio e scoppio</b> sul valore di ricostruzione + contenuto; impianti a norma e sprinkler riducono il premio.",
+  furto:"<b>Furto, rapina e danni ai beni</b> adeguati al contenuto; sconti con allarme/vigilanza/video.",
+  rc:"<b>RC verso terzi (RCT)</b> adeguata all'attività e ai cantieri/sedi.",
+  prodotti:"<b>RC prodotti (RCP)</b> — essenziale se si vende o esporta; ritiro prodotti.",
+  infortuni:"<b>Infortuni dipendenti + RC operatori (RCO)</b> e tutela rivalsa INAIL.",
+  interruzione:"<b>Business interruption</b> — copre i costi fissi e il margine durante il fermo.",
+  inquinamento:"<b>Responsabilità ambientale / inquinamento</b> — obbligatoria in molti settori.",
+  cyber:"<b>Cyber risk</b> — dati, sistemi, responsabilità e ripristino.",
+  flotta:"<b>Flotta auto / RC libro matricola</b> per i mezzi aziendali."
+};
+
+function render(d){
+  document.getElementById("placeholder").style.display="none";
+  document.getElementById("risultati").style.display="block";
+  document.getElementById("out-vr").innerHTML=`
+    <div class="vr-box"><div class="lbl">Valore di ricostruzione fabbricato</div>
+      <div class="val">${d.vrFab>0?fmt(d.vrFab):"—"}</div>
+      <div class="sub">${d.sup>0?d.sup+" m² · "+fmt(d.costoMq)+"/m² · massimale "+fmt(d.massimale):"inserisci la superficie"}</div></div>`;
+  document.getElementById("out-somma").textContent=d.sommaTot>0?fmt(d.sommaTot):"—";
+  document.getElementById("out-giorni").textContent=d.giorni>0?d.giorni:"—";
+
+  const bi=banda(d.indice);
+  document.getElementById("out-indice").innerHTML=`
+    <div class="indice"><div class="gauge" style="background:${bi.col}">${d.indice}</div>
+    <div><div style="font-weight:700;font-size:15px">Indice di rischio: ${bi.txt}</div>
+    <div style="font-size:12.5px;color:var(--grigio)">Settore: ${d.settore} · media dei rischi (0–100)</div></div></div>`;
+
+  const ord=d.rischi.slice().sort((a,b)=>b.s-a.s);
+  document.getElementById("out-rischi").innerHTML=ord.map(r=>{const b=banda(r.s);
+    return `<div class="peril"><div class="nome">${r.nome}<small>${r.desc}</small></div>
+      <div class="bar"><i style="width:${r.s}%;background:${b.col}"></i></div>
+      <div class="badge ${b.cls}">${b.txt}</div></div>`;}).join("");
+
+  const reco=ord.filter(r=>r.s>=40);
+  let html=reco.length?reco.map(r=>`<div class="reco">${COPERTURE[r.key]}</div>`).join(""):`<div class="reco">Profilo contenuto: copertura base Incendio + Furto + RCT.</div>`;
+  if(d.giorni>0&&d.giorni<365)html+=`<div class="reco"><b>Tutela continuità / key man</b> — con ${d.giorni} giorni di autonomia, proteggere la figura chiave libera il patrimonio aziendale.</div>`;
+  document.getElementById("out-reco").innerHTML=html;
+
+  document.getElementById("disclaimer").innerHTML="Stima orientativa a fini consulenziali. Valore di ricostruzione = costo tecnico a nuovo (escluso il terreno), diverso dal valore di mercato. Sisma per Comune (classificazione ufficiale); alluvione/frana dalle mappe ISPRA all'indirizzo; rischi di settore stimati da ATECO. Non è preventivo né perizia: verificare con sopralluogo.";
+}
+
+/* ---------- report PDF ---------- */
+function stampaPDF(){
+  if(!ULTIMO){eseguiCalcolo();}if(!ULTIMO)return;const d=ULTIMO;
+  const oggi=new Date().toLocaleDateString("it-IT",{day:"2-digit",month:"long",year:"numeric"});
+  const indirizzo=[(v("via")+" "+v("civico")).trim(),(v("comune")||"").replace(/\s*\(.*\)\s*$/,"")].filter(Boolean).join(", ");
+  const ord=d.rischi.slice().sort((a,b)=>b.s-a.s);
+  const righe=ord.map(r=>{const b=banda(r.s);return `<tr><td>${r.nome}</td><td><span class="rbadge" style="background:${b.col}">${b.txt}</span></td><td>${r.s}/100</td></tr>`;}).join("");
+  const bi=banda(d.indice);
+  const reco=ord.filter(r=>r.s>=40).map(r=>`<div style="margin:5px 0;padding-left:10px;border-left:2px solid #14618c">${COPERTURE[r.key]}</div>`).join("");
+  document.getElementById("report").innerHTML=`
+    <div class="rhead"><div style="font-weight:700;color:#0b3d5c">${v("ag_nome")||"&nbsp;"}<br><small style="font-weight:400;color:#5b6b76">LuniversoTuo</small></div>
+      <div style="text-align:right;font-size:11px;color:#5b6b76">Analisi rischi azienda 360°<br>${oggi}</div></div>
+    <div style="font-size:13px;margin-bottom:8px"><b>Azienda:</b> ${v("nome")||v("cliente")||"—"} ${v("forma")?"· "+v("forma"):""}<br>
+      <b>Settore:</b> ${d.settore} &nbsp;·&nbsp; <b>Sede:</b> ${indirizzo||"—"}</div>
+    <h2>Valore e somme assicurabili</h2>
+    <table><tr><th>Voce</th><th>Valore</th></tr>
+      <tr><td>Superficie · costo ricostruzione</td><td>${d.sup} m² · ${fmt(d.costoMq)}/m²</td></tr>
+      <tr><td><b>Valore ricostruzione fabbricato</b></td><td><b>${fmt(d.vrFab)}</b></td></tr>
+      <tr><td>Contenuto (impianti+macchinari+merci)</td><td>${fmt(d.contenuto)}</td></tr>
+      <tr><td><b>Somma assicurabile totale</b></td><td><b>${fmt(d.sommaTot)}</b></td></tr>
+      <tr><td>Massimale fabbricato consigliato (+10%)</td><td>${fmt(d.massimale)}</td></tr></table>
+    <h2>Esposizione ai rischi — Indice ${d.indice}/100 (${bi.txt})</h2>
+    <table><tr><th>Rischio</th><th>Livello</th><th>Punteggio</th></tr>${righe}</table>
+    ${d.giorni>0?`<h2>Continuità finanziaria</h2><table>
+      <tr><td>Costi interni / anno</td><td>${fmt(d.costi_interni)}</td></tr>
+      <tr><td>Perdita giornaliera</td><td>${fmt(d.perdita)}</td></tr>
+      <tr><td>Patrimonio / liquidità</td><td>${fmt(d.patrimonio)}</td></tr>
+      <tr><td><b>Giorni di autonomia</b></td><td><b>${d.giorni}</b> (~${(d.giorni/GG_LAVORATIVI).toFixed(1).replace(".",",")} anni)</td></tr></table>`:""}
+    <h2>Coperture da valutare</h2><div style="font-size:12px">${reco||"Copertura base Incendio + Furto + RCT."}</div>
+    <div class="rfoot">Documento informativo a fini consulenziali, ${oggi}. Sisma: classificazione ufficiale del Comune. Alluvione/frana: mappe ISPRA (PAI) all'indirizzo. Rischi di settore stimati da ATECO. Non costituisce preventivo, perizia o offerta. — ${v("ag_nome")||"LuniversoTuo"}</div>`;
+  window.print();
+}
+</script>
+</body>
+</html>
