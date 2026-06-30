@@ -54,6 +54,7 @@
   function hideBanner() {
     const b = document.getElementById('lt-cookie-banner');
     if (b) { b.style.opacity='0'; b.style.transform='translateY(20px)'; setTimeout(()=>b.remove(),400); }
+    document.body.classList.remove('lt-cookiebar-on');
   }
 
   // --- Conversions API (server-side) ---------------------------------------
@@ -212,7 +213,9 @@
       // NB: il "Lead" NON scatta più su questi click (gonfiava i numeri con
       // conversioni false e senza email/telefono). Lead scatta SOLO sulla
       // pagina grazie-prenotazione, cioè su una prenotazione realmente conclusa.
-      var book = e.target.closest('a[href*="link.delera.co/widget/booking"]');
+      // I pulsanti "Prenota" ora puntano alla pagina interna /prenota (widget inline).
+      // Manteniamo anche il vecchio link diretto al widget per retro-compatibilità.
+      var book = e.target.closest('a[href*="link.delera.co/widget/booking"], a[href$="prenota.html"], a[href$="/prenota"], a[href$="/prenota/"]');
       if (book) {
         try { ltTrack('InitiateCheckout'); } catch(err) {}
         try { if (window.gtag) gtag('event','click_prenota'); } catch(err) {}
@@ -239,30 +242,34 @@
   if (saved === 'essential') { return; }
 
   // Nessuna scelta → mostra il banner
+  // Barra cookie SOTTILE pinnata in basso a tutta larghezza (non più overlay/card).
+  // Non copre hero/CTA: occupa solo una striscia. Su pagine con CTA fissa, la
+  // CTA viene alzata via la classe body.lt-cookiebar-on (gestita lato pagina).
   const css = `
     #lt-cookie-banner {
-      position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-      width:calc(100% - 40px); max-width:680px; z-index:99999;
-      background:#13151f; border:0.5px solid rgba(37,99,235,0.35);
-      border-radius:16px; padding:20px 22px; box-shadow:0 20px 60px rgba(0,0,0,0.6);
-      display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+      position:fixed; bottom:0; left:0; right:0; z-index:99999;
+      background:rgba(11,13,20,0.97); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+      border-top:0.5px solid rgba(37,99,235,0.35);
+      padding:10px 18px calc(10px + env(safe-area-inset-bottom));
+      display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
       font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
       transition:opacity 0.4s, transform 0.4s;
     }
     #lt-cookie-banner p {
-      flex:1; min-width:200px; margin:0;
-      font-size:13px; line-height:1.6; color:rgba(255,255,255,0.6);
+      flex:1 1 auto; min-width:200px; max-width:760px; margin:0;
+      font-size:12.5px; line-height:1.5; color:rgba(255,255,255,0.62);
     }
     #lt-cookie-banner p a { color:rgba(147,186,255,0.9); text-decoration:underline; }
-    #lt-cookie-banner strong { color:rgba(255,255,255,0.85); }
+    #lt-cookie-banner strong { color:rgba(255,255,255,0.85); font-weight:600; }
     .lt-cb-btns { display:flex; gap:8px; flex-shrink:0; }
-    .lt-cb-btn { border:none; border-radius:10px; padding:9px 18px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; transition:background 0.15s; white-space:nowrap; }
+    .lt-cb-btn { border:none; border-radius:9px; padding:8px 16px; font-size:12.5px; font-weight:600; cursor:pointer; font-family:inherit; transition:background 0.15s; white-space:nowrap; }
     .lt-cb-btn-all { background:#2563EB; color:#fff; }
     .lt-cb-btn-all:hover { background:#1d4ed8; }
     .lt-cb-btn-ess { background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.6); border:0.5px solid rgba(255,255,255,0.12); }
     .lt-cb-btn-ess:hover { background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.85); }
-    @media(max-width:500px){
-      #lt-cookie-banner { flex-direction:column; align-items:flex-start; bottom:0; left:0; right:0; width:100%; max-width:100%; border-radius:16px 16px 0 0; transform:none; }
+    @media(max-width:600px){
+      #lt-cookie-banner { gap:10px; padding:10px 14px calc(10px + env(safe-area-inset-bottom)); }
+      #lt-cookie-banner p { flex-basis:100%; font-size:12px; }
       .lt-cb-btns { width:100%; }
       .lt-cb-btn { flex:1; text-align:center; }
     }
@@ -276,8 +283,7 @@
   banner.id = 'lt-cookie-banner';
   banner.innerHTML = `
     <p>
-      Usiamo <strong>cookie tecnici</strong> necessari al funzionamento del sito e, con il tuo consenso, <strong>cookie statistici e di marketing</strong> (Facebook Pixel, Microsoft Clarity, Google Analytics) per misurare visite e campagne.
-      Leggi la nostra <a href="cookie-policy.html">Cookie Policy</a>.
+      Usiamo <strong>cookie tecnici</strong> e, col tuo consenso, <strong>cookie statistici e di marketing</strong> (Pixel, Clarity, Google Analytics) per misurare le campagne. <a href="cookie-policy.html">Cookie Policy</a>.
     </p>
     <div class="lt-cb-btns">
       <button class="lt-cb-btn lt-cb-btn-ess" onclick="window._ltSetConsent('essential')">Solo essenziali</button>
@@ -285,6 +291,7 @@
     </div>
   `;
   document.body.appendChild(banner);
+  document.body.classList.add('lt-cookiebar-on');
 
   window._ltSetConsent = setConsent;
 })();
