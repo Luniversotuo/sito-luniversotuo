@@ -25,6 +25,17 @@
     .book-frame iframe { width: 100%; min-height: 720px; border: none; display: block; }
     .book-alt { text-align: center; font-size: 13.5px; color: rgba(255,255,255,0.5); margin-top: 20px; line-height: 1.6; }
     .book-alt a { color: rgba(147,186,255,0.9); }
+    .book-two-ways { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 14px; line-height: 1.6; }
+    .book-two-ways a { color: rgba(147,186,255,0.9); }
+    .who { padding: 10px 0 26px; }
+    .who__card { max-width: 680px; margin: 0 auto; text-align: center; }
+    .who__card h2 { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.7px; margin: 0 0 8px; }
+    .who__card > p { font-size: 14.5px; color: rgba(255,255,255,0.62); line-height: 1.6; margin: 0 0 26px; }
+    .who__people { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .who__person { flex: 1 1 240px; max-width: 300px; background: var(--bg-card, #13151f); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 24px 20px; }
+    .who__person img { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; object-position: top; filter: grayscale(100%); display: block; margin: 0 auto 14px; border: 1px solid rgba(255,255,255,0.15); }
+    .who__name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .who__role { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
     @media(max-width:600px){
       .book-hero { padding: 84px 0 18px; }
       .book-hero h1 { font-size: 30px; letter-spacing: -1px; }
@@ -49,8 +60,9 @@
   <section class="book-hero">
     <div class="container">
       <h1>Scegli quando vederci.<br><em>La consulenza è gratuita.</em></h1>
-      <p>Seleziona il giorno e l'ora che preferisci. Dura circa 30 minuti, online o in agenzia a Pescia. Nessun obbligo, nessuna polizza da comprare.</p>
+      <p>In 30 minuti scopri quali rischi economici hai davvero, quali sono coperti e quali no — e cosa servirebbe per sistemarli. Poi decidi tu, con calma.</p>
       <div class="book-micro">Gratuita <span class="dot"></span> 30 minuti <span class="dot"></span> Online o a Pescia <span class="dot"></span> Senza impegno</div>
+      <p class="book-two-ways">Prenota direttamente dal calendario qui sotto — oppure <a href="#richiamami">scorri in basso e lascia il numero</a>: ti richiamiamo noi.</p>
     </div>
   </section>
 
@@ -62,6 +74,28 @@
     </div>
     <p class="book-alt">Non trovi il giorno o l'orario giusto? Scrivici su <a href="https://wa.me/39057247139" target="_blank">WhatsApp</a> o chiama lo <a href="tel:057247139">0572 47139</a>.</p>
   </div>
+
+  <!-- CON CHI PARLERAI -->
+  <section class="who">
+    <div class="container">
+      <div class="who__card">
+        <h2>Con chi parlerai</h2>
+        <p>La consulenza la fai con uno di noi due. Nessun call center, nessun venditore.</p>
+        <div class="who__people">
+          <div class="who__person">
+            <img src="img/foto-francesco.jpg" alt="Francesco, consulente LuniversoTuo" loading="lazy">
+            <div class="who__name">Francesco</div>
+            <div class="who__role">Consulente &middot; famiglia, azienda e investimenti</div>
+          </div>
+          <div class="who__person">
+            <img src="img/foto-gabriele.jpg" alt="Gabriele, consulente LuniversoTuo" loading="lazy">
+            <div class="who__name">Gabriele</div>
+            <div class="who__role">Consulente &middot; famiglia, sinistri e tutela</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- MODULO FATTI RICHIAMARE -->
   <style>
@@ -75,6 +109,9 @@
     .lt-richiamami-form input:focus { outline: none; border-color: #2563EB; background: rgba(37,99,235,0.08); }
     .lt-richiamami-form button { width: 100%; justify-content: center; padding: 15px; font-size: 16px; }
     .lt-rm-msg { font-size: 14px; margin: 4px 0 0; min-height: 18px; }
+    .lt-rm-hint { font-size: 12.5px; color: rgba(255,255,255,0.5); text-align: left; margin: -4px 0 0 2px; line-height: 1.5; }
+    .lt-rm-err { font-size: 13px; color: #f87171; text-align: left; margin: -4px 0 0 2px; min-height: 0; line-height: 1.5; }
+    .lt-richiamami-form input.lt-input-error { border-color: #f87171; }
     .lt-rm-priv { font-size: 11.5px; color: rgba(255,255,255,0.4); margin: 6px 0 0; }
     .lt-rm-priv a { color: rgba(147,186,255,0.85); }
   </style>
@@ -84,8 +121,10 @@
         <h2>Preferisci che ti richiamiamo noi?</h2>
         <p>Niente calendario: lasciaci nome e numero e ti ricontattiamo a breve per fissare insieme la consulenza.</p>
         <form class="lt-richiamami-form" novalidate>
-          <input type="text" name="nome" placeholder="Il tuo nome" autocomplete="given-name" required>
-          <input type="tel" name="telefono" placeholder="Il tuo numero di telefono" autocomplete="tel" inputmode="tel" required>
+          <input type="text" name="nome" placeholder="Il tuo nome" aria-label="Il tuo nome" autocomplete="given-name" required>
+          <input type="tel" name="telefono" placeholder="Numero WhatsApp" aria-label="Numero WhatsApp" autocomplete="tel" inputmode="tel" required>
+          <p class="lt-rm-err" role="alert" aria-live="assertive"></p>
+          <p class="lt-rm-hint">Ti scriviamo su WhatsApp per fissare insieme giorno e ora della consulenza.</p>
           <button type="submit" class="btn-primary">Fatti richiamare</button>
           <p class="lt-rm-msg" role="status" aria-live="polite"></p>
           <p class="lt-rm-priv">Inviando accetti di essere ricontattato per la consulenza. Niente spam. <a href="informativa-privacy.html">Privacy</a></p>

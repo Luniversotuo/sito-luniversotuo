@@ -47,6 +47,31 @@ function esc(s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+/**
+ * Validazione cellulare italiano (stessa logica del client js/richiamami.js):
+ * 10 cifre che iniziano con 3, prefisso +39/0039 opzionale, niente cifre
+ * tutte uguali, niente sequenze (3456789012), almeno 3 cifre distinte.
+ * Ritorna le 10 cifre normalizzate oppure null.
+ */
+function normalizePhone(raw) {
+  let t = String(raw || '').replace(/[^\d+]/g, '');
+  if (t.startsWith('+39')) t = t.slice(3);
+  else if (t.startsWith('0039')) t = t.slice(4);
+  if (t.includes('+')) return null;
+  if (!/^3\d{9}$/.test(t)) return null;
+  if (/^(\d)\1{9}$/.test(t)) return null;
+  const distinct = new Set(t);
+  let asc = true, desc = true;
+  for (let i = 1; i < t.length; i++) {
+    const d = (10 + t.charCodeAt(i) - t.charCodeAt(i - 1)) % 10;
+    if (d !== 1) asc = false;
+    if (d !== 9) desc = false;
+  }
+  if (asc || desc) return null;
+  if (distinct.size < 3) return null;
+  return t;
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers: CORS, body: '' };
   if (event.httpMethod !== 'POST') return { statusCode: 405, headers: CORS, body: 'Method Not Allowed' };
@@ -56,13 +81,18 @@ exports.handler = async (event) => {
   catch (e) { return json(400, { error: 'JSON non valido' }); }
 
   const nome = String(data.nome || '').trim().slice(0, 80);
-  const telefono = String(data.telefono || '').trim().slice(0, 40);
-  const telDigits = telefono.replace(/[^0-9]/g, '');
+  const telefonoRaw = String(data.telefono || '').trim().slice(0, 40);
 
-  // Validazione minima (anti-spam base)
-  if (nome.length < 2 || telDigits.length < 8) {
-    return json(400, { error: 'Nome o telefono non validi' });
+  // Validazione vera (specchia il client: il form non procede con numeri fasulli)
+  if (nome.length < 2) {
+    return json(400, { error: 'nome_invalid', message: 'Inserisci il tuo nome.' });
   }
+  const telMobile = normalizePhone(telefonoRaw);
+  if (!telMobile) {
+    return json(400, { error: 'phone_invalid', message: 'Il numero non sembra un cellulare italiano valido.' });
+  }
+  const telDigits = '39' + telMobile;              // formato E.164 senza "+" per hash CAPI
+  const telefono = '+39 ' + telMobile;             // formato leggibile per email/Delera
 
   const h = event.headers || {};
   const ua = h['user-agent'] || h['User-Agent'];
