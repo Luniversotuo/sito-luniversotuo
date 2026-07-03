@@ -127,9 +127,30 @@
     s.parentNode.insertBefore(t,s)}(window,document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init','390681561312731');
-    ltTrack('PageView');
 
     var path = location.pathname;
+
+    // Sulla pagina grazie i dati (email/telefono/nome) arrivano nell'URL dal redirect
+    // di Delera. PROBLEMA: Meta, se vede dati personali nell'URL, OSCURA l'indirizzo e
+    // lo riduce alla radice del dominio -> l'evento risultava dalla "homepage".
+    // SOLUZIONE: leggiamo i dati e poi PULIAMO subito l'URL (replaceState) PRIMA di far
+    // partire qualsiasi evento, così il pixel registra /grazie-prenotazione pulito.
+    // I dati restano in memoria e li passiamo comunque alla CAPI (hashati lato server).
+    var scheduleUd = null;
+    if (path.indexOf('grazie-prenotazione') !== -1) {
+      scheduleUd = {};
+      try {
+        var qs = new URLSearchParams(location.search);
+        scheduleUd.email = (qs.get('email') || qs.get('em') || '').trim();
+        scheduleUd.phone = (qs.get('phone') || qs.get('tel') || qs.get('telefono') || '').trim();
+        scheduleUd.fn    = (qs.get('fn') || qs.get('first_name') || qs.get('nome') || '').trim();
+        scheduleUd.ln    = (qs.get('ln') || qs.get('last_name') || qs.get('cognome') || '').trim();
+      } catch(e) {}
+      // Ripulisce l'URL dalla query con i dati personali PRIMA di tracciare
+      try { if (location.search) window.history.replaceState({}, document.title, path); } catch(e) {}
+    }
+
+    ltTrack('PageView');
 
     // ViewContent = visita di una pagina "chiave" (offerta SuperSerenità o una storia).
     // Segnale di metà funnel, utile per retargeting e per dare più dati all'algoritmo.
@@ -138,24 +159,15 @@
     }
 
     // Evento Schedule = prenotazione completata (pagina di ringraziamento).
-    // Se Delera passa i dati nell'URL (email/telefono/nome) li inoltriamo per
-    // migliorare l'Event Match Quality (vengono hashati dal nostro server).
-    if (path.indexOf('grazie-prenotazione') !== -1) {
-      var ud = {};
-      try {
-        var qs = new URLSearchParams(location.search);
-        ud.email = (qs.get('email') || qs.get('em') || '').trim();
-        ud.phone = (qs.get('phone') || qs.get('tel') || qs.get('telefono') || '').trim();
-        ud.fn    = (qs.get('fn') || qs.get('first_name') || qs.get('nome') || '').trim();
-        ud.ln    = (qs.get('ln') || qs.get('last_name') || qs.get('cognome') || '').trim();
-      } catch(e) {}
+    // I dati (email/telefono/nome) li abbiamo già letti sopra e vengono hashati dal server.
+    if (scheduleUd) {
       try {
         if (!sessionStorage.getItem('lt_schedule_fired')) {
-          ltTrack('Schedule', undefined, ud);
-          ltTrack('Lead', { lead_source: 'appuntamento' }, ud);
+          ltTrack('Schedule', undefined, scheduleUd);
+          ltTrack('Lead', { lead_source: 'appuntamento' }, scheduleUd);
           sessionStorage.setItem('lt_schedule_fired','1');
         }
-      } catch(e) { ltTrack('Schedule', undefined, ud); ltTrack('Lead', { lead_source: 'appuntamento' }, ud); }
+      } catch(e) { ltTrack('Schedule', undefined, scheduleUd); ltTrack('Lead', { lead_source: 'appuntamento' }, scheduleUd); }
     }
   }
 
