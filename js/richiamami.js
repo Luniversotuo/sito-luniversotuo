@@ -48,6 +48,8 @@
       var err = form.querySelector('.lt-rm-err') || msg;
       var btn = form.querySelector('button[type="submit"]');
       var telInput = form.telefono;
+      // Origine del form (form-prenota / form-landing) per distinguere i contatti nei report
+      var origin = form.getAttribute('data-origin') || '';
 
       function showErr(text) {
         if (err) { err.textContent = text; if (err === msg) err.style.color = '#f87171'; }
@@ -60,6 +62,10 @@
       }
 
       if (telInput) telInput.addEventListener('input', clearErr);
+
+      function thanksUrl() {
+        return 'grazie-richiamo.html' + (origin ? '?utm_content=' + encodeURIComponent(origin) : '');
+      }
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -82,9 +88,12 @@
         if (btn) { btn.disabled = true; btn.dataset.old = btn.textContent; btn.textContent = 'Invio…'; }
 
         var eventId = genId();
-        // Evento Lead lato browser (deduplica con la CAPI tramite event_id condiviso)
-        try { if (window.fbq) fbq('track', 'Lead', { lead_source: 'richiamami' }, { eventID: eventId }); } catch (e2) {}
-        try { if (window.gtag) gtag('event', 'generate_lead', { method: 'richiamami' }); } catch (e2) {}
+        // Evento Lead lato browser (deduplica con la CAPI tramite event_id condiviso).
+        // lead_source resta 'richiamami' (report esistenti); content_name distingue l'origine.
+        var fbData = { lead_source: 'richiamami' };
+        if (origin) fbData.content_name = origin;
+        try { if (window.fbq) fbq('track', 'Lead', fbData, { eventID: eventId }); } catch (e2) {}
+        try { if (window.gtag) gtag('event', 'generate_lead', { method: 'richiamami', form_origin: origin }); } catch (e2) {}
 
         fetch('/.netlify/functions/richiamami', {
           method: 'POST',
@@ -93,6 +102,7 @@
           body: JSON.stringify({
             nome: nome,
             telefono: '+39' + telValid,
+            origin: origin,
             event_id: eventId,
             event_source_url: location.href,
             fbp: ltCookie('_fbp'),
@@ -105,10 +115,10 @@
             showErr(PHONE_ERR);
             return;
           }
-          window.location.href = 'grazie-richiamo.html';
+          window.location.href = thanksUrl();
         }).catch(function () {
           // Rete instabile: la richiesta keepalive parte comunque, portiamo alla conferma
-          window.location.href = 'grazie-richiamo.html';
+          window.location.href = thanksUrl();
         });
       });
     });

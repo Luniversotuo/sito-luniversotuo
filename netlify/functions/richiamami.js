@@ -93,6 +93,7 @@ exports.handler = async (event) => {
   }
   const telDigits = '39' + telMobile;              // formato E.164 senza "+" per hash CAPI
   const telefono = '+39 ' + telMobile;             // formato leggibile per email/Delera
+  const origin = String(data.origin || '').trim().slice(0, 40); // form-prenota / form-landing
 
   const h = event.headers || {};
   const ua = h['user-agent'] || h['User-Agent'];
@@ -112,7 +113,8 @@ exports.handler = async (event) => {
         <h2 style="margin:0 0 12px;">Nuova richiesta di richiamo</h2>
         <p><strong>Nome:</strong> ${esc(nome)}<br>
         <strong>Telefono:</strong> <a href="tel:${esc(telDigits)}">${esc(telefono)}</a><br>
-        <strong>Quando:</strong> ${esc(when)}</p>
+        <strong>Quando:</strong> ${esc(when)}<br>
+        <strong>Origine:</strong> ${esc(origin || 'non indicata')}</p>
         <p style="margin-top:16px;"><a href="tel:${esc(telDigits)}" style="background:#2563EB;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;">Chiama ora ${esc(nome)}</a></p>
         <p style="color:#666;font-size:12px;margin-top:18px;">Inviato dal modulo "fatti richiamare" su luniversotuo.it</p>
       </div>`;
@@ -142,7 +144,9 @@ exports.handler = async (event) => {
       event_time: Math.floor(Date.now() / 1000),
       action_source: 'website',
       user_data,
-      custom_data: { lead_source: 'richiamami' }
+      custom_data: origin
+        ? { lead_source: 'richiamami', content_name: origin }
+        : { lead_source: 'richiamami' }
     };
     if (data.event_id) ev.event_id = data.event_id;           // deduplica col pixel browser
     if (data.event_source_url) ev.event_source_url = data.event_source_url;
@@ -170,7 +174,7 @@ exports.handler = async (event) => {
           full_name: nome,
           phone: telefono,
           source: 'Sito - Fatti richiamare',
-          tags: ['richiamami', 'sito']
+          tags: origin ? ['richiamami', 'sito', origin] : ['richiamami', 'sito']
         })
       });
       results.delera = r.ok;

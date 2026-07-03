@@ -258,6 +258,7 @@
         <a href="#come-funziona" class="btn-outline">Come funziona la consulenza</a>
         <a href="https://wa.me/39057247139" target="_blank" class="btn-outline">Scrivici su WhatsApp</a>
       </div>
+      <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;margin:14px 0 0;">…oppure <a href="#richiamami-mid" style="color:rgba(147,186,255,0.9);">lasciaci il numero</a> e ti richiamiamo noi.</p>
       <div class="cta-micro">Gratuita <span class="dot"></span> 30 minuti <span class="dot"></span> Online o a Pescia <span class="dot"></span> Senza impegno</div>
       <div class="hero-proof">
         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -471,6 +472,25 @@
       <div class="cta-center" style="margin-top:48px;">
         <a href="prenota.html" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
         <div class="cta-micro">30 minuti <span class="dot"></span> Online o in agenzia <span class="dot"></span> Gratuita <span class="dot"></span> Nessun obbligo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULO FATTI RICHIAMARE — metà pagina -->
+  <section class="callback" id="richiamami-mid">
+    <div class="container">
+      <div class="callback__card">
+        <h2>Preferisci che ti richiamiamo noi?</h2>
+        <p>Niente calendario: nome e numero, ti ricontattiamo noi per fissare insieme la consulenza.</p>
+        <form class="lt-richiamami-form" data-origin="form-landing" novalidate>
+          <input type="text" name="nome" placeholder="Il tuo nome" aria-label="Il tuo nome" autocomplete="given-name" required>
+          <input type="tel" name="telefono" placeholder="Numero WhatsApp" aria-label="Numero WhatsApp" autocomplete="tel" inputmode="tel" required>
+          <p class="lt-rm-err" role="alert" aria-live="assertive"></p>
+          <p class="lt-rm-hint">Ti scriviamo su WhatsApp per fissare insieme giorno e ora della consulenza.</p>
+          <button type="submit" class="btn-primary">Fatti richiamare</button>
+          <p class="lt-rm-msg" role="status" aria-live="polite"></p>
+          <p class="lt-rm-priv">Inviando accetti di essere ricontattato per la consulenza. Niente spam. <a href="informativa-privacy.html">Privacy</a></p>
+        </form>
       </div>
     </div>
   </section>
@@ -716,7 +736,7 @@
       <div class="callback__card">
         <h2>Preferisci che ti richiamiamo noi?</h2>
         <p>Lasciaci nome e numero: ti ricontattiamo a breve per fissare la consulenza, quando ti è più comodo.</p>
-        <form class="lt-richiamami-form" novalidate>
+        <form class="lt-richiamami-form" data-origin="form-landing" novalidate>
           <input type="text" name="nome" placeholder="Il tuo nome" aria-label="Il tuo nome" autocomplete="given-name" required>
           <input type="tel" name="telefono" placeholder="Numero WhatsApp" aria-label="Numero WhatsApp" autocomplete="tel" inputmode="tel" required>
           <p class="lt-rm-err" role="alert" aria-live="assertive"></p>
