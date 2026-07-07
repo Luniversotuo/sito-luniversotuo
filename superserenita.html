@@ -29,7 +29,25 @@
   <meta name="theme-color" content="#07080e">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .page-hero { padding: 90px 0 60px; background: var(--bg-main); }
+    .page-hero { padding: 90px 0 60px; background: var(--bg-main); position: relative; }
+
+    /* CARD VIDEO ANIMATA (desktop, lato destro hero) */
+    .hero-video-cta { position: absolute; top: 50%; right: clamp(24px, 4vw, 90px); width: 250px; text-decoration: none; animation: heroFloat 4s ease-in-out infinite; z-index: 2; }
+    .hero-video-cta__frame { position: relative; border-radius: 18px; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.16); box-shadow: 0 24px 60px rgba(0,0,0,0.55); }
+    .hero-video-cta__frame img { display: block; width: 100%; }
+    .hero-video-cta__frame::before { content: ''; position: absolute; inset: 0; background: rgba(7,8,14,0.25); transition: background .25s; }
+    .hero-video-cta:hover .hero-video-cta__frame::before { background: rgba(7,8,14,0.05); }
+    .hero-video-cta__play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .hero-video-cta__btn { width: 58px; height: 58px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 8px 24px rgba(37,99,235,0.5); }
+    .hero-video-cta__btn svg { width: 20px; height: 20px; fill: #fff; margin-left: 3px; }
+    .hero-video-cta__btn::after { content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid rgba(37,99,235,0.8); animation: videoPulse 2s ease-out infinite; }
+    .hero-video-cta__label { margin-top: 14px; text-align: center; font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.75); display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .hero-video-cta__label svg { width: 14px; height: 14px; stroke: rgba(147,186,255,0.9); animation: arrowBounce 1.6s ease-in-out infinite; }
+    @keyframes heroFloat { 0%, 100% { transform: translateY(-50%); } 50% { transform: translateY(calc(-50% - 12px)); } }
+    @keyframes videoPulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.9); opacity: 0; } }
+    @keyframes arrowBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+    @media (max-width: 1280px) { .hero-video-cta { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .hero-video-cta, .hero-video-cta__btn::after, .hero-video-cta__label svg { animation: none; } }
     .page-hero__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; max-width: 780px; }
     .page-hero__h1 { font-size: 56px; font-weight: 800; color: #fff; letter-spacing: -2.2px; line-height: 1.06; margin-bottom: 24px; }
     .page-hero__h1 em { font-style: normal; color: #2563EB; }
@@ -246,10 +264,19 @@
 
   <!-- 1. ABOVE THE FOLD -->
   <section class="page-hero">
+    <a href="#guarda-video" class="hero-video-cta" id="hero-video-cta" aria-label="Guarda il video di presentazione (3 minuti)">
+      <div class="hero-video-cta__frame">
+        <img src="/video/video-superserenita-poster.jpg" alt="Anteprima video SuperSerenità" loading="lazy">
+        <div class="hero-video-cta__play">
+          <div class="hero-video-cta__btn"><svg viewBox="0 0 24 24"><polygon points="6 3 21 12 6 21"/></svg></div>
+        </div>
+      </div>
+      <div class="hero-video-cta__label">Guarda il video &middot; 3 min <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </a>
     <div class="page-hero__inner container">
       <img src="img/logo-luniversotuo.svg" alt="LuniversoTuo" style="height:72px;width:auto;display:block;margin-bottom:24px;" onerror="this.style.display='none'">
       <div class="tag" style="margin-bottom:24px"><div class="tag__dot"></div>Consulenza gratuita &middot; Agenzia Allianz &middot; Pescia (PT)</div>
-      <h1 class="page-hero__h1">Se domani il tuo reddito si ferma,<br>la tua famiglia <em>per quanto va avanti?</em></h1>
+      <h1 class="page-hero__h1">Se domani il tuo reddito si ferma,<br>la tua vita <em>per quanto va avanti?</em></h1>
       <p class="page-hero__p">
         In 30 minuti, gratis e senza impegno, capiamo insieme quali rischi possono colpire il tuo reddito, la tua famiglia e la tua casa — e da dove partire per metterli al sicuro. Nessuna polizza da comprare: esci con le idee chiare.
       </p>
@@ -282,7 +309,7 @@
   </section>
 
   <!-- 2B. VIDEO PRESENTAZIONE -->
-  <section style="padding:72px 0; background:var(--bg-alt); border-top:0.5px solid rgba(255,255,255,0.06);">
+  <section id="guarda-video" style="padding:72px 0; background:var(--bg-alt); border-top:0.5px solid rgba(255,255,255,0.06); scroll-margin-top:40px;">
     <div class="container" style="max-width:820px;">
       <div class="eyebrow" style="text-align:center;">Guarda il video</div>
       <h2 class="section-title" style="text-align:center; margin-left:auto; margin-right:auto;">3 minuti per capire<br>se fa per te.</h2>
@@ -292,6 +319,13 @@
         <source src="/video/video-superserenita.mp4" type="video/mp4">
         Il tuo browser non supporta la riproduzione video.
       </video>
+      <div class="cta-center" style="margin-top:36px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;">
+          <a href="prenota.html" class="btn-primary">Prenota la consulenza gratuita <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+          <a href="#richiamami-mid" class="btn-outline">Preferisci? Ti richiamiamo noi</a>
+        </div>
+        <div class="cta-micro">Gratuita <span class="dot"></span> 30 minuti <span class="dot"></span> Online o a Pescia <span class="dot"></span> Senza impegno</div>
+      </div>
     </div>
   </section>
   <script>
@@ -303,6 +337,10 @@
         if (fired) return; fired = true;
         if (typeof gtag === 'function') gtag('event', 'video_play', { video_title: 'Video SuperSerenita landing' });
         if (typeof fbq === 'function') fbq('trackCustom', 'VideoPlay', { page: 'superserenita' });
+      });
+      var cta = document.getElementById('hero-video-cta');
+      if (cta) cta.addEventListener('click', function(){
+        setTimeout(function(){ v.play().catch(function(){}); }, 600);
       });
     })();
   </script>
