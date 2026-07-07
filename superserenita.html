@@ -47,7 +47,20 @@
     @keyframes videoPulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.9); opacity: 0; } }
     @keyframes arrowBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
     @media (max-width: 1280px) { .hero-video-cta { display: none; } }
-    @media (prefers-reduced-motion: reduce) { .hero-video-cta, .hero-video-cta__btn::after, .hero-video-cta__label svg { animation: none; } }
+
+    /* MINI CARD VIDEO (mobile/tablet, dentro l'hero) */
+    .hero-video-mini { display: none; margin-top: 24px; text-decoration: none; align-items: center; gap: 14px; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 10px 16px 10px 10px; max-width: 360px; }
+    .hero-video-mini__thumb { position: relative; width: 92px; flex-shrink: 0; border-radius: 9px; overflow: hidden; }
+    .hero-video-mini__thumb img { display: block; width: 100%; }
+    .hero-video-mini__thumb::before { content: ''; position: absolute; inset: 0; background: rgba(7,8,14,0.25); }
+    .hero-video-mini__play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .hero-video-mini__btn { width: 30px; height: 30px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; position: relative; }
+    .hero-video-mini__btn svg { width: 11px; height: 11px; fill: #fff; margin-left: 2px; }
+    .hero-video-mini__btn::after { content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid rgba(37,99,235,0.8); animation: videoPulse 2s ease-out infinite; }
+    .hero-video-mini__t { font-size: 14.5px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
+    .hero-video-mini__s { font-size: 12.5px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+    @media (max-width: 1280px) { .hero-video-mini { display: flex; } }
+    @media (prefers-reduced-motion: reduce) { .hero-video-cta, .hero-video-cta__btn::after, .hero-video-cta__label svg, .hero-video-mini__btn::after { animation: none; } }
     .page-hero__inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; max-width: 780px; }
     .page-hero__h1 { font-size: 56px; font-weight: 800; color: #fff; letter-spacing: -2.2px; line-height: 1.06; margin-bottom: 24px; }
     .page-hero__h1 em { font-style: normal; color: #2563EB; }
@@ -287,6 +300,16 @@
       </div>
       <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;margin:14px 0 0;">…oppure <a href="#richiamami-mid" style="color:rgba(147,186,255,0.9);">lasciaci il numero</a> e ti richiamiamo noi.</p>
       <div class="cta-micro">Gratuita <span class="dot"></span> 30 minuti <span class="dot"></span> Online o a Pescia <span class="dot"></span> Senza impegno</div>
+      <a href="#guarda-video" class="hero-video-mini" id="hero-video-mini" aria-label="Guarda il video di presentazione (3 minuti)">
+        <div class="hero-video-mini__thumb">
+          <img src="/video/video-superserenita-poster.jpg" alt="" loading="lazy">
+          <div class="hero-video-mini__play"><div class="hero-video-mini__btn"><svg viewBox="0 0 24 24"><polygon points="6 3 21 12 6 21"/></svg></div></div>
+        </div>
+        <div>
+          <div class="hero-video-mini__t">Guarda il video</div>
+          <div class="hero-video-mini__s">3 minuti per capire se fa per te</div>
+        </div>
+      </a>
       <div class="hero-proof">
         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         <span><strong style="color:rgba(255,255,255,0.82);font-weight:600;">461 recensioni &middot; Eccellente</strong> &middot; tra le agenzie più recensite d'Italia</span>
@@ -338,9 +361,11 @@
         if (typeof gtag === 'function') gtag('event', 'video_play', { video_title: 'Video SuperSerenita landing' });
         if (typeof fbq === 'function') fbq('trackCustom', 'VideoPlay', { page: 'superserenita' });
       });
-      var cta = document.getElementById('hero-video-cta');
-      if (cta) cta.addEventListener('click', function(){
-        setTimeout(function(){ v.play().catch(function(){}); }, 600);
+      ['hero-video-cta','hero-video-mini'].forEach(function(id){
+        var cta = document.getElementById(id);
+        if (cta) cta.addEventListener('click', function(){
+          setTimeout(function(){ v.play().catch(function(){}); }, 600);
+        });
       });
     })();
   </script>
